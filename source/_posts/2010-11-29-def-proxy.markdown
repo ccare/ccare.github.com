@@ -1,0 +1,13 @@
+---
+layout: post
+title: "Def Proxy"
+date: 2010-11-29 17:44
+comments: true
+categories: 
+---
+A while ago, I wrote some funky code to proxy interfaces method calls
+and delegate against a meta Object. For the last couple of day Tim Watson
+and I have been generalising this as a library for custom proxying between
+Java interfaces.
+
+Code's available on github: https://github.com/hyperthunk/def-proxy

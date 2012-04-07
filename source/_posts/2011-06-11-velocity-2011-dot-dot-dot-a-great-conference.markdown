@@ -1,0 +1,41 @@
+---
+layout: post
+title: "Velocity 2011... a great conference"
+date: 2011-06-11 20:27
+comments: true
+categories: 
+---
+
+It's a week now since I came back from
+[O'Reilly's Velocity](http://velocityconf.com/velocity2011)
+conference in San
+Jose so I've had a chance to let some of the thoughts settle in my mind. I
+attended both the main conference and the workshops the day before.
+
+Attending a large tech conference is a great way of getting up to speed with the
+latest technical themes and meet some great people. Velocity's three days long,
+but tacked on the end was DevopsDays - a more informal meet-up of people
+interested in bringing the traditionally separate roles of development and
+operations together. Devops was also an important theme at Velocity. Or, as Theo
+Schlossnagle said in
+his [Velocity keynote on careers](http://www.youtube.com/watch?v=y0mHo7SMCQk&feature=player_embedded)...
+it's really about *ops.
+Whatever technology you build, that software's delivering a service, and
+whatever that service, it must operate. Or to put it from another way Theo was
+saying that we should treat 'operability like security'.
+
+  
+For the last couple of months, I've been working within the platform team at
+[Talis](http://www.talis.com). We're a small team, but have a lot we want to build and manage. Trying to
+organise ourselves in a devops is something really important to the way we work.
+Personally, I've never felt comfortable with the traditional 'throw it over the
+wall' relationship between software and operations teams. I've worked in a
+number of different kinds of teams before, usually I've tried to be a developer
+who works closely with ops, but I've definitely fallen into the us and them trap
+from time to time. Like agile, devops is not a magic formula, but I definitely
+feel much more comfortable with everyone being part of the same team.
+
+  
+
+I've decided to blog some of my thoughts/notes from the conference: the posts
+should start to appear very soon.
