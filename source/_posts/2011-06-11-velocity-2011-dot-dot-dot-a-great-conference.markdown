@@ -4,6 +4,9 @@ title: "Velocity 2011... a great conference"
 date: 2011-06-11 20:27
 comments: true
 categories: 
+- velocityconf
+- devops
+- web operations
 ---
 
 It's a week now since I came back from

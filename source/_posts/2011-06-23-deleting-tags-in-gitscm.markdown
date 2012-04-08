@@ -3,7 +3,8 @@ layout: post
 title: "Deleting tags in gitscm"
 date: 2011-06-23 09:52
 comments: true
-categories: 
+categories:
+- git-scm
 ---
 
 I'm bound to forget this little cryptic command to delete branch foo.

@@ -3,7 +3,9 @@ layout: post
 title: "Statistics @ Velocity"
 date: 2011-06-11 21:12
 comments: true
-categories: 
+categories:
+- velocityconf
+- statistics
 ---
 
 One of the pre-conference workshops was an excellent session by John Rauser from

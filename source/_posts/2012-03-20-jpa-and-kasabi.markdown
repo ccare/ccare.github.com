@@ -3,7 +3,10 @@ layout: post
 title: "JPA and Kasabi"
 date: 2012-03-20 18:04
 comments: true
-categories: 
+categories:
+- Java
+- Kasabi
+- JPA
 ---
 
 Over the last couple of days I've been trying to pull together a demo of

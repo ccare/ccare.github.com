@@ -3,7 +3,8 @@ layout: post
 title: "Interesting SemWeb Books"
 date: 2011-03-10 16:38
 comments: true
-categories: 
+categories:
+- reading
 ---
 
 Over the last few months I've been trying to understand a little more about semantic web concepts etc... Here's a list of some of the books I've been flicking through. Thought I'd blog them so I can find them again in the future.

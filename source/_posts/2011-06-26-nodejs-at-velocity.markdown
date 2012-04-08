@@ -3,7 +3,9 @@ layout: post
 title: "NodeJS at Velocity"
 date: 2011-06-26 21:17
 comments: true
-categories: 
+categories:
+- velocityconf
+- node.js
 ---
 
 NodeJS seemed to be a passing theme in a number of the talks at the conference,

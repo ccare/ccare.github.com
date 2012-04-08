@@ -3,7 +3,8 @@ layout: post
 title: "Installing Ubuntu 10.04 (Beta) on Asus eeePC 1001HA"
 date: 2010-04-07 20:11
 comments: true
-categories: 
+categories:
+- Ubuntu
 ---
 
 Today bought a new EeePC (I broke my old and trust 901 model... ).

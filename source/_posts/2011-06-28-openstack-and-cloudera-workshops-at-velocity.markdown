@@ -4,6 +4,11 @@ title: "Openstack and Cloudera workshops at Velocity"
 date: 2011-06-28 21:47
 comments: true
 categories: 
+- velocityconf
+- Cloudera
+- Hadoop
+- OpenStack
+- IaaS
 ---
 
 The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.

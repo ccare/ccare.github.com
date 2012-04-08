@@ -3,7 +3,8 @@ layout: post
 title: "Migrating Outlook to a Ubuntu mailbox"
 date: 2011-03-03 11:10
 comments: true
-categories: 
+categories:
+- Migration
 ---
 
 Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it's really simple.

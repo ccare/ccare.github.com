@@ -3,7 +3,9 @@ layout: post
 title: "Testing what happens when a java process runs out of disk"
 date: 2011-04-11 12:32
 comments: true
-categories: 
+categories:
+- testing
+- java
 ---
 
 Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.

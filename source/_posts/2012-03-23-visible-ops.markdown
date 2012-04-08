@@ -3,7 +3,11 @@ layout: post
 title: "Visible Ops"
 date: 2012-03-23 16:41
 comments: true
-categories: 
+categories:
+- Operations
+- Devops
+- VisibleOps
+- ITIL
 ---
 
 Last weekend I finally got around to reading the Visible Ops handbook [1]. I'd
