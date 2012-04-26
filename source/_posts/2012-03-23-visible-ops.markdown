@@ -10,7 +10,8 @@ categories:
 - ITIL
 ---
 
-Last weekend I finally got around to reading the Visible Ops handbook [1]. I'd
+Last weekend I finally got around to reading
+the [Visible Ops handbook](http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612). I'd
 been meaning to read it for a while - ever since I first heard Gene Kim speak at
 a conference last year.
 
@@ -28,8 +29,10 @@ the natural turn-off of these things is usually more to do with past
 experience of bureaucratic processes, rather than a feeling that audit and
 change-reviews are, in-themselves, a bad thing.
 
-The other week I gave a lecture to students at Warwick about what it's like to
-be a software developer at Kasabi [2, 3]. I had lots of things to talk about:
+The other week I gave a [lecture](http://www.slideshare.net/cpcare/warwick-2012)
+to [students at Warwick](http://www2.warwick.ac.uk/fac/sci/dcs/teaching/material/cs321/)
+about what it's like to
+be a software developer at Kasabi. I had lots of things to talk about:
 our product, our team, our culture, etc. However I wanted to share something
 about our working practices. The practices we use have certainly evolved over
 time, inspired from various methodologies and communities including: Scrum,
@@ -37,7 +40,8 @@ Kanban, and dev-ops. However, if I had to choose one thing that I couldn't do
 without, I think it would be having a code-review process that's tightly
 coupled to the build/release process.
 
-Nearly a year ago, our team moved to using Gerrit [4] as our principle review
+Nearly a year ago, our team moved to
+using [Gerrit](http://code.google.com/p/gerrit/) as our principle review
 tool. The way it integrates with version control and continuous integration is
 fantastic. We were already following a continuous deployment model, but I feel
 that following the Gerrit workflow has helped us get closer to doing truly
@@ -59,8 +63,3 @@ to take these changes down the normal review path. Even though we're not doing
 heavy-weight audits, from an ITIL perspective, it's re-assuring to know that
 these changes are going through a robust, well-understood, and auditable
 process.
-
-[1] http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612
-[2] http://www2.warwick.ac.uk/fac/sci/dcs/teaching/material/cs321/
-[3] http://www.slideshare.net/cpcare/warwick-2012
-[4] http://code.google.com/p/gerrit/
