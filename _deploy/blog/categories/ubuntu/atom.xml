@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ubuntu | Charles' Blog]]></title>
+  <link href="http://blog.ccare.me/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-03-20T10:03:17+00:00</updated>
+  <id>http://blog.ccare.me/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Skype on Ubuntu 10.04 ]]></title>
+    <link href="http://blog.ccare.me/blog/2010/08/04/skype-on-ubuntu-10-dot-04/"/>
+    <updated>2010-08-04T22:10:00+01:00</updated>
+    <id>http://blog.ccare.me/blog/2010/08/04/skype-on-ubuntu-10-dot-04</id>
+    <content type="html"><![CDATA[<p>Installed Skype from the standard package - all looks fine - but I've got to sort my microphone out first!</p>
+
+<p>Did have a problem with menus being invisible (black text on black background). My fix was to simply change the settings of the current "style" and remove skype's own 'clean looks' style with the ubuntu one.</p>
+
+<p>Go to Options > General > Choose Style</p>
+
+<p>and instead of "clean looks" choose "Desktop settings". You will need to restart Skype.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Ubuntu 10.04 (Beta) on Asus eeePC 1001HA]]></title>
+    <link href="http://blog.ccare.me/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha/"/>
+    <updated>2010-04-07T20:11:00+01:00</updated>
+    <id>http://blog.ccare.me/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha</id>
+    <content type="html"><![CDATA[<p>Today bought a new EeePC (I broke my old and trust 901 model... ).</p>
+
+<p>It came with Windows (of course). I was going to blat the whole disk with
+ubuntu, but decided to keep a dual boot for now.</p>
+
+<p>Ubuntu 10.04 is out next month, so I went straight for the Beta release.
+Installation went fine (as usual). Only immediate problem was a lack of
+wireless LAN. After digging around some forum posts I found this
+helpful <a href="http://ubuntuforums.org/showthread.php?p=9033458">thread</a>.</p>
+
+<p>To install the drivers for the wireless network card I downloaded the following package.</p>
+
+<p>https://launchpad.net/~markus-tisoft/+archive/rt3090/+files/rt3090-dkms_2.3.1.3-0ubuntu0~ppa1_all.deb</p>
+
+<p>Simple :)</p>
+]]></content>
+  </entry>
+  
+</feed>

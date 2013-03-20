@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Work | Charles' Blog]]></title>
+  <link href="http://blog.ccare.me/blog/categories/work/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-03-20T10:03:17+00:00</updated>
+  <id>http://blog.ccare.me/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Joining Black Pepper Software]]></title>
+    <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
+    <updated>2012-05-16T09:31:00+01:00</updated>
+    <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
+    <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I've joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
+
+<p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
+]]></content>
+  </entry>
+  
+</feed>

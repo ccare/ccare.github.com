@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Using Grails to throw-up a simple interface over JPA entities - Charles' Blog</title>
+  <meta name="author" content="Charles Care">
+
+  
+  <meta name="description" content="Over the last few weeks, I&#8217;ve been wanting to write a demo for
+Kasabi to show how to integrate data from a database using
+object-relational &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Charles' Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30682266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Charles' Blog</a></h1>
+  
+    <h2>General ramblings of a tech geek.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.ccare.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Using Grails to Throw-up a Simple Interface Over JPA Entities</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-29T18:25:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Over the last few weeks, I&#8217;ve been wanting to write a demo for
+<a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
+object-relational mapping. The idea was that data in an existing database would
+be polled and loaded in an ETL fashion. However, in order to build a compelling
+demo, I wanted to generate a simple CRUD over my existing domain classes.</p>
+
+<h2>The scenario</h2>
+
+<p>My entity classes followed a DB schema based on the classic suppliers-parts
+database used by C. J. Date in his database textbooks.</p>
+
+<p>The suppliers-parts database contains information about a business&#8217;
+<strong>Customers</strong> and <strong>Suppliers</strong>, each of these parties will have an <strong>Address</strong>,
+which in the relational model is decomposed into a separate database table. In
+addition, our database will have a catalogue of <strong>Parts</strong> and a mapping
+indicating which <strong>Supplier</strong> supplies which <strong>Part</strong>. Furthermore,
+<strong>Customers</strong> will be able to place an <strong>Order</strong>, where an <strong>Order</strong> is an order
+of a certain quantity of <strong>Parts</strong>, sourced from a given <strong>Supplier</strong>.</p>
+
+<h2>The datamodel</h2>
+
+<pre><code>                            +---------+
+    +--------------+        | Country |  +-----------+
+    |   Address    |  *..1  |---------|  | Customer  |
+    |--------------+--------+ name    |  |-----------|
+    |              |        +---------+  | title     | 1..*
+    | addressline1 |                     | firstname +------+
+    | addressline2 |         1..*        | surname   |      |
+    | addressline3 +---------------------+           |      |
+    |              |                     +-----------+      |
+    | city         |                                        |
+    | postcode     |                            +-----------+---+
+    |              |      +-----------+  *..1   | CustomerOrder |
+    +---+----------+      | OrderItem +---------+---------------|
+        |                 |-----------|         |               |
+        |           1..*  |           |         +---------------+
+        |          +------+ quanity   +-------+
+        |          |      |           |  1..* |
+        |          |      +-----------+       |
+        |          |                    +-----+--+
+        |       +--+-------+            | Part   |
+        |       | Supplier |            |--------|
+        |       |----------|            |        |
+        |  1..* |          |    *..*    | name   |
+        +-------+ name     +------------+ color  |
+                |          |            | weight |
+                +----------+            +--------+
+</code></pre>
+
+<h2>JPA Entities</h2>
+
+<p>It is assumed, for the purposes of this demo, that JPA entity classes already
+exist for the domain. The easiest way to create entity classes is using the
+JPA annotations. E.g.</p>
+
+<figure class='code'><figcaption><span>Customer.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Entity</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="kd">extends</span> <span class="n">AuditableEntityBase</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@NotNull</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstname</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@NotNull</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">surname</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@ManyToOne</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Address</span> <span class="n">address</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All of my classes have an inherited Id and Version field. These are
+defined in <strong>EntityBase</strong>.</p>
+
+<figure class='code'><figcaption><span>EntityBase.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MappedSuperclass</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EntityBase</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Id</span>
+</span><span class='line'>    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">GenerationType</span><span class="o">.</span><span class="na">AUTO</span><span class="o">)</span>
+</span><span class='line'>    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Long</span> <span class="n">id</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Version</span>
+</span><span class='line'>    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;version&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">version</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Furthermore, a number of classes also extend from <strong>AuditableEntityBase</strong> in
+order to timestamped audit information. Automatic event handlers control the
+capture of timestamp fields that indicate when a record was created or last
+modified.</p>
+
+<figure class='code'><figcaption><span>AuditableEntityBase.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MappedSuperclass</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AuditableEntityBase</span> <span class="kd">extends</span> <span class="n">EntityBase</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Temporal</span><span class="o">(</span><span class="n">javax</span><span class="o">.</span><span class="na">persistence</span><span class="o">.</span><span class="na">TemporalType</span><span class="o">.</span><span class="na">TIMESTAMP</span><span class="o">)</span>
+</span><span class='line'>    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;created&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Date</span> <span class="n">dateTimeCreated</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Temporal</span><span class="o">(</span><span class="n">javax</span><span class="o">.</span><span class="na">persistence</span><span class="o">.</span><span class="na">TemporalType</span><span class="o">.</span><span class="na">TIMESTAMP</span><span class="o">)</span>
+</span><span class='line'>    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;modified&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Date</span> <span class="n">dateTimeModified</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@PreUpdate</span>
+</span><span class='line'>    <span class="nd">@PrePersist</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateTimeStamps</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">dateTimeModified</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">dateTimeCreated</span><span class="o">==</span><span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">dateTimeCreated</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The entity classes for the suppliers-parts domain model are in a simple java
+project, packaged up using maven2. See - <a href="">link&#8230;</a></p>
+
+<p>Build and install the packages use maven</p>
+
+<pre><code>mvn clean install
+</code></pre>
+
+<h2>Creating a simple webapp using grails</h2>
+
+<p>The whole point of this demo is to show how relational data can be extracted
+from an existing database. In reality, this existing database would be
+continually updated by existing systems. And for the purposes of a demo, it
+would be interesting to model this situation. In the following steps, we will
+create a simple web-based CRUD application that allows you to create and update
+records. We need something that will get us a working system with the bare
+minimum of effort, so we&#8217;re using SpringSource Grails to build a simple webapp
+infront of our JPA database.</p>
+
+<p>For the database we&#8217;ll used a file-based H2 database, although in reality you
+would probably be using a production-strength database.</p>
+
+<h3>Create the application</h3>
+
+<p>First, create a new grails app</p>
+
+<pre><code>grails create-app suppliers-parts-webapp
+</code></pre>
+
+<p>Next, we need to bring our JPA classes into the project. The JPA classes are
+a maven project, so as long as we&#8217;ve installed them into our local maven repo (
+by running  in the suppliers-parts-domain project),
+we can pull these in via a dependency:</p>
+
+<p>In the BuildConfig.groovy configuration, uncomment the
+mavenLocal() repo. And add the following, new entry to the dependencies section:</p>
+
+<figure class='code'><figcaption><span>grails-app/conf/BuildConfig.groovy</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dependencies {
+</span><span class='line'>    compile "com.kasabi.demo.suppliers-parts:domain-model:0-1-3-SNAPSHOT"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the database to use a file-based development database (rather than the
+default, in-mem db) in grails-app/conf/DataSource.groovy</p>
+
+<figure class='code'><figcaption><span>grails-app/conf/DataSource.groovy</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>development {
+</span><span class='line'>  dataSource {
+</span><span class='line'>    dbCreate = "update"
+</span><span class='line'>    url = "jdbc:h2:file:/tmp/suppliersparts;MVCC=TRUE;AUTO_SERVER=TRUE"
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <br/>
+Tell grails to use the JPA entity manager, and inform hibernate (Grails uses
+Hibernate as its persistence implementation) about each entity class you want
+to work with.</p>
+
+<figure class='code'><figcaption><span>grails-app/conf/hibernate/hibernate.cfg.xml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;!DOCTYPE hibernate-configuration SYSTEM</span>
+</span><span class='line'><span class="cp">  &quot;http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd&quot;&gt;</span>
+</span><span class='line'><span class="nt">&lt;hibernate-configuration&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;session-factory&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">package=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.EntityBase&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.AuditableEntityBase&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Part&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Address&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Country&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Customer&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.CustomerOrder&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Supplier&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.OrderItem&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;mapping</span> <span class="na">class=</span><span class="s">&quot;com.kasabi.demo.suppliersparts.domain.Title&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/session-factory&gt;</span>
+</span><span class='line'><span class="nt">&lt;/hibernate-configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Grails will generate scaffolding views and controllers for each entity class.
+This is achieved using:</p>
+
+<pre><code>grails generate-all &lt;CLASS_NAME&gt;
+</code></pre>
+
+<p>You&#8217;ll now have all ui pages and web controllers for each entity. There seems
+to be a bug with handling the audit and id fields (which aren&#8217;t needed in the
+web forms) so the following script (regenerateScaffolding.sh) has some manual
+&#8216;sed&#8217; commands to remove these extra fields.</p>
+
+<figure class='code'><figcaption><span>generate-all.bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Part
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Address
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Country
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Customer
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.CustomerOrder
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Supplier
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.OrderItem
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;a&quot;</span> | grails generate-all com.kasabi.demo.suppliersparts.domain.Title
+</span><span class='line'>
+</span><span class='line'><span class="k">for </span>i in <span class="sb">`</span>find . -name _form.gsp<span class="sb">`</span>
+</span><span class='line'>  <span class="k">do </span>sed -i -e <span class="s2">&quot;/field: &#39;id&#39;, &#39;error&#39;)}/,+6d&quot;</span> <span class="nv">$i</span>
+</span><span class='line'>     sed -i -e <span class="s2">&quot;/field: &#39;dateTimeModified&#39;, &#39;error&#39;)}/,+6d&quot;</span> <span class="nv">$i</span>
+</span><span class='line'>     sed -i -e <span class="s2">&quot;/field: &#39;dateTimeCreated&#39;, &#39;error&#39;)}/,+6d&quot;</span> <span class="nv">$i</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we need to configure Grails to process the audit fields. To do this, we
+need to add a Hibernate event listener and register it. For those interested&#8230;
+the code is [here].</p>
+
+<h3>Run the application</h3>
+
+<p>From the web-app project, it should be simple to start the app on port 8080
+with the command:</p>
+
+<pre><code>grails run-war
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Charles Care</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-29T18:25:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/grails/'>Grails</a>, <a class='category' href='/blog/categories/jpa/'>JPA</a>, <a class='category' href='/blog/categories/kasabi/'>Kasabi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/" data-via="charlescare" data-counturl="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/23/visible-ops/" title="Previous Post: Visible Ops">&laquo; Visible Ops</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/07/hello-octopress/" title="Next Post: Hello Octopress!">Hello Octopress! &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/05/16/joining-black-pepper-software/">Joining Black Pepper Software</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/07/hello-octopress/">Hello Octopress!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/">Using Grails to throw-up a simple interface over JPA entities</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/23/visible-ops/">Visible Ops</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/20/jpa-and-kasabi/">JPA and Kasabi</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ccare">@ccare</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ccare',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("charlescare", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/charlescare" class="twitter-follow-button" data-show-count="false">Follow @charlescare</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Charles Care -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

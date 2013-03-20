@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: publishing | Charles' Blog]]></title>
+  <link href="http://blog.ccare.me/blog/categories/publishing/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-03-20T10:03:17+00:00</updated>
+  <id>http://blog.ccare.me/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ways of Thinking]]></title>
+    <link href="http://blog.ccare.me/blog/2012/03/12/ways-of-thinking/"/>
+    <updated>2012-03-12T17:23:00+00:00</updated>
+    <id>http://blog.ccare.me/blog/2012/03/12/ways-of-thinking</id>
+    <content type="html"><![CDATA[<p>It's nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled 'Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers'. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It's taken a while to find it's way into print, but I think it's an interesting collection of different perspectives on modelling.</p>
+
+<p><img class="right" src="/images/cc/cover.jpg" title="Cover image" ></p>
+
+<p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
+
+<p>[1] http://www.springer.com/engineering/robotics/book/978-3-642-25208-2</p>
+
+<p>[2] http://www.springerlink.com/content/r071882m26486028/</p>
+]]></content>
+  </entry>
+  
+</feed>
