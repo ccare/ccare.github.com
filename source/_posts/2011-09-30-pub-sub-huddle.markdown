@@ -16,6 +16,7 @@ particularly interesting conversations with people responsible for messaging sof
 and banks. The basic structure of the day was talks in the morning which was then 
 followed by a self-organised 'hack-afternoon'. The morning was excellent and had a large number of
 attendees. The afternoon was also good fun, but things did tail off as people started disappearing.
+<!-- more -->
 
 The morning started off with Martin Sústrik discussing his vision for 'the future of messaging'.
 Martin is the founder of zeromq, but he was talking more about his higher-level goals to simplify

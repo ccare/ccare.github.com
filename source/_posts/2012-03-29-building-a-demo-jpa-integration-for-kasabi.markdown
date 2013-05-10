@@ -15,6 +15,8 @@ object-relational mapping. The idea was that data in an existing database would
 be polled and loaded in an ETL fashion. However, in order to build a compelling
 demo, I wanted to generate a simple CRUD over my existing domain classes.
 
+<!-- more -->
+
 The scenario
 ------------
 

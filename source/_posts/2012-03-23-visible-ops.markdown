@@ -22,6 +22,7 @@ now part of the 'received wisdom' of operations. I also found it useful to get
 a reminder of the ITIL jargon. Using the correct terms for this sort of thing
 is something I'm a bit weak on, but as the authors say in the book, having a
 common language is vital.
+<!-- more -->
 
 Working for a smaller company, I suppose some of the talk about audits and
 change-review boards sounded a bit overkill. Although it made me realise that

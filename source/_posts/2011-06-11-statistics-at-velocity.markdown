@@ -26,6 +26,7 @@ really think of them as lossy formats?
   Moby Dick. Another major theme in his talks was to make time to do deep dives
   into log data, even if it only means you know how to when something really
   goes wrong.
+<!-- more -->
 
   
 

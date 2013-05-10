@@ -16,6 +16,7 @@ The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and
 http://velocityconf.com/velocity2011/public/schedule/detail/19970
 
 The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project's road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.
+<!-- more -->
 
 As the speakers presented it, there are two core components Openstack: OpenStack Compute (or Nova), and OpenStack Object Store, (or Swift). In Amazon speak, these are the OpenStack equivalents of EC2 and S3. Both the virtualisation and storage layers aim to be scalable, back-end agnostic, and use eventually consistent.
 

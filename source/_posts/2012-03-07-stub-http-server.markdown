@@ -22,6 +22,7 @@ remote service. Sometimes we do the usual thing and create mocks. This is fairly
 easy, but does involve quite a lot of plumbing - you need a mock HttpClient, then
 a mock GetRequest, then a mock entity, and so on... it can certainly create
 quite a lot of boilerplate.
+<!-- more -->
 
 I think this sort of test works much better with a _real_ HttpClient, making
 real HTTP calls. We've been using this pattern quite a lot, and found that the
