@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Ubuntu | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Skype on Ubuntu 10.04 ]]></title>
-    <link href="http://ccare.github.com/blog/2010/08/04/skype-on-ubuntu-10-dot-04/"/>
+    <link href="http://blog.ccare.me/blog/2010/08/04/skype-on-ubuntu-10-dot-04/"/>
     <updated>2010-08-04T22:10:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2010/08/04/skype-on-ubuntu-10-dot-04</id>
+    <id>http://blog.ccare.me/blog/2010/08/04/skype-on-ubuntu-10-dot-04</id>
     <content type="html"><![CDATA[<p>Installed Skype from the standard package - all looks fine - but I've got to sort my microphone out first!</p>
 
 <p>Did have a problem with menus being invisible (black text on black background). My fix was to simply change the settings of the current "style" and remove skype's own 'clean looks' style with the ubuntu one.</p>
@@ -30,9 +30,9 @@
   
   <entry>
     <title type="html"><![CDATA[Installing Ubuntu 10.04 (Beta) on Asus eeePC 1001HA]]></title>
-    <link href="http://ccare.github.com/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha/"/>
+    <link href="http://blog.ccare.me/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha/"/>
     <updated>2010-04-07T20:11:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha</id>
+    <id>http://blog.ccare.me/blog/2010/04/07/installing-ubuntu-10-dot-04-beta-on-asus-eeepc-1001ha</id>
     <content type="html"><![CDATA[<p>Today bought a new EeePC (I broke my old and trust 901 model... ).</p>
 
 <p>It came with Windows (of course). I was going to blat the whole disk with

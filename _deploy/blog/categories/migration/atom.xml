@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Migration | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/migration/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/migration/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Extracting calendar entries from Outlook]]></title>
-    <link href="http://ccare.github.com/blog/2011/03/03/extracting-calendar-entries-from-outlook/"/>
+    <link href="http://blog.ccare.me/blog/2011/03/03/extracting-calendar-entries-from-outlook/"/>
     <updated>2011-03-03T12:06:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2011/03/03/extracting-calendar-entries-from-outlook</id>
+    <id>http://blog.ccare.me/blog/2011/03/03/extracting-calendar-entries-from-outlook</id>
     <content type="html"><![CDATA[<p>Having migrated by Outlook mailbox, I wanted to load calendar entries into another calendar. Following my earlier post, I already had my calendar entries in ICAL format, so all seemed good. However, I also had a number of recurring events (birthdays etc) that I wanted to put into my Google Calendar. The following PERL script was a handy bit of code to extract the recurring events so that I could extract them and add to my public calendar.</p>
 
 <p>```bash
@@ -45,9 +45,9 @@ print $entry;
   
   <entry>
     <title type="html"><![CDATA[Migrating Outlook to a Ubuntu mailbox]]></title>
-    <link href="http://ccare.github.com/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/"/>
+    <link href="http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/"/>
     <updated>2011-03-03T11:10:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox</id>
+    <id>http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox</id>
     <content type="html"><![CDATA[<p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it's really simple.</p>
 
 <p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook's settings. Important: make sure outlook is closed first!</p>

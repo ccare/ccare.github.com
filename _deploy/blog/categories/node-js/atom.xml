@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: node.js | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/node-js/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/node-js/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
     <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity</id>
+    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
     <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
 including:</p>
 

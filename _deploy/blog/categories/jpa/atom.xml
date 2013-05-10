@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: JPA | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/jpa/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/jpa/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using Grails to throw-up a simple interface over JPA entities]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
+    <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last few weeks, I've been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
@@ -288,9 +288,9 @@ with the command:</p>
   
   <entry>
     <title type="html"><![CDATA[JPA and Kasabi]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi/"/>
     <updated>2012-03-20T18:04:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi</id>
+    <id>http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last couple of days I've been trying to pull together a demo of
 integrating an existing JPA application with Kasabi. It's been a fun journey
 learning (and relearning) the JPA spec, and also working with some of the

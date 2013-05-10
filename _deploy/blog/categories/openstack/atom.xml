@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: OpenStack | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/openstack/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/openstack/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Openstack and Cloudera workshops at Velocity]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
     <updated>2011-06-28T21:47:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
+    <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
 <p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>

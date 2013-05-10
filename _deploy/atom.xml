@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Charles' Blog]]></title>
-  <link href="http://ccare.github.com/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating a simple AMF client for testing]]></title>
-    <link href="http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
+    <link href="http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
     <updated>2013-05-09T12:31:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing</id>
+    <id>http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-client-for-testing/">original</a>
 was posted on 30/04/2013.</p>
@@ -166,9 +166,9 @@ was posted on 30/04/2013.</p>
   
   <entry>
     <title type="html"><![CDATA[Correlating log entries using Log4J and the Mapped Diagnostic Context]]></title>
-    <link href="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
+    <link href="http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
     <updated>2012-12-21T12:31:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
+    <id>http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/correlating-log-entries-using-log4j-and-the-mapped-diagnostic-context/">original</a>
 was posted on 20/12/2012.</p>
@@ -461,9 +461,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Playing with Java Timestamps]]></title>
-    <link href="http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha/"/>
+    <link href="http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha/"/>
     <updated>2012-10-19T12:31:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha</id>
+    <id>http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha</id>
     <content type="html"><![CDATA[<p>The shortcomings of Java&#8217;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&#8217;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
 
 <!-- more -->
@@ -500,9 +500,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Joining Black Pepper Software]]></title>
-    <link href="http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software/"/>
+    <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
     <updated>2012-05-16T09:31:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software</id>
+    <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
     <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&#8217;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
@@ -511,9 +511,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress!]]></title>
-    <link href="http://ccare.github.com/blog/2012/04/07/hello-octopress/"/>
+    <link href="http://blog.ccare.me/blog/2012/04/07/hello-octopress/"/>
     <updated>2012-04-07T18:25:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2012/04/07/hello-octopress</id>
+    <id>http://blog.ccare.me/blog/2012/04/07/hello-octopress</id>
     <content type="html"><![CDATA[<p>Hi there!</p>
 
 <p>This my first post using <a href="http://octopress.org">Octopress</a>. Today I setup
@@ -531,9 +531,9 @@ sources to here during the next few weeks)</p>
   
   <entry>
     <title type="html"><![CDATA[Using Grails to throw-up a simple interface over JPA entities]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
+    <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last few weeks, I&#8217;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
@@ -881,9 +881,9 @@ with the command:</p>
   
   <entry>
     <title type="html"><![CDATA[Visible Ops]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/23/visible-ops/"/>
     <updated>2012-03-23T16:41:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
+    <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
 the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&#8217;d
 been meaning to read it for a while - ever since I first heard Gene Kim speak at
@@ -945,9 +945,9 @@ process.</p>
   
   <entry>
     <title type="html"><![CDATA[JPA and Kasabi]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi/"/>
     <updated>2012-03-20T18:04:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi</id>
+    <id>http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last couple of days I&#8217;ve been trying to pull together a demo of
 integrating an existing JPA application with Kasabi. It&#8217;s been a fun journey
 learning (and relearning) the JPA spec, and also working with some of the
@@ -972,12 +972,12 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Ways of Thinking]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/12/ways-of-thinking/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/12/ways-of-thinking/"/>
     <updated>2012-03-12T17:23:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/12/ways-of-thinking</id>
+    <id>http://blog.ccare.me/blog/2012/03/12/ways-of-thinking</id>
     <content type="html"><![CDATA[<p>It&#8217;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &#8216;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&#8217;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&#8217;s taken a while to find it&#8217;s way into print, but I think it&#8217;s an interesting collection of different perspectives on modelling.</p>
 
-<p><img class="right" src="http://ccare.github.com/images/cc/cover.jpg" title="Cover image" ></p>
+<p><img class="right" src="http://blog.ccare.me/images/cc/cover.jpg" title="Cover image" ></p>
 
 <p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
 
@@ -989,9 +989,9 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Stub Http Server]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/07/stub-http-server/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/07/stub-http-server/"/>
     <updated>2012-03-07T20:25:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/07/stub-http-server</id>
+    <id>http://blog.ccare.me/blog/2012/03/07/stub-http-server</id>
     <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we&#8217;ve been building our RDF platform
 following a distributed SOA
 architecture. Most of our integrations are through RESTful HTTP APIs, and in our
@@ -1126,9 +1126,9 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
   
   <entry>
     <title type="html"><![CDATA[PubSub Huddle conference]]></title>
-    <link href="http://ccare.github.com/blog/2011/09/30/pub-sub-huddle/"/>
+    <link href="http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle/"/>
     <updated>2011-09-30T11:39:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/09/30/pub-sub-huddle</id>
+    <id>http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle</id>
     <content type="html"><![CDATA[<p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
 one-day conference/hack-afternoon hosted by SkillsMatter.</p>
 
@@ -1228,9 +1228,9 @@ tuning it - particularly since they are getting quite impressive throughput.</p>
   
   <entry>
     <title type="html"><![CDATA[Primitive types and Java performance]]></title>
-    <link href="http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance/"/>
+    <link href="http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance/"/>
     <updated>2011-07-11T09:05:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance</id>
+    <id>http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance</id>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
@@ -1240,9 +1240,9 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
   
   <entry>
     <title type="html"><![CDATA[git-scm topic branch creation]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation/"/>
     <updated>2011-06-30T08:42:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation</id>
+    <id>http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation</id>
     <content type="html"><![CDATA[<p>Way I tend to create a topic branch in git-scm for a specific issue:</p>
 
 <pre><code>git checkout -b  # create a local branch
@@ -1256,9 +1256,9 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
   
   <entry>
     <title type="html"><![CDATA[Openstack and Cloudera workshops at Velocity]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
     <updated>2011-06-28T21:47:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
+    <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
 <p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>
@@ -1337,9 +1337,9 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
   
   <entry>
     <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
     <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity</id>
+    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
     <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
 including:</p>
 
@@ -1399,9 +1399,9 @@ been able to make using his benchmark.</p>
   
   <entry>
     <title type="html"><![CDATA[Deleting tags in gitscm]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/23/deleting-tags-in-gitscm/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm/"/>
     <updated>2011-06-23T09:52:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/23/deleting-tags-in-gitscm</id>
+    <id>http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm</id>
     <content type="html"><![CDATA[<p>I&#8217;m bound to forget this little cryptic command to delete branch foo.</p>
 
 <pre><code>git push origin :refs/tags/foo
@@ -1411,9 +1411,9 @@ been able to make using his benchmark.</p>
   
   <entry>
     <title type="html"><![CDATA[Statistics @ Velocity]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/11/statistics-at-velocity/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity/"/>
     <updated>2011-06-11T21:12:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/11/statistics-at-velocity</id>
+    <id>http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity</id>
     <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
 Amazon. I&#8217;ve never been hugely confident at my abilities to do estimation,
 forecasting, capacity planning etc. It&#8217;s a really difficult thing.</p>
@@ -1491,9 +1491,9 @@ easy to slip into the default behaviour of giving a single numeric response.</p>
   
   <entry>
     <title type="html"><![CDATA[Velocity 2011... a great conference]]></title>
-    <link href="http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
+    <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
     <updated>2011-06-11T20:27:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
+    <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
     <content type="html"><![CDATA[<p>It&#8217;s a week now since I came back from
 <a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&#8217;s Velocity</a>
 conference in San
@@ -1529,9 +1529,9 @@ should start to appear very soon.</p>
   
   <entry>
     <title type="html"><![CDATA[Avoiding 'peer not authenticated' error in Apache Httpclient]]></title>
-    <link href="http://ccare.github.com/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
+    <link href="http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
     <updated>2011-05-11T09:18:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
+    <id>http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
     <content type="html"><![CDATA[<p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&#8217;s certificate verification. This how-to was really helpful.</p>
 
 <p>http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</p>
@@ -1540,9 +1540,9 @@ should start to appear very soon.</p>
   
   <entry>
     <title type="html"><![CDATA[Testing what happens when a java process runs out of disk]]></title>
-    <link href="http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
+    <link href="http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
     <updated>2011-04-11T12:32:00+01:00</updated>
-    <id>http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
+    <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
     <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
 
 <p>I didn&#8217;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&#8217;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>

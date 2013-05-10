@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Acceptance Tests | Charles' Blog]]></title>
-  <link href="http://ccare.github.com/blog/categories/acceptance-tests/atom.xml" rel="self"/>
-  <link href="http://ccare.github.com/"/>
-  <updated>2013-05-09T14:06:16+01:00</updated>
-  <id>http://ccare.github.com/</id>
+  <link href="http://blog.ccare.me/blog/categories/acceptance-tests/atom.xml" rel="self"/>
+  <link href="http://blog.ccare.me/"/>
+  <updated>2013-05-10T15:15:30+01:00</updated>
+  <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Stub Http Server]]></title>
-    <link href="http://ccare.github.com/blog/2012/03/07/stub-http-server/"/>
+    <link href="http://blog.ccare.me/blog/2012/03/07/stub-http-server/"/>
     <updated>2012-03-07T20:25:00+00:00</updated>
-    <id>http://ccare.github.com/blog/2012/03/07/stub-http-server</id>
+    <id>http://blog.ccare.me/blog/2012/03/07/stub-http-server</id>
     <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we've been building our RDF platform
 following a distributed SOA
 architecture. Most of our integrations are through RESTful HTTP APIs, and in our
