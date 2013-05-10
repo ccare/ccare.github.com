@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Grails | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/grails/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
-    <content type="html"><![CDATA[<p>Over the last few weeks, I've been wanting to write a demo for
+    <content type="html"><![CDATA[<p>Over the last few weeks, I&rsquo;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
 be polled and loaded in an ETL fashion. However, in order to build a compelling
@@ -152,7 +152,7 @@ public void updateTimeStamps() {
 ```</p>
 
 <p>The entity classes for the suppliers-parts domain model are in a simple java
-project, packaged up using maven2. See - <a href="">link...</a></p>
+project, packaged up using maven2. See &ndash; <a href="">link&hellip;</a></p>
 
 <p>Build and install the packages use maven</p>
 
@@ -167,10 +167,10 @@ continually updated by existing systems. And for the purposes of a demo, it
 would be interesting to model this situation. In the following steps, we will
 create a simple web-based CRUD application that allows you to create and update
 records. We need something that will get us a working system with the bare
-minimum of effort, so we're using SpringSource Grails to build a simple webapp
+minimum of effort, so we&rsquo;re using SpringSource Grails to build a simple webapp
 infront of our JPA database.</p>
 
-<p>For the database we'll used a file-based H2 database, although in reality you
+<p>For the database we&rsquo;ll used a file-based H2 database, although in reality you
 would probably be using a production-strength database.</p>
 
 <h3>Create the application</h3>
@@ -181,7 +181,7 @@ would probably be using a production-strength database.</p>
 </code></pre>
 
 <p>Next, we need to bring our JPA classes into the project. The JPA classes are
-a maven project, so as long as we've installed them into our local maven repo (
+a maven project, so as long as we&rsquo;ve installed them into our local maven repo (
 by running  in the suppliers-parts-domain project),
 we can pull these in via a dependency:</p>
 
@@ -217,8 +217,8 @@ to work with.</p>
 
 <p>``` xml grails-app/conf/hibernate/hibernate.cfg.xml
 &lt;!DOCTYPE hibernate-configuration SYSTEM
-  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-<hibernate-configuration></p>
+  &ldquo;<a href="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd</a>&rdquo;>
+&lt;hibernate-configuration></p>
 
 <pre><code>&lt;session-factory&gt;
     &lt;mapping package="com.kasabi.demo.suppliersparts.domain" /&gt;
@@ -235,7 +235,7 @@ to work with.</p>
 &lt;/session-factory&gt;
 </code></pre>
 
-<p></hibernate-configuration>
+<p>&lt;/hibernate-configuration>
 ```</p>
 
 <p>Grails will generate scaffolding views and controllers for each entity class.
@@ -244,26 +244,26 @@ This is achieved using:</p>
 <pre><code>grails generate-all &lt;CLASS_NAME&gt;
 </code></pre>
 
-<p>You'll now have all ui pages and web controllers for each entity. There seems
-to be a bug with handling the audit and id fields (which aren't needed in the
+<p>You&rsquo;ll now have all ui pages and web controllers for each entity. There seems
+to be a bug with handling the audit and id fields (which aren&rsquo;t needed in the
 web forms) so the following script (regenerateScaffolding.sh) has some manual
-'sed' commands to remove these extra fields.</p>
+&lsquo;sed&rsquo; commands to remove these extra fields.</p>
 
 <p>```bash generate-all.bash</p>
 
 <h1>!/bin/bash</h1>
 
-<p>echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Part
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Address
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Country
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Customer
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.CustomerOrder
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Supplier
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.OrderItem
-echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Title</p>
+<p>echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Part
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Address
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Country
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Customer
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.CustomerOrder
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Supplier
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.OrderItem
+echo &ldquo;a&rdquo; | grails generate-all com.kasabi.demo.suppliersparts.domain.Title</p>
 
 <p>for i in <code>find . -name _form.gsp</code>
-  do sed -i -e "/field: 'id', 'error')}/,+6d" $i</p>
+  do sed -i -e &ldquo;/field: &lsquo;id&rsquo;, &lsquo;error&rsquo;)}/,+6d&rdquo; $i</p>
 
 <pre><code> sed -i -e "/field: 'dateTimeModified', 'error')}/,+6d" $i
  sed -i -e "/field: 'dateTimeCreated', 'error')}/,+6d" $i
@@ -273,7 +273,7 @@ echo "a" | grails generate-all com.kasabi.demo.suppliersparts.domain.Title</p>
 ```</p>
 
 <p>Finally, we need to configure Grails to process the audit fields. To do this, we
-need to add a Hibernate event listener and register it. For those interested...
+need to add a Hibernate event listener and register it. For those interested&hellip;
 the code is [here].</p>
 
 <h3>Run the application</h3>

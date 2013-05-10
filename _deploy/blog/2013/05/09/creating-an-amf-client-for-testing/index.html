@@ -23,10 +23,11 @@ was posted on 30/04/2013. A few months back I had to debug an Adobe &hellip;">
   <link rel="canonical" href="http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Charles' Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -100,6 +101,8 @@ was posted on 30/04/2013. A few months back I had to debug an Adobe &hellip;">
 
 <time datetime="2013-05-09T12:31:00+01:00" pubdate data-updated="true">May 9<span>th</span>, 2013</time>
         
+         | <a href="#disqus_thread">Comments</a>
+        
       </p>
     
   </header>
@@ -110,14 +113,14 @@ blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-clie
 was posted on 30/04/2013.</p>
 
 
-<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&#8217;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&#8217;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
+<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&rsquo;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&rsquo;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
 
-<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&#8217;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&#8217;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &#8216;see&#8217; the data that was flowing between the two applications.</p>
+<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&rsquo;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&rsquo;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &lsquo;see&rsquo; the data that was flowing between the two applications.</p>
 
 <!-- more -->
 
 
-<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&#8217;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&#8217;s really difficult to &#8216;see&#8217; what data is being transferred.</p>
+<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&rsquo;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&rsquo;s really difficult to &lsquo;see&rsquo; what data is being transferred.</p>
 
 <h2>Building a client</h2>
 
@@ -179,7 +182,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&#8217;s email address. To invoke this service, I did the following:</p>
+<p>Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&rsquo;s email address. To invoke this service, I did the following:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -188,7 +191,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This all looked good. However, I wasn&#8217;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&#8217;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
+<p>This all looked good. However, I wasn&rsquo;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&rsquo;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -211,7 +214,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&#8217;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
+<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&rsquo;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
 
 <h2>Using HashMap-backed Data Transfer Objects</h2>
 
@@ -245,7 +248,7 @@ was posted on 30/04/2013.</p>
 
 <h2>Summary</h2>
 
-<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&#8217;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
+<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&rsquo;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
 
 <p>And the bug? Well, it was data related, and it did get fixed.</p>
 </div>
@@ -304,6 +307,12 @@ was posted on 30/04/2013.</p>
   </footer>
 </article>
 
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
 </div>
 
 <aside class="sidebar">
@@ -313,15 +322,15 @@ was posted on 30/04/2013.</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a simple AMF client for testing</a>
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating log entries using Log4J and the Mapped Diagnostic Context</a>
+        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating Log Entries Using Log4J and the Mapped Diagnostic Context</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing with Java Timestamps</a>
+        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing With Java Timestamps</a>
       </li>
     
       <li class="post">
@@ -344,7 +353,7 @@ was posted on 30/04/2013.</p>
   <a href="https://github.com/ccare">@ccare</a> on GitHub
   
   <script type="text/javascript">
-    $.domReady(function(){
+    $(document).ready(function(){
         if (!window.jXHR){
             var jxhr = document.createElement('script');
             jxhr.type = 'text/javascript';
@@ -399,13 +408,29 @@ was posted on 30/04/2013.</p>
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'ccare';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing/';
+        var disqus_url = 'http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
 
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
+  js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>

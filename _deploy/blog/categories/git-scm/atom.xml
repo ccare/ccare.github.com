@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git-scm | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/git-scm/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm/"/>
     <updated>2011-06-23T09:52:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm</id>
-    <content type="html"><![CDATA[<p>I'm bound to forget this little cryptic command to delete branch foo.</p>
+    <content type="html"><![CDATA[<p>I&rsquo;m bound to forget this little cryptic command to delete branch foo.</p>
 
 <pre><code>git push origin :refs/tags/foo
 </code></pre>

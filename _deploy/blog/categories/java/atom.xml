@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
-<p>http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</p>
+<p><a href="http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html">http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</a></p>
 ]]></content>
   </entry>
   
@@ -32,15 +32,15 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
     <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
     <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
 
-<p>I didn't want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I'd forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
+<p>I didn&rsquo;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&rsquo;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
 
 <p>```bash</p>
 
-<h1>Create a raw 'disk' around 1 GB in size</h1>
+<h1>Create a raw &lsquo;disk&rsquo; around 1 GB in size</h1>
 
 <p>dd if=/dev/zero of=disk.raw bs=1k count=1000000</p>
 
-<h1>Format it - I went for ~900MB which suited my tests</h1>
+<h1>Format it &ndash; I went for ~900MB which suited my tests</h1>
 
 <p>mkfs -t ext2 disk1.raw  900000</p>
 

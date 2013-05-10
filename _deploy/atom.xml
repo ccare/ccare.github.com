@@ -4,7 +4,7 @@
   <title><![CDATA[Charles' Blog]]></title>
   <link href="http://blog.ccare.me/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -23,14 +23,14 @@ blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-clie
 was posted on 30/04/2013.</p>
 
 
-<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&#8217;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&#8217;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
+<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&rsquo;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&rsquo;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
 
-<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&#8217;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&#8217;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &#8216;see&#8217; the data that was flowing between the two applications.</p>
+<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&rsquo;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&rsquo;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &lsquo;see&rsquo; the data that was flowing between the two applications.</p>
 
 <!-- more -->
 
 
-<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&#8217;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&#8217;s really difficult to &#8216;see&#8217; what data is being transferred.</p>
+<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&rsquo;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&rsquo;s really difficult to &lsquo;see&rsquo; what data is being transferred.</p>
 
 <h2>Building a client</h2>
 
@@ -92,7 +92,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&#8217;s email address. To invoke this service, I did the following:</p>
+<p>Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&rsquo;s email address. To invoke this service, I did the following:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -101,7 +101,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This all looked good. However, I wasn&#8217;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&#8217;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
+<p>This all looked good. However, I wasn&rsquo;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&rsquo;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -124,7 +124,7 @@ was posted on 30/04/2013.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&#8217;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
+<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&rsquo;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
 
 <h2>Using HashMap-backed Data Transfer Objects</h2>
 
@@ -158,7 +158,7 @@ was posted on 30/04/2013.</p>
 
 <h2>Summary</h2>
 
-<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&#8217;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
+<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&rsquo;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
 
 <p>And the bug? Well, it was data related, and it did get fixed.</p>
 ]]></content>
@@ -176,7 +176,7 @@ was posted on 20/12/2012.</p>
 
 <p>Over the last couple of years, it has become increasingly common for web applications to be built using client-side frameworks that interact with a remote server via asynchronous requests. Unlike a traditional app, that makes a single request per page, a modern web application will probably make many asynchronous HTTP requests. This poses a challenge when analysing server logs, since it can be difficult to identify which requests belong to the same client.</p>
 
-<p>In this blog post I&#8217;ll describe a simple technique we&#8217;ve applied to retro-fit a client-aware correlation token to the server logs of an existing web application.</p>
+<p>In this blog post I&rsquo;ll describe a simple technique we&rsquo;ve applied to retro-fit a client-aware correlation token to the server logs of an existing web application.</p>
 
 <!-- more -->
 
@@ -185,7 +185,7 @@ was posted on 20/12/2012.</p>
 
 <p>Our web application communicates with a Java application server over HTTP. The majority of client-side code is written in Java, using Google Web Toolkit (GWT), which is then compiled into JavaScript. The application server exposes both RESTful and GWT-RPC-based web services.</p>
 
-<p>For traditional webpages that follow a simple request-response pattern, log analysis is very straightforward. In a standard J2EE implementation, each request is served by a separate web server thread allocated from a pool. Once a request has been fully completed, that thread is returned to the pool so that it can process future requests. A convenient result of this &#8216;one-thread-per-request&#8217; model is that log lines can be correlated using the thread&#8217;s id. So a single request, handled by a thread named &#8220;http-8080-3&#8221;, might produce the following lines of output (I&#8217;ve shortened all timestamps in the log-line snippets):</p>
+<p>For traditional webpages that follow a simple request-response pattern, log analysis is very straightforward. In a standard J2EE implementation, each request is served by a separate web server thread allocated from a pool. Once a request has been fully completed, that thread is returned to the pool so that it can process future requests. A convenient result of this &lsquo;one-thread-per-request&rsquo; model is that log lines can be correlated using the thread&rsquo;s id. So a single request, handled by a thread named &ldquo;http-8080-3&rdquo;, might produce the following lines of output (I&rsquo;ve shortened all timestamps in the log-line snippets):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -195,7 +195,7 @@ was posted on 20/12/2012.</p>
 </span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
 
 
-<p>When the server is busy, these log lines will inevitably become interleaved, but they&#8217;re easy to unravel by looking at the thread id. Here we can see that there are two threads (http-8080-3 and http-8080-6) processing concurrent requests to the same service.</p>
+<p>When the server is busy, these log lines will inevitably become interleaved, but they&rsquo;re easy to unravel by looking at the thread id. Here we can see that there are two threads (http-8080-3 and http-8080-6) processing concurrent requests to the same service.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -211,7 +211,7 @@ was posted on 20/12/2012.</p>
 </span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Thread-based correlation is a useful technique for identifying all log entries for a <strong>single</strong> request. However, in this example we don&#8217;t know whether these requests came from the same web client or from different clients. In order to get more value from our application logs, we really need to correlate all requests from a single client.</p>
+<p>Thread-based correlation is a useful technique for identifying all log entries for a <strong>single</strong> request. However, in this example we don&rsquo;t know whether these requests came from the same web client or from different clients. In order to get more value from our application logs, we really need to correlate all requests from a single client.</p>
 
 <p>Consider the following scenario: we have two customers connecting to our site, and when they load the home page, each of their browsers will make two web service requests, one to <strong>Service1</strong> and another to <strong>Service2</strong>. If both clients load at the same time, we may get an interleaving like this.</p>
 
@@ -241,11 +241,11 @@ was posted on 20/12/2012.</p>
 </span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s clear from these logs that there were two calls to each of our services, but it&#8217;s not easy to identify which ones belong to the same customer. Was our first customer using threads http-8080-3 and http-8080-2, or do the requests relating to threads http-8080-3 and http-8080-1 go together?</p>
+<p>It&rsquo;s clear from these logs that there were two calls to each of our services, but it&rsquo;s not easy to identify which ones belong to the same customer. Was our first customer using threads http-8080-3 and http-8080-2, or do the requests relating to threads http-8080-3 and http-8080-1 go together?</p>
 
-<p>One way to distinguish between them might be to print the client IP address, although that would rely on our load balancer passing through the source IP (and wouldn&#8217;t provide enough granularity if multiple sessions were coming from the same source). In any case, if both clients were behind a firewall we might see them as originating from the same address. Another approach might be to make use of server-side sessions to correlate requests. However, this wouldn&#8217;t distinguish between separate page loads, perhaps initiated in multiple browser tabs. We would also prefer to avoid maintaining server-side state.</p>
+<p>One way to distinguish between them might be to print the client IP address, although that would rely on our load balancer passing through the source IP (and wouldn&rsquo;t provide enough granularity if multiple sessions were coming from the same source). In any case, if both clients were behind a firewall we might see them as originating from the same address. Another approach might be to make use of server-side sessions to correlate requests. However, this wouldn&rsquo;t distinguish between separate page loads, perhaps initiated in multiple browser tabs. We would also prefer to avoid maintaining server-side state.</p>
 
-<p>We finally settled on a solution based on generating a (reasonably) unique identifier for each application session client-side. This identifier can be passed as an HTTP header with each request and ultimately appended to each log line. In order to add the identifier to each log-line we used Log4J&#8217;s Mapped Diagnostic Context (MDC), which provides a simple key/value mechanism to capture small amounts of custom diagnostic data. Since it&#8217;s built into the logging framework, it&#8217;s really easy to add values from the MDC to each log line. For instance, here we have the same log fragment, but with an additional identifier field (here: &#8216;ae0021f&#8217; and &#8216;f3wev1x&#8217;) to distinguish between the different clients:</p>
+<p>We finally settled on a solution based on generating a (reasonably) unique identifier for each application session client-side. This identifier can be passed as an HTTP header with each request and ultimately appended to each log line. In order to add the identifier to each log-line we used Log4J&rsquo;s Mapped Diagnostic Context (MDC), which provides a simple key/value mechanism to capture small amounts of custom diagnostic data. Since it&rsquo;s built into the logging framework, it&rsquo;s really easy to add values from the MDC to each log line. For instance, here we have the same log fragment, but with an additional identifier field (here: &lsquo;ae0021f&rsquo; and &lsquo;f3wev1x&rsquo;) to distinguish between the different clients:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -275,9 +275,9 @@ was posted on 20/12/2012.</p>
 
 <h2>The implementation</h2>
 
-<p>The implementation doesn&#8217;t intrude into the business logic of our application and involves 3 simple steps:</p>
+<p>The implementation doesn&rsquo;t intrude into the business logic of our application and involves 3 simple steps:</p>
 
-<p>Firstly, when the application starts, we generate an identifier client-side, and add it to all subsequent HTTP requests. As I mentioned earlier, our application is built using GWT and interacts with the server using both GWT-RPC and ordinary AJAX calls to JSON APIs. Adding the HTTP header to our GWT RPC calls is a simple one-liner if you&#8217;re using com.google.gwt.http.client.RequestBuilder:</p>
+<p>Firstly, when the application starts, we generate an identifier client-side, and add it to all subsequent HTTP requests. As I mentioned earlier, our application is built using GWT and interacts with the server using both GWT-RPC and ordinary AJAX calls to JSON APIs. Adding the HTTP header to our GWT RPC calls is a simple one-liner if you&rsquo;re using com.google.gwt.http.client.RequestBuilder:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">requestBuilder</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">,</span> <span class="n">globalClientId</span><span class="o">);</span>
@@ -305,7 +305,7 @@ was posted on 20/12/2012.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Secondly, the next step is to capture the identifier from each request. In order to not interfere with our existing business logic, we implemented a ServletFilter that captures the custom header and stores it in the Log4J MDC with the key &#8216;CLIENT_ID&#8217;.</p>
+<p>Secondly, the next step is to capture the identifier from each request. In order to not interfere with our existing business logic, we implemented a ServletFilter that captures the custom header and stores it in the Log4J MDC with the key &lsquo;CLIENT_ID&rsquo;.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -383,7 +383,7 @@ was posted on 20/12/2012.</p>
 
 <h2>Correlating acceptance tests</h2>
 
-<p>Although we originally added the correlation to help with the diagnosis of live logs, we&#8217;ve also found it really useful when investigating acceptance test failures. At Black Pepper our continuous integration server runs large numbers of automated UI tests. For this project we use Selenium&#8217;s WebDriver, and follow the fairly standard pattern of launching our application once for the entire test run. As a result, we have a single application log for the entire acceptance suite, so if a single test fails it can be difficult to find the log entries relating to the failure. Since we launch a new client for each test, the correlation token helps, as long as we can identify which token belonged to each test. We can make a further improvement by using the actual test name as the correlation token. We modified our application so that the client identifier could be overridden with a browser cookie, and added a JUnit @Rule to store the name of the current test in the cookie:</p>
+<p>Although we originally added the correlation to help with the diagnosis of live logs, we&rsquo;ve also found it really useful when investigating acceptance test failures. At Black Pepper our continuous integration server runs large numbers of automated UI tests. For this project we use Selenium&rsquo;s WebDriver, and follow the fairly standard pattern of launching our application once for the entire test run. As a result, we have a single application log for the entire acceptance suite, so if a single test fails it can be difficult to find the log entries relating to the failure. Since we launch a new client for each test, the correlation token helps, as long as we can identify which token belonged to each test. We can make a further improvement by using the actual test name as the correlation token. We modified our application so that the client identifier could be overridden with a browser cookie, and added a JUnit @Rule to store the name of the current test in the cookie:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -449,13 +449,13 @@ was posted on 20/12/2012.</p>
 
 <p>Making a simple change to our application to submit a client identifier in an HTTP header has helped us correlate our server-side logs. The facilities in the Log4J Mapped Diagnostic Context made this really easy to implement. Furthermore, using a cookie-based override allowed us to make our acceptance test logs more readable.</p>
 
-<p>MDC is a really handy feature of Log4J, and there are alternatives in other logging frameworks. The SLF4J facade library, for instance, provides an interface to the MDC when a suitably featured logging library is used (at the time of writing, these were just LogBack and Log4J). For libraries that don&#8217;t support this feature SLF4J provides a BasicMDCAdapter class which provides a basic implementation using ThreadLocal storage. Developers using .Net will find an MDC implementation in the NLog and log4net libraries.</p>
+<p>MDC is a really handy feature of Log4J, and there are alternatives in other logging frameworks. The SLF4J facade library, for instance, provides an interface to the MDC when a suitably featured logging library is used (at the time of writing, these were just LogBack and Log4J). For libraries that don&rsquo;t support this feature SLF4J provides a BasicMDCAdapter class which provides a basic implementation using ThreadLocal storage. Developers using .Net will find an MDC implementation in the NLog and log4net libraries.</p>
 
 <h2>Links</h2>
 
-<p>MDC documentation: <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html">http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html</a></p>
+<p>MDC documentation: <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html"><a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html">http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html</a></a></p>
 
-<p>SLF4J&#8217;s implementation: <a href="http://www.slf4j.org/manual.html#mdc">http://www.slf4j.org/manual.html#mdc</a></p>
+<p>SLF4J&rsquo;s implementation: <a href="http://www.slf4j.org/manual.html#mdc"><a href="http://www.slf4j.org/manual.html#mdc">http://www.slf4j.org/manual.html#mdc</a></a></p>
 ]]></content>
   </entry>
   
@@ -464,7 +464,7 @@ was posted on 20/12/2012.</p>
     <link href="http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha/"/>
     <updated>2012-10-19T12:31:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha</id>
-    <content type="html"><![CDATA[<p>The shortcomings of Java&#8217;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&#8217;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
+    <content type="html"><![CDATA[<p>The shortcomings of Java&rsquo;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&rsquo;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
 
 <!-- more -->
 
@@ -494,7 +494,7 @@ was posted on 20/12/2012.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This is a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Timestamp.html#equals(java.lang.Object)">documented &#8216;feature&#8217;</a> and is there for backward compatibility reasons. However, if you don&#8217;t know you have an instance of java.util.Timestamp then this can be an interesting gotcha. I encountered this issue on a project where some client-side code used java.util.Date, but a deserialisation library had automagically created an instance of a Timestamp.</p>
+<p>This is a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Timestamp.html#equals(java.lang.Object)">documented &lsquo;feature&rsquo;</a> and is there for backward compatibility reasons. However, if you don&rsquo;t know you have an instance of java.util.Timestamp then this can be an interesting gotcha. I encountered this issue on a project where some client-side code used java.util.Date, but a deserialisation library had automagically created an instance of a Timestamp.</p>
 ]]></content>
   </entry>
   
@@ -503,7 +503,7 @@ was posted on 20/12/2012.</p>
     <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
     <updated>2012-05-16T09:31:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
-    <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&#8217;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
+    <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&rsquo;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
 ]]></content>
@@ -519,10 +519,10 @@ was posted on 20/12/2012.</p>
 <p>This my first post using <a href="http://octopress.org">Octopress</a>. Today I setup
 <a href="http://blog.ccare.me">this blog</a> which is currently hosted on
 <a href="http://pages.github.com/">github pages</a>.
-Since I tend to write most of my fragmented thoughts when offline, I&#8217;m
-hoping that having the content in a git repo (that&#8217;s editable offline) will be a
-great help. I also like the fact that I&#8217;ll be able to be more in control of my
-content (when compared to the hosted accounts I&#8217;ve used before).</p>
+Since I tend to write most of my fragmented thoughts when offline, I&rsquo;m
+hoping that having the content in a git repo (that&rsquo;s editable offline) will be a
+great help. I also like the fact that I&rsquo;ll be able to be more in control of my
+content (when compared to the hosted accounts I&rsquo;ve used before).</p>
 
 <p>So, fingers-crossed, and here we go! I plan to migrate older posts from other
 sources to here during the next few weeks)</p>
@@ -534,7 +534,7 @@ sources to here during the next few weeks)</p>
     <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
-    <content type="html"><![CDATA[<p>Over the last few weeks, I&#8217;ve been wanting to write a demo for
+    <content type="html"><![CDATA[<p>Over the last few weeks, I&rsquo;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
 be polled and loaded in an ETL fashion. However, in order to build a compelling
@@ -716,7 +716,7 @@ modified.</p>
 
 
 <p>The entity classes for the suppliers-parts domain model are in a simple java
-project, packaged up using maven2. See - <a href="">link&#8230;</a></p>
+project, packaged up using maven2. See &ndash; <a href="">link&hellip;</a></p>
 
 <p>Build and install the packages use maven</p>
 
@@ -731,10 +731,10 @@ continually updated by existing systems. And for the purposes of a demo, it
 would be interesting to model this situation. In the following steps, we will
 create a simple web-based CRUD application that allows you to create and update
 records. We need something that will get us a working system with the bare
-minimum of effort, so we&#8217;re using SpringSource Grails to build a simple webapp
+minimum of effort, so we&rsquo;re using SpringSource Grails to build a simple webapp
 infront of our JPA database.</p>
 
-<p>For the database we&#8217;ll used a file-based H2 database, although in reality you
+<p>For the database we&rsquo;ll used a file-based H2 database, although in reality you
 would probably be using a production-strength database.</p>
 
 <h3>Create the application</h3>
@@ -745,7 +745,7 @@ would probably be using a production-strength database.</p>
 </code></pre>
 
 <p>Next, we need to bring our JPA classes into the project. The JPA classes are
-a maven project, so as long as we&#8217;ve installed them into our local maven repo (
+a maven project, so as long as we&rsquo;ve installed them into our local maven repo (
 by running  in the suppliers-parts-domain project),
 we can pull these in via a dependency:</p>
 
@@ -825,10 +825,10 @@ This is achieved using:</p>
 <pre><code>grails generate-all &lt;CLASS_NAME&gt;
 </code></pre>
 
-<p>You&#8217;ll now have all ui pages and web controllers for each entity. There seems
-to be a bug with handling the audit and id fields (which aren&#8217;t needed in the
+<p>You&rsquo;ll now have all ui pages and web controllers for each entity. There seems
+to be a bug with handling the audit and id fields (which aren&rsquo;t needed in the
 web forms) so the following script (regenerateScaffolding.sh) has some manual
-&#8216;sed&#8217; commands to remove these extra fields.</p>
+&lsquo;sed&rsquo; commands to remove these extra fields.</p>
 
 <figure class='code'><figcaption><span>generate-all.bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -866,7 +866,7 @@ web forms) so the following script (regenerateScaffolding.sh) has some manual
 
 
 <p>Finally, we need to configure Grails to process the audit fields. To do this, we
-need to add a Hibernate event listener and register it. For those interested&#8230;
+need to add a Hibernate event listener and register it. For those interested&hellip;
 the code is [here].</p>
 
 <h3>Run the application</h3>
@@ -885,16 +885,16 @@ with the command:</p>
     <updated>2012-03-23T16:41:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
-the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&#8217;d
-been meaning to read it for a while - ever since I first heard Gene Kim speak at
+the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&rsquo;d
+been meaning to read it for a while &ndash; ever since I first heard Gene Kim speak at
 a conference last year.</p>
 
-<p>All in all it&#8217;s an interesting read. I didn&#8217;t find the book particularly
+<p>All in all it&rsquo;s an interesting read. I didn&rsquo;t find the book particularly
 controversial. But, then again, it is nearly 7 years since the book was first
 published. I think few people would disagree that many of the practices are
-now part of the &#8216;received wisdom&#8217; of operations. I also found it useful to get
+now part of the &lsquo;received wisdom&rsquo; of operations. I also found it useful to get
 a reminder of the ITIL jargon. Using the correct terms for this sort of thing
-is something I&#8217;m a bit weak on, but as the authors say in the book, having a
+is something I&rsquo;m a bit weak on, but as the authors say in the book, having a
 common language is vital.</p>
 
 <!-- more -->
@@ -908,13 +908,13 @@ change-reviews are, in-themselves, a bad thing.</p>
 
 <p>The other week I gave a <a href="http://www.slideshare.net/cpcare/warwick-2012">lecture</a>
 to <a href="http://www2.warwick.ac.uk/fac/sci/dcs/teaching/material/cs321/">students at Warwick</a>
-about what it&#8217;s like to
+about what it&rsquo;s like to
 be a software developer at Kasabi. I had lots of things to talk about:
 our product, our team, our culture, etc. However I wanted to share something
 about our working practices. The practices we use have certainly evolved over
 time, inspired from various methodologies and communities including: Scrum,
-Kanban, and dev-ops. However, if I had to choose one thing that I couldn&#8217;t do
-without, I think it would be having a code-review process that&#8217;s tightly
+Kanban, and dev-ops. However, if I had to choose one thing that I couldn&rsquo;t do
+without, I think it would be having a code-review process that&rsquo;s tightly
 coupled to the build/release process.</p>
 
 <p>Nearly a year ago, our team moved to
@@ -922,22 +922,22 @@ using <a href="http://code.google.com/p/gerrit/">Gerrit</a> as our principle rev
 tool. The way it integrates with version control and continuous integration is
 fantastic. We were already following a continuous deployment model, but I feel
 that following the Gerrit workflow has helped us get closer to doing truly
-automated deployments. We&#8217;re also a distributed team, so spending extra-time
+automated deployments. We&rsquo;re also a distributed team, so spending extra-time
 on code-reviews can make up for less time spent pair-programming.</p>
 
-<p>So lets return to Visible Ops&#8230; for me, one of the biggest take-aways from
+<p>So lets return to Visible Ops&hellip; for me, one of the biggest take-aways from
 reading the book was the idea that the acceptable number of unauthorised
 changes should be zero. Two points follow directly from this: 1) that
 code-review / change-review should be a straightforward and fast process (so
-that it&#8217;s not routinely circumvented), and 2) that even emergency changes
+that it&rsquo;s not routinely circumvented), and 2) that even emergency changes
 should go through some kind of review process. In fact, the authors of Visible
 Ops make the valid point that emergency changes often benefit from closer
-review. For me, the simplicity of using a review-tool (like Gerrit) that&#8217;s
+review. For me, the simplicity of using a review-tool (like Gerrit) that&rsquo;s
 built into the release process facilitates both of these goals. There have
-been times when I&#8217;ve needed to push an emergency fix. But because the tooling
-is relatively quick and simple to use, more and more I&#8217;m finding that I prefer
-to take these changes down the normal review path. Even though we&#8217;re not doing
-heavy-weight audits, from an ITIL perspective, it&#8217;s re-assuring to know that
+been times when I&rsquo;ve needed to push an emergency fix. But because the tooling
+is relatively quick and simple to use, more and more I&rsquo;m finding that I prefer
+to take these changes down the normal review path. Even though we&rsquo;re not doing
+heavy-weight audits, from an ITIL perspective, it&rsquo;s re-assuring to know that
 these changes are going through a robust, well-understood, and auditable
 process.</p>
 ]]></content>
@@ -948,12 +948,12 @@ process.</p>
     <link href="http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi/"/>
     <updated>2012-03-20T18:04:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi</id>
-    <content type="html"><![CDATA[<p>Over the last couple of days I&#8217;ve been trying to pull together a demo of
-integrating an existing JPA application with Kasabi. It&#8217;s been a fun journey
+    <content type="html"><![CDATA[<p>Over the last couple of days I&rsquo;ve been trying to pull together a demo of
+integrating an existing JPA application with Kasabi. It&rsquo;s been a fun journey
 learning (and relearning) the JPA spec, and also working with some of the
-internals of the Hibernate framework. It&#8217;s interesting that when a framework
-becomes really ubiquitous - like Hibernate, in this case - it&#8217;s really easy to
-find online docs and howtos about how to use it, but it&#8217;s far harder to sift
+internals of the Hibernate framework. It&rsquo;s interesting that when a framework
+becomes really ubiquitous &ndash; like Hibernate, in this case &ndash; it&rsquo;s really easy to
+find online docs and howtos about how to use it, but it&rsquo;s far harder to sift
 through all that noise to find docs that help you extend it.</p>
 
 <p>In the end, I did get it working: I re-used the annotation scanning plumbing
@@ -961,12 +961,12 @@ that Hibernate provides to get access to the JPA configuration, then I walked
 the object graph marshalling entities as RDF (I used NTriples) before submitting
 them to a Kasabi dataset.</p>
 
-<p>Of course, to complete the demo, I needed an actual JPA application, so I&#8217;ve had
+<p>Of course, to complete the demo, I needed an actual JPA application, so I&rsquo;ve had
 some fun re-learning Spring Roo and Grails in order to build a quick
 database-backed webapp. Normally I dislike scaffolding-based frameworks, but
-they&#8217;re certainly useful for creating a quick functional app.</p>
+they&rsquo;re certainly useful for creating a quick functional app.</p>
 
-<p>I&#8217;ll submit a link to the code at some point soon.</p>
+<p>I&rsquo;ll submit a link to the code at some point soon.</p>
 ]]></content>
   </entry>
   
@@ -975,15 +975,15 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
     <link href="http://blog.ccare.me/blog/2012/03/12/ways-of-thinking/"/>
     <updated>2012-03-12T17:23:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/12/ways-of-thinking</id>
-    <content type="html"><![CDATA[<p>It&#8217;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &#8216;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&#8217;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&#8217;s taken a while to find it&#8217;s way into print, but I think it&#8217;s an interesting collection of different perspectives on modelling.</p>
+    <content type="html"><![CDATA[<p>It&rsquo;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &lsquo;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&rsquo;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&rsquo;s taken a while to find it&rsquo;s way into print, but I think it&rsquo;s an interesting collection of different perspectives on modelling.</p>
 
 <p><img class="right" src="http://blog.ccare.me/images/cc/cover.jpg" title="Cover image" ></p>
 
 <p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
 
-<p>[1] http://www.springer.com/engineering/robotics/book/978-3-642-25208-2</p>
+<p>[1] <a href="http://www.springer.com/engineering/robotics/book/978-3-642-25208-2">http://www.springer.com/engineering/robotics/book/978-3-642-25208-2</a></p>
 
-<p>[2] http://www.springerlink.com/content/r071882m26486028/</p>
+<p>[2] <a href="http://www.springerlink.com/content/r071882m26486028/">http://www.springerlink.com/content/r071882m26486028/</a></p>
 ]]></content>
   </entry>
   
@@ -992,42 +992,42 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
     <link href="http://blog.ccare.me/blog/2012/03/07/stub-http-server/"/>
     <updated>2012-03-07T20:25:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2012/03/07/stub-http-server</id>
-    <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we&#8217;ve been building our RDF platform
+    <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we&rsquo;ve been building our RDF platform
 following a distributed SOA
 architecture. Most of our integrations are through RESTful HTTP APIs, and in our
 Java projects we tend to use Apache HttpClient to consume them.</p>
 
 <p>As a result, when writing tests I find myself having to frequently stub-out a
 remote service. Sometimes we do the usual thing and create mocks. This is fairly
-easy, but does involve quite a lot of plumbing - you need a mock HttpClient, then
-a mock GetRequest, then a mock entity, and so on&#8230; it can certainly create
+easy, but does involve quite a lot of plumbing &ndash; you need a mock HttpClient, then
+a mock GetRequest, then a mock entity, and so on&hellip; it can certainly create
 quite a lot of boilerplate.</p>
 
 <!-- more -->
 
 
 <p>I think this sort of test works much better with a <em>real</em> HttpClient, making
-real HTTP calls. We&#8217;ve been using this pattern quite a lot, and found that the
+real HTTP calls. We&rsquo;ve been using this pattern quite a lot, and found that the
 JettyRule class from the junit-rules project is a great way of embedding an
 HTTP server into a unit test. Choosing a random free port for this server helps
 make the test more robust and independent.</p>
 
-<p>However, I found myself writing more and more &#8216;mock-like&#8217; assertion code into my
+<p>However, I found myself writing more and more &lsquo;mock-like&rsquo; assertion code into my
 handlers. Implementing the happy path was easy, but if I, for example, wanted to
 test fail-and-retry logic, I needed to make a number of requests fail, then one
 succeed, and assert no other spurious requests were made. Traditionally this is
-the perfect use-case for a mock - but I wanted to make these kind of assertions,
+the perfect use-case for a mock &ndash; but I wanted to make these kind of assertions,
 and, at the same time, exercise a real HttpClient.</p>
 
 <p>To help, I wrote <a href="http://github.com/ccare/stub-http">stub-http</a>, a really simple stub HTTP Server that is
 embeddable in a unit test and supports the recording and playback of a sequence
 of Requests and Responses. I based the code on the interface of EasyMock, and
-like EasyMock, the stub can be run in either &#8216;strict&#8217;, &#8216;regular&#8217;, or &#8216;nice&#8217;
+like EasyMock, the stub can be run in either &lsquo;strict&rsquo;, &lsquo;regular&rsquo;, or &lsquo;nice&rsquo;
 mode. When running in strict mode, unexpected requests result in an assertion
 failure, whereas in nice mode, they return an HTTP 404 code. Switching between
-&#8216;regular&#8217; and &#8216;strict&#8217; reflects whether ordering of requests matters.</p>
+&lsquo;regular&rsquo; and &lsquo;strict&rsquo; reflects whether ordering of requests matters.</p>
 
-<p>Here&#8217;s an example test:</p>
+<p>Here&rsquo;s an example test:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1135,13 +1135,13 @@ one-day conference/hack-afternoon hosted by SkillsMatter.</p>
 <p>The day was a good event, there were quite a few people around in the morning and I had some
 particularly interesting conversations with people responsible for messaging software in hedge funds
 and banks. The basic structure of the day was talks in the morning which was then
-followed by a self-organised &#8216;hack-afternoon&#8217;. The morning was excellent and had a large number of
+followed by a self-organised &lsquo;hack-afternoon&rsquo;. The morning was excellent and had a large number of
 attendees. The afternoon was also good fun, but things did tail off as people started disappearing.</p>
 
 <!-- more -->
 
 
-<p>The morning started off with Martin Sústrik discussing his vision for &#8216;the future of messaging&#8217;.
+<p>The morning started off with Martin Sústrik discussing his vision for &lsquo;the future of messaging&rsquo;.
 Martin is the founder of zeromq, but he was talking more about his higher-level goals to simplify
 messaging by pushing handling of basic messaging patterns into infrastructure. Basically, he was
 arguing for messaging APIs to be provided as layer-6 (presentation-layer) protocol. The basic points
@@ -1156,12 +1156,12 @@ demonstrated by his work on zeromq)</li>
 <li>A major challenge of providing this kind of infrastructure is that multiple patterns would need
 to be supported (he mentioned push-pull, pub-sub, request-response), the difficulty being that
 the logical topology changes with each pattern</li>
-<li>He mentioned there would be even more challenges with security etc but didn&#8217;t discuss them.</li>
-<li>His current plans are to form a proposal for a new protocol - currently named Scalability
-Protocol - and as a starting point towards this, there is a mailing list
-http://groups.google.com/group/sp-discuss-group which is apparently an interesting read.</li>
+<li>He mentioned there would be even more challenges with security etc but didn&rsquo;t discuss them.</li>
+<li>His current plans are to form a proposal for a new protocol &ndash; currently named Scalability
+Protocol &ndash; and as a starting point towards this, there is a mailing list
+<a href="http://groups.google.com/group/sp-discuss-group">http://groups.google.com/group/sp-discuss-group</a> which is apparently an interesting read.</li>
 <li>In terms of practical stuff, he sees zeromq as being a step-towards this (in that it
-demonstrates the simple APIs he&#8217;d like to push for). Other practical steps forward are that
+demonstrates the simple APIs he&rsquo;d like to push for). Other practical steps forward are that
 people are thinking about adding zeromq to the linux kernel, and considering how vendors might
 tackle messaging-aware hardware.</li>
 </ul>
@@ -1174,19 +1174,19 @@ Android, and also on an Arduino prototype board. It has some nice features, incl
 requirements, and support for handling different types of retry-handling. The other nice feature was
 support for registering an action to be performed if a client disappears. There is an open source
 implementation named Mosquito which looked quite interesting. I think a lot of people were a bit
-suspicious of the &#8216;IBM sell&#8217;, but it looked like a good fit for collecting data from many sources.</p>
+suspicious of the &lsquo;IBM sell&rsquo;, but it looked like a good fit for collecting data from many sources.</p>
 
 <p>The next two talks moved into the territory of doing pub-sub between web clients and servers.</p>
 
 <p>We heard from Marek Majkowski (RabbitMq) about the difficulties of building a generic solution to
 server-browser messaging. He discussed a project that had attempted to do that, and how it had
-become really challenging to solve issues around client presence and identity. I found Marek&#8217;s talk
+become really challenging to solve issues around client presence and identity. I found Marek&rsquo;s talk
 quite interesting, as he discussed the web-socket standard and showed lots of examples of how the
 different implementations behaved differently. It really drove home how much the websocket standard
-is in it&#8217;s infancy. He also went on to discuss how to approach building a load-balanced server that
+is in it&rsquo;s infancy. He also went on to discuss how to approach building a load-balanced server that
 could handle messaging-enabled clients, and talked about other products that help make a
 non-messaging application built on a standard MVC platform (he kept mentioning Django) to become
-messaging enabled. Some of the example services he mentioned were: AppEngine&#8217;s channels API, PubNub,
+messaging enabled. Some of the example services he mentioned were: AppEngine&rsquo;s channels API, PubNub,
 and Pusher. The majority of these services are designed to support server push rather than client
 pull. And while all of these solutions offer some useful features, he concluded by arguing that they
 would never be able to provide a simple solution for two-way messaging. He saw the issues around
@@ -1202,27 +1202,27 @@ people could attach arbitrary filters to their subscriptions so they only get no
 changes. He also talked about how their infrastructure could be used to augment a chain of rss
 feeds.</p>
 
-<p>After lunch we had a series of lightning talks about various projects&#8230; the two that stood out for
+<p>After lunch we had a series of lightning talks about various projects&hellip; the two that stood out for
 me were:</p>
 
 <ul>
-<li>the use of pub-sub messaging to implement the BBC&#8217;s Radio1 homepage using XMPP.</li>
-<li>a discussion of the architecture behind datasift.com - which is a stream-based data marketplace
+<li>the use of pub-sub messaging to implement the BBC&rsquo;s Radio1 homepage using XMPP.</li>
+<li>a discussion of the architecture behind datasift.com &ndash; which is a stream-based data marketplace
 where you can subscribe (any pay) for streams of tweets and other social events containing a
 given criteria. They were using a lot of zeromq and kafka to do their processing (4000 messages
 a second, I think he said)</li>
 </ul>
 
 
-<p>All in all, the day was definitely worth attending, and although I didn&#8217;t come away with loads of new
+<p>All in all, the day was definitely worth attending, and although I didn&rsquo;t come away with loads of new
 info, I did come away with a feeling that investing in learning in more pub-sub technologies is
 a good thing to do.</p>
 
 <p>It was also good to get some validation about how people are using zeromq and comparing it to the work
-I&#8217;ve been doing at Talis.
+I&rsquo;ve been doing at Talis.
 Chatting to Lorenzo Alberton after his talk, it was interesting to hear how they approach failover
 and scaling of zeromq. It was nice to hear that we following very similar approaches to using and
-tuning it - particularly since they are getting quite impressive throughput.</p>
+tuning it &ndash; particularly since they are getting quite impressive throughput.</p>
 ]]></content>
   </entry>
   
@@ -1234,7 +1234,7 @@ tuning it - particularly since they are getting quite impressive throughput.</p>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
-<p>http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</p>
+<p><a href="http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html">http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</a></p>
 ]]></content>
   </entry>
   
@@ -1261,22 +1261,22 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
     <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
-<p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>
+<p><a href="http://velocityconf.com/velocity2011/public/schedule/detail/19970">http://velocityconf.com/velocity2011/public/schedule/detail/19970</a></p>
 
-<p>The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project&#8217;s road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.</p>
+<p>The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project&rsquo;s road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.</p>
 
 <!-- more -->
 
 
 <p>As the speakers presented it, there are two core components Openstack: OpenStack Compute (or Nova), and OpenStack Object Store, (or Swift). In Amazon speak, these are the OpenStack equivalents of EC2 and S3. Both the virtualisation and storage layers aim to be scalable, back-end agnostic, and use eventually consistent.</p>
 
-<p>The speakers went through the architecture of a what a compute cluster would look like. Compute nodes run the virtual machines and are typically commodity servers with a public, private, and management network. After the talk, some people were asking whether all three interfaces were necessary. The speakers said that they weren&#8217;t, but they did recommended separating management/private traffic from the public traffic.</p>
+<p>The speakers went through the architecture of a what a compute cluster would look like. Compute nodes run the virtual machines and are typically commodity servers with a public, private, and management network. After the talk, some people were asking whether all three interfaces were necessary. The speakers said that they weren&rsquo;t, but they did recommended separating management/private traffic from the public traffic.</p>
 
-<p>One of the interesting features was to see they&#8217;ve got an EC2 compatible which is nice. Another thing that was interesting is that while they store metadata in SqlAlchemy for fast access, the canonical source of the cluster&#8217;s state is derived from the state of the virtualisation layer. Not sure exactly how they&#8217;re deriving firewall and networking configuration - that&#8217;s one for me to read more about.</p>
+<p>One of the interesting features was to see they&rsquo;ve got an EC2 compatible which is nice. Another thing that was interesting is that while they store metadata in SqlAlchemy for fast access, the canonical source of the cluster&rsquo;s state is derived from the state of the virtualisation layer. Not sure exactly how they&rsquo;re deriving firewall and networking configuration &ndash; that&rsquo;s one for me to read more about.</p>
 
-<p>Another feature I liked was the concept Utility VM - a kind of virtual equivalent of a hardware appliance. A Utility VM essentially allows them to do various virtualisation offerings such as Database as service.</p>
+<p>Another feature I liked was the concept Utility VM &ndash; a kind of virtual equivalent of a hardware appliance. A Utility VM essentially allows them to do various virtualisation offerings such as Database as service.</p>
 
-<p>They also discussed their API, which unsurprisingly makes use of async rest calls. Someone asked if they had plans to provide a synchronous api, the response was that clients should get feedback by polling. However, the speakers indicated that there might be support for a pub-sub mechanism with callbacks at some point in the future. I found the fact they were considering callbacks interesting. Although it would add state to their infrastructure, it&#8217;s clearly a feature that clients want.</p>
+<p>They also discussed their API, which unsurprisingly makes use of async rest calls. Someone asked if they had plans to provide a synchronous api, the response was that clients should get feedback by polling. However, the speakers indicated that there might be support for a pub-sub mechanism with callbacks at some point in the future. I found the fact they were considering callbacks interesting. Although it would add state to their infrastructure, it&rsquo;s clearly a feature that clients want.</p>
 
 <p>Interesting upcoming features:</p>
 
@@ -1284,8 +1284,8 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
 <li>Quantum: Networking as a service (with Cisco)</li>
 <li>Burrow: HTTP message queue</li>
 <li>Red Dwarf: Database as a service</li>
-<li>Keystone - pluggable auth for all OpenStack components</li>
-<li>lunr - volumes as service</li>
+<li>Keystone &ndash; pluggable auth for all OpenStack components</li>
+<li>lunr &ndash; volumes as service</li>
 <li>A dashboard to manage the stack</li>
 <li>Atlas: load balancing as a service (backed by Zeus)</li>
 </ul>
@@ -1293,14 +1293,14 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
 
 <p>All of these components are clearly being designed with a specific initial vendor in mind (e.g. Zeus for their load-balancing solution) but the general OpenStack philosophy seems to be to make these back-ends pluggable and introduce additional back-ends later on.</p>
 
-<p>They then talked a little around the design of Swift, and how enterprise storage was expensive and requirements were going to double every year. Swift needed to be designed for failure with self healing using commodity hardware. To provide resilience, Swift has the concept of an &#8216;availability zone&#8217; inside a cluster&#8230; it&#8217;s an overloaded term, but an OpenStack avaliablity zone they mean a set of storage resources that might all die together in the event of a network, cooling or power failure. Data is then stored in 3 different zones.</p>
+<p>They then talked a little around the design of Swift, and how enterprise storage was expensive and requirements were going to double every year. Swift needed to be designed for failure with self healing using commodity hardware. To provide resilience, Swift has the concept of an &lsquo;availability zone&rsquo; inside a cluster&hellip; it&rsquo;s an overloaded term, but an OpenStack avaliablity zone they mean a set of storage resources that might all die together in the event of a network, cooling or power failure. Data is then stored in 3 different zones.</p>
 
 <p>A other few parts of the architecture I found interesting:</p>
 
 <ul>
-<li>To manage where the data is stored they have a coordination function named the Ring. Interesting story of how the Ring&#8217;s implementation evolved. They started with a DB and although they knew it wasn&#8217;t going to scale long term it quickly became unmanageble. It was an interesting lesson-learnt that they &#8220;didn&#8217;t realise how amazingly quickly [a relational db] becomes a bottleneck&#8221;. One member of the audience asked if the ring was the bottleneck&#8230; the speakers thought that networking would be the true bottleneck.</li>
+<li>To manage where the data is stored they have a coordination function named the Ring. Interesting story of how the Ring&rsquo;s implementation evolved. They started with a DB and although they knew it wasn&rsquo;t going to scale long term it quickly became unmanageble. It was an interesting lesson-learnt that they &ldquo;didn&rsquo;t realise how amazingly quickly [a relational db] becomes a bottleneck&rdquo;. One member of the audience asked if the ring was the bottleneck&hellip; the speakers thought that networking would be the true bottleneck.</li>
 <li>To achieve better scalability they distributed the work by pushing work into the replicas. They defer checking and auditing etc to the replicas rather than in a central coordination, and they now store metadata in sqllite databases within Swift.</li>
-<li>Objects are versioned using system time, so at Rackspace everything&#8217;s synchronised over NTP. For the distributed databases (sqllite stored in Swift), the NTP timestamps are used for row-based synchronisation</li>
+<li>Objects are versioned using system time, so at Rackspace everything&rsquo;s synchronised over NTP. For the distributed databases (sqllite stored in Swift), the NTP timestamps are used for row-based synchronisation</li>
 </ul>
 
 
@@ -1308,14 +1308,14 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
 
 <p>Knife openstack is a project to bring the equivalent management utilities to ec-tools.
 The other interesting tool he mentioned was Crowbar from Dell which is a PXE-based tool to bootstrap openstack and chef.
-One interesting point he made was that OpenStack was evolving so fast that he was having to create a separate Chef cookbook for each major version. I found that interesting because we&#8217;ve seen a similar issue with needing to manage and version several parallel branches of Puppet config.</p>
+One interesting point he made was that OpenStack was evolving so fast that he was having to create a separate Chef cookbook for each major version. I found that interesting because we&rsquo;ve seen a similar issue with needing to manage and version several parallel branches of Puppet config.</p>
 
 <p>The final workshop I attended at Velocity was</p>
 
-<p>&#8220;Managing the System Lifecycle and Configuration of Apache Hadoop and Other Distributed Systems&#8221;
+<p>&ldquo;Managing the System Lifecycle and Configuration of Apache Hadoop and Other Distributed Systems&rdquo;
 / Philip Zeyliger Cloudera</p>
 
-<p>The talk introduced Hadoop and it&#8217;s various components, which was handy as there always seem to be so many.</p>
+<p>The talk introduced Hadoop and it&rsquo;s various components, which was handy as there always seem to be so many.</p>
 
 <ul>
 <li>HDFS</li>
@@ -1329,7 +1329,7 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
 
 <p>He discussed how different people were managing Hadoop hosts (PXE, kickstart, Cobbler) and software (packaging, file transfer, installer scripts).</p>
 
-<p>An interesting comment made during the talk were that we still talk about distributed systems are clusters of nodes whereas Hadoop is all about programming a datacentre as if it were one node. So, for instance, puppet and chef are designed to manage N hosts running a number of services&#8230; but with hadoop you&#8217;re trying to manage a N hosts running ONE distributed/failsafe service.</p>
+<p>An interesting comment made during the talk were that we still talk about distributed systems are clusters of nodes whereas Hadoop is all about programming a datacentre as if it were one node. So, for instance, puppet and chef are designed to manage N hosts running a number of services&hellip; but with hadoop you&rsquo;re trying to manage a N hosts running ONE distributed/failsafe service.</p>
 
 <p>He introduced the Cloudera Service and Configuration Manager (SCM) which is essentially a central console with log and status aggregation and the Cloudera Activity Monitor, which he described as being like UNIX top for hadoop.</p>
 ]]></content>
@@ -1344,45 +1344,45 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
 including:</p>
 
 <ul>
-<li>&#8220;Performance Enhancing Programming with NodeJS&#8221; by Tim Caswell</li>
-<li>Bryan Cantrill&#8217;s &#8220;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&#8221;</li>
-<li>&#8220;Cast - The Open Deployment Platform&#8221; by Paul Querna</li>
-<li>&#8220;Real-Time, Real-Fast&#8221; by Dylan Schiemann</li>
+<li>&ldquo;Performance Enhancing Programming with NodeJS&rdquo; by Tim Caswell</li>
+<li>Bryan Cantrill&rsquo;s &ldquo;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&rdquo;</li>
+<li>&ldquo;Cast &ndash; The Open Deployment Platform&rdquo; by Paul Querna</li>
+<li>&ldquo;Real-Time, Real-Fast&rdquo; by Dylan Schiemann</li>
 </ul>
 
 
-<p>I attended Tim Caswell&#8217;s and Bryan Cantrill&#8217;s sessions, both of which were great
+<p>I attended Tim Caswell&rsquo;s and Bryan Cantrill&rsquo;s sessions, both of which were great
 introductions to Node.js hipe</p>
 
-<p>Tim Caswell&#8217;s (creationix on twitter/github) workshop was a great demo of
-Node&#8217;s scalability. He spun up a webserver on a private wlan and got the whole
+<p>Tim Caswell&rsquo;s (creationix on twitter/github) workshop was a great demo of
+Node&rsquo;s scalability. He spun up a webserver on a private wlan and got the whole
 room to start pinging various demo apps.</p>
 
 <p>A few things discussed:</p>
 
 <p>Running JavaScript on client and server can avoid the issue of doubling your
-effort&#8230; You don&#8217;t cross the boundary all the time if pieces of modular
+effort&hellip; You don&rsquo;t cross the boundary all the time if pieces of modular
 functionality can be run either client side or server side.
-There&#8217;s an opportunity to run more in the server during the period that the
-Browser&#8217;s busy downloading content or engaged in pre-render tasks. Once the
+There&rsquo;s an opportunity to run more in the server during the period that the
+Browser&rsquo;s busy downloading content or engaged in pre-render tasks. Once the
 app is fully up, you can then progressively do more in the client by shipping
 the same scripts over the wire.
 Non blocking IO. Using buffers and memcpy to avoid string builder overhead
 Some discussion on tooling: node-inspector, DTrace, node -debug, and v8
 graphical debug all sound interesting.</p>
 
-<p>Bryan Cantrill&#8217;s talk was, in a single word, energetic. Unsurprisingly we saw a
-lot of DTrace and we heard about a Node.js app he&#8217;d build to monitor net traffic
-during a hackday. I think that Cantrill&#8217;s talk can be summarised as Node being
+<p>Bryan Cantrill&rsquo;s talk was, in a single word, energetic. Unsurprisingly we saw a
+lot of DTrace and we heard about a Node.js app he&rsquo;d build to monitor net traffic
+during a hackday. I think that Cantrill&rsquo;s talk can be summarised as Node being
 the union of the popularity of JavaScript, non-blocking IO, and the Unix APIs
-(or, as Cantrill puts it &#8220;the APIs God intended&#8221;).</p>
+(or, as Cantrill puts it &ldquo;the APIs God intended&rdquo;).</p>
 
 <p>In summary, there seems to be a lot of hype around Node. And it seems that
-it&#8217;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
+it&rsquo;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
 the mood. Also because JavaScript never had any IO in the core language, you
-don&#8217;t have to drop the bits of the language that don&#8217;t fit the Node.js model
-(e.g. if you&#8217;re using twisted you&#8217;re only wanting to use a subset of python).
-I&#8217;ll definitely be playing with it to understand more.</p>
+don&rsquo;t have to drop the bits of the language that don&rsquo;t fit the Node.js model
+(e.g. if you&rsquo;re using twisted you&rsquo;re only wanting to use a subset of python).
+I&rsquo;ll definitely be playing with it to understand more.</p>
 
 <p>Of course, the backbone of Node is the V8 JavaScript engine, and the theme of
 JavaScript tuning was definitely strong at Velocity. Another interesting keynote
@@ -1391,7 +1391,7 @@ benchmarks and how a lack of good benchmarks had resulted in the wrong kind of
 optimisations. Recently Crockford created a benchmark by running jslint over
 jslint. He argued that this provided a much better benchmark as it touched more
 widely-used patterns (such as closures and prototypal inheritance) than the more
-common &#8220;how fast does this loop execute&#8221; tests often found in benchmarks. He
+common &ldquo;how fast does this loop execute&rdquo; tests often found in benchmarks. He
 also shared some interesting stats on performance gains that the V8 team had
 been able to make using his benchmark.</p>
 ]]></content>
@@ -1402,7 +1402,7 @@ been able to make using his benchmark.</p>
     <link href="http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm/"/>
     <updated>2011-06-23T09:52:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm</id>
-    <content type="html"><![CDATA[<p>I&#8217;m bound to forget this little cryptic command to delete branch foo.</p>
+    <content type="html"><![CDATA[<p>I&rsquo;m bound to forget this little cryptic command to delete branch foo.</p>
 
 <pre><code>git push origin :refs/tags/foo
 </code></pre>
@@ -1415,14 +1415,14 @@ been able to make using his benchmark.</p>
     <updated>2011-06-11T21:12:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity</id>
     <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
-Amazon. I&#8217;ve never been hugely confident at my abilities to do estimation,
-forecasting, capacity planning etc. It&#8217;s a really difficult thing.</p>
+Amazon. I&rsquo;ve never been hugely confident at my abilities to do estimation,
+forecasting, capacity planning etc. It&rsquo;s a really difficult thing.</p>
 
-<p>I&#8217;d heard that Rauser was an excellent speaker, so I attended his workshop on
+<p>I&rsquo;d heard that Rauser was an excellent speaker, so I attended his workshop on
 statistics. For anyone interested, Rauser also did a shorter keynote later in
 the conference, which you can catch on YouTube. A big theme from these
 discussions was understanding the reduction that your statistical reporting
-makes. Averages, variances, etc are all summary statistics - but how often to we
+makes. Averages, variances, etc are all summary statistics &ndash; but how often to we
 really think of them as lossy formats?</p>
 
 <p>  My main takeaways from both of his talk were to try and understand the
@@ -1434,23 +1434,23 @@ really think of them as lossy formats?</p>
 <!-- more -->
 
 
-<p>  During the workshop, John discussed how we approach estimating someone&#8217;s age.
+<p>  During the workshop, John discussed how we approach estimating someone&rsquo;s age.
   Given that problem, the instinct reaction is to propose a estimated value: 45,
-  58, 60 etc. However, to quote Rauser: we &#8216;[shouldn&#8217;t] give a single number
-  unless you&#8217;re forced to. We should always give a range, ideally with an agreed
-  confidence interval such as 90%. I can guess someone&#8217;s age with 100%
-  confidence if I state their age is between 0 and 150, but that&#8217;s not very
+  58, 60 etc. However, to quote Rauser: we &lsquo;[shouldn&rsquo;t] give a single number
+  unless you&rsquo;re forced to. We should always give a range, ideally with an agreed
+  confidence interval such as 90%. I can guess someone&rsquo;s age with 100%
+  confidence if I state their age is between 0 and 150, but that&rsquo;s not very
   useful. But by combining additional information and reducing absolute
-  certainty I can start to narrow that down. This isn&#8217;t rocket science, but how
-  many times have we been asked &#8220;when will this be ready&#8221;, or &#8220;when&#8217;s the
-  delivery date&#8221;? And in the face of those questions, how often have we given a
+  certainty I can start to narrow that down. This isn&rsquo;t rocket science, but how
+  many times have we been asked &ldquo;when will this be ready&rdquo;, or &ldquo;when&rsquo;s the
+  delivery date&rdquo;? And in the face of those questions, how often have we given a
   range with a stated confidence. Perhaps we feel that our project managers
   would laugh us out of the room? Project managers like fixed dates.</p>
 
-<p>However, in complex projects - and IT projects are usually complex - a range is
+<p>However, in complex projects &ndash; and IT projects are usually complex &ndash; a range is
 often more honest, and would often better express the reality of the situation.
-Again, this is nothing new - if you have an Agile Coach on your team, they will
-probably recommend estimating using ranges or 3-point estimates. However, it&#8217;s
+Again, this is nothing new &ndash; if you have an Agile Coach on your team, they will
+probably recommend estimating using ranges or 3-point estimates. However, it&rsquo;s
 easy to slip into the default behaviour of giving a single numeric response.</p>
 
 <p>  Throughout the talk, Rauser covered other examples, such as estimating the
@@ -1460,14 +1460,14 @@ easy to slip into the default behaviour of giving a single numeric response.</p>
 <p>  As the workshop continued, Rauser set us an estimating task. He asked us to
   provide estimates (ranges, of course!) for a number of questions. The key was
   not the specific answers, but rather that we were aiming for 90% confidence
-  estimates&#8230; i.e we should have got 18 out of the 20 questions correct. We
+  estimates&hellip; i.e we should have got 18 out of the 20 questions correct. We
   then graphed the results of a portion of the room and found that most people
   averaged between 20% and 40% accuracy. An interesting demo of how humans seem
   to default to be over-optimistic in their estimating.</p>
 
 <p>  In the final section of the workshop, Rauser discussed the nature of
-  statistics - how school curriculum are still teaching stats the &#8216;old way&#8217; and
-  how for practical analysis, it&#8217;s really much better to tackle stats correctly
+  statistics &ndash; how school curriculum are still teaching stats the &lsquo;old way&rsquo; and
+  how for practical analysis, it&rsquo;s really much better to tackle stats correctly
   using computer modelling. Do we need to learn about how to apply statistical
   tests and derive summary statistics? After all, summary stats are lossy and
   stop you looking at your data? Are they more dangerous in the hands of the
@@ -1494,35 +1494,35 @@ easy to slip into the default behaviour of giving a single numeric response.</p>
     <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
     <updated>2011-06-11T20:27:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
-    <content type="html"><![CDATA[<p>It&#8217;s a week now since I came back from
-<a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&#8217;s Velocity</a>
+    <content type="html"><![CDATA[<p>It&rsquo;s a week now since I came back from
+<a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&rsquo;s Velocity</a>
 conference in San
-Jose so I&#8217;ve had a chance to let some of the thoughts settle in my mind. I
+Jose so I&rsquo;ve had a chance to let some of the thoughts settle in my mind. I
 attended both the main conference and the workshops the day before.</p>
 
 <p>Attending a large tech conference is a great way of getting up to speed with the
-latest technical themes and meet some great people. Velocity&#8217;s three days long,
-but tacked on the end was DevopsDays - a more informal meet-up of people
+latest technical themes and meet some great people. Velocity&rsquo;s three days long,
+but tacked on the end was DevopsDays &ndash; a more informal meet-up of people
 interested in bringing the traditionally separate roles of development and
 operations together. Devops was also an important theme at Velocity. Or, as Theo
 Schlossnagle said in
-his <a href="http://www.youtube.com/watch?v=y0mHo7SMCQk&amp;feature=player_embedded">Velocity keynote on careers</a>&#8230;
-it&#8217;s really about *ops.
-Whatever technology you build, that software&#8217;s delivering a service, and
+his <a href="http://www.youtube.com/watch?v=y0mHo7SMCQk&amp;feature=player_embedded">Velocity keynote on careers</a>&hellip;
+it&rsquo;s really about *ops.
+Whatever technology you build, that software&rsquo;s delivering a service, and
 whatever that service, it must operate. Or to put it from another way Theo was
-saying that we should treat &#8216;operability like security&#8217;.</p>
+saying that we should treat &lsquo;operability like security&rsquo;.</p>
 
-<p>For the last couple of months, I&#8217;ve been working within the platform team at
-<a href="http://www.talis.com">Talis</a>. We&#8217;re a small team, but have a lot we want to build and manage. Trying to
+<p>For the last couple of months, I&rsquo;ve been working within the platform team at
+<a href="http://www.talis.com">Talis</a>. We&rsquo;re a small team, but have a lot we want to build and manage. Trying to
 organise ourselves in a devops is something really important to the way we work.
-Personally, I&#8217;ve never felt comfortable with the traditional &#8216;throw it over the
-wall&#8217; relationship between software and operations teams. I&#8217;ve worked in a
-number of different kinds of teams before, usually I&#8217;ve tried to be a developer
-who works closely with ops, but I&#8217;ve definitely fallen into the us and them trap
+Personally, I&rsquo;ve never felt comfortable with the traditional &lsquo;throw it over the
+wall&rsquo; relationship between software and operations teams. I&rsquo;ve worked in a
+number of different kinds of teams before, usually I&rsquo;ve tried to be a developer
+who works closely with ops, but I&rsquo;ve definitely fallen into the us and them trap
 from time to time. Like agile, devops is not a magic formula, but I definitely
 feel much more comfortable with everyone being part of the same team.</p>
 
-<p>I&#8217;ve decided to blog some of my thoughts/notes from the conference: the posts
+<p>I&rsquo;ve decided to blog some of my thoughts/notes from the conference: the posts
 should start to appear very soon.</p>
 ]]></content>
   </entry>
@@ -1532,9 +1532,9 @@ should start to appear very soon.</p>
     <link href="http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
     <updated>2011-05-11T09:18:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
-    <content type="html"><![CDATA[<p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&#8217;s certificate verification. This how-to was really helpful.</p>
+    <content type="html"><![CDATA[<p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&rsquo;s certificate verification. This how-to was really helpful.</p>
 
-<p>http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</p>
+<p><a href="http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html">http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</a></p>
 ]]></content>
   </entry>
   
@@ -1545,7 +1545,7 @@ should start to appear very soon.</p>
     <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
     <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
 
-<p>I didn&#8217;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&#8217;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
+<p>I didn&rsquo;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&rsquo;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

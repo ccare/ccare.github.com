@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reading | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/reading/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books/"/>
     <updated>2011-03-10T16:38:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books</id>
-    <content type="html"><![CDATA[<p>Over the last few months I've been trying to understand a little more about semantic web concepts etc... Here's a list of some of the books I've been flicking through. Thought I'd blog them so I can find them again in the future.</p>
+    <content type="html"><![CDATA[<p>Over the last few months I&rsquo;ve been trying to understand a little more about semantic web concepts etc&hellip; Here&rsquo;s a list of some of the books I&rsquo;ve been flicking through. Thought I&rsquo;d blog them so I can find them again in the future.</p>
 
 <p>John Davies, Rudi Studer, Paul Warren. Semantic web technologies: trends and research in ontology-based systems. Wiley 2006.</p>
 
@@ -28,11 +28,11 @@
 
 <p>Pascal Hitzler, Markus Krotzsch, Sebastian Rudolph. Foundations of semantic web technologies. CRC Press, 2010</p>
 
-<p>I found Davies et al. (2006) Quite interesting to flick through... two of the authors worked at the same company I was with so there's some interesting case studies. However, I found the focus was a bit too much towards reasoning, discovery and other conceptual ideas.</p>
+<p>I found Davies et al. (2006) Quite interesting to flick through&hellip; two of the authors worked at the same company I was with so there&rsquo;s some interesting case studies. However, I found the focus was a bit too much towards reasoning, discovery and other conceptual ideas.</p>
 
 <p>Breitman et al. (2006) and Allemang et al. (2008) were interesting as well</p>
 
-<p>My favourite was Hitzler et al. (2010). I really enjoyed their coverage of sparql - I read this one far more closely than the others.</p>
+<p>My favourite was Hitzler et al. (2010). I really enjoyed their coverage of sparql &ndash; I read this one far more closely than the others.</p>
 ]]></content>
   </entry>
   

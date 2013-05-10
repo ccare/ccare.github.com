@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Work | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/work/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -18,7 +18,7 @@
     <link href="http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha/"/>
     <updated>2012-10-19T12:31:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha</id>
-    <content type="html"><![CDATA[<p>The shortcomings of Java's native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there's plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
+    <content type="html"><![CDATA[<p>The shortcomings of Java&rsquo;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&rsquo;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
 
 <!-- more -->
 
@@ -41,7 +41,7 @@ Assert.assertFalse(timestamp.equals(date));
 <p>}
 ```</p>
 
-<p>This is a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Timestamp.html#equals(java.lang.Object)">documented 'feature'</a> and is there for backward compatibility reasons. However, if you don't know you have an instance of java.util.Timestamp then this can be an interesting gotcha. I encountered this issue on a project where some client-side code used java.util.Date, but a deserialisation library had automagically created an instance of a Timestamp.</p>
+<p>This is a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Timestamp.html#equals(java.lang.Object)">documented &lsquo;feature&rsquo;</a> and is there for backward compatibility reasons. However, if you don&rsquo;t know you have an instance of java.util.Timestamp then this can be an interesting gotcha. I encountered this issue on a project where some client-side code used java.util.Date, but a deserialisation library had automagically created an instance of a Timestamp.</p>
 ]]></content>
   </entry>
   
@@ -50,7 +50,7 @@ Assert.assertFalse(timestamp.equals(date));
     <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
     <updated>2012-05-16T09:31:00+01:00</updated>
     <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
-    <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I've joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
+    <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&rsquo;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
 ]]></content>

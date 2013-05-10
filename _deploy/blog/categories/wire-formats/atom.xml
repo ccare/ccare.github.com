@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Wire formats | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/wire-formats/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -23,14 +23,14 @@ blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-clie
 was posted on 30/04/2013.</p>
 
 
-<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe's Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe's BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
+<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&rsquo;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&rsquo;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
 
-<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn't have access to a stable version of Adobe FlexBuilder for Linux, so I wasn't able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to 'see' the data that was flowing between the two applications.</p>
+<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&rsquo;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&rsquo;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &lsquo;see&rsquo; the data that was flowing between the two applications.</p>
 
 <!-- more -->
 
 
-<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I'm a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it's really difficult to 'see' what data is being transferred.</p>
+<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&rsquo;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&rsquo;s really difficult to &lsquo;see&rsquo; what data is being transferred.</p>
 
 <h2>Building a client</h2>
 
@@ -82,17 +82,17 @@ amfConnection.connect(url);
 
 <p>}
 ```
-Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user's email address. To invoke this service, I did the following:</p>
+Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&rsquo;s email address. To invoke this service, I did the following:</p>
 
 <p>```java
-Object result = amfConnection.call("UserService.getUserByEmailAddress",</p>
+Object result = amfConnection.call(&ldquo;UserService.getUserByEmailAddress&rdquo;,</p>
 
 <pre><code>                                    "charles@example.com");
 </code></pre>
 
 <p>```</p>
 
-<p>This all looked good. However, I wasn't quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let's say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
+<p>This all looked good. However, I wasn&rsquo;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&rsquo;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
 
 <p>```java
 package com.example.model;</p>
@@ -108,7 +108,7 @@ private final String emailAddress;
 <p>}
 ```</p>
 
-<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I'd need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
+<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&rsquo;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
 
 <h2>Using HashMap-backed Data Transfer Objects</h2>
 
@@ -128,18 +128,18 @@ package com.example.model;</p>
 <p>Then I was able to use simple Map getters to access the data and have a look at what was going on.</p>
 
 <p>```java
-User result = (User) amfConnection.call("UserService.getUserByEmailAddress",</p>
+User result = (User) amfConnection.call(&ldquo;UserService.getUserByEmailAddress&rdquo;,</p>
 
 <pre><code>                                        "charles@example.com");
 </code></pre>
 
-<p>System.out.println(result.get("name"));
-System.out.println(result.get("email"));
+<p>System.out.println(result.get(&ldquo;name&rdquo;));
+System.out.println(result.get(&ldquo;email&rdquo;));
 ```</p>
 
 <h2>Summary</h2>
 
-<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn't rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
+<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&rsquo;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
 
 <p>And the bug? Well, it was data related, and it did get fixed.</p>
 ]]></content>

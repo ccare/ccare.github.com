@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Migration | Charles' Blog]]></title>
   <link href="http://blog.ccare.me/blog/categories/migration/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:15:30+01:00</updated>
+  <updated>2013-05-10T15:35:42+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -20,10 +20,10 @@
     <id>http://blog.ccare.me/blog/2011/03/03/extracting-calendar-entries-from-outlook</id>
     <content type="html"><![CDATA[<p>Having migrated by Outlook mailbox, I wanted to load calendar entries into another calendar. Following my earlier post, I already had my calendar entries in ICAL format, so all seemed good. However, I also had a number of recurring events (birthdays etc) that I wanted to put into my Google Calendar. The following PERL script was a handy bit of code to extract the recurring events so that I could extract them and add to my public calendar.</p>
 
-<p>```bash
-$entry =  '';
+<p>`&ldquo;bash
+$entry =  &rdquo;;
 while(<STDIN>) {
-  if ($<em> eq "" || $</em> eq "\n") {</p>
+  if ($<em> eq &ldquo;&rdquo; || $</em> eq &ldquo;\n&rdquo;) {</p>
 
 <pre><code>if ($entry =~ /^RRULE\:/) {
   print $entry;
@@ -48,19 +48,19 @@ print $entry;
     <link href="http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/"/>
     <updated>2011-03-03T11:10:00+00:00</updated>
     <id>http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox</id>
-    <content type="html"><![CDATA[<p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it's really simple.</p>
+    <content type="html"><![CDATA[<p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it&rsquo;s really simple.</p>
 
-<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook's settings. Important: make sure outlook is closed first!</p>
+<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook&rsquo;s settings. Important: make sure outlook is closed first!</p>
 
-<p>2) Convert the ost file to a pst. There's a windows tool for this - but I found it worked ok under wine. The program's called ost2pst</p>
+<p>2) Convert the ost file to a pst. There&rsquo;s a windows tool for this &ndash; but I found it worked ok under wine. The program&rsquo;s called ost2pst</p>
 
-<p>http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</p>
+<p><a href="http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/">http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</a></p>
 
-<p>3) Install the readpst program (sudo apt-get install readpst - on Ubuntu). Then it's a simple command to create a UNIX mailbox (one file for each folder)</p>
+<p>3) Install the readpst program (sudo apt-get install readpst &ndash; on Ubuntu). Then it&rsquo;s a simple command to create a UNIX mailbox (one file for each folder)</p>
 
 <p>readpst outlook.pst</p>
 
-<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I'm using Alpine ;-)</p>
+<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I&rsquo;m using Alpine ;&ndash;)</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Charles Care">
 
   
-  <meta name="description" content="Over the last few weeks, I&#8217;ve been wanting to write a demo for
+  <meta name="description" content="Over the last few weeks, I&rsquo;ve been wanting to write a demo for
 Kasabi to show how to integrate data from a database using
 object-relational &hellip;">
   
@@ -23,10 +23,11 @@ object-relational &hellip;">
   <link rel="canonical" href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Charles' Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -100,12 +101,14 @@ object-relational &hellip;">
 
 <time datetime="2012-03-29T18:25:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
         
+         | <a href="#disqus_thread">Comments</a>
+        
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Over the last few weeks, I&#8217;ve been wanting to write a demo for
+<div class="entry-content"><p>Over the last few weeks, I&rsquo;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
 be polled and loaded in an ETL fashion. However, in order to build a compelling
@@ -287,7 +290,7 @@ modified.</p>
 
 
 <p>The entity classes for the suppliers-parts domain model are in a simple java
-project, packaged up using maven2. See - <a href="">link&#8230;</a></p>
+project, packaged up using maven2. See &ndash; <a href="">link&hellip;</a></p>
 
 <p>Build and install the packages use maven</p>
 
@@ -302,10 +305,10 @@ continually updated by existing systems. And for the purposes of a demo, it
 would be interesting to model this situation. In the following steps, we will
 create a simple web-based CRUD application that allows you to create and update
 records. We need something that will get us a working system with the bare
-minimum of effort, so we&#8217;re using SpringSource Grails to build a simple webapp
+minimum of effort, so we&rsquo;re using SpringSource Grails to build a simple webapp
 infront of our JPA database.</p>
 
-<p>For the database we&#8217;ll used a file-based H2 database, although in reality you
+<p>For the database we&rsquo;ll used a file-based H2 database, although in reality you
 would probably be using a production-strength database.</p>
 
 <h3>Create the application</h3>
@@ -316,7 +319,7 @@ would probably be using a production-strength database.</p>
 </code></pre>
 
 <p>Next, we need to bring our JPA classes into the project. The JPA classes are
-a maven project, so as long as we&#8217;ve installed them into our local maven repo (
+a maven project, so as long as we&rsquo;ve installed them into our local maven repo (
 by running  in the suppliers-parts-domain project),
 we can pull these in via a dependency:</p>
 
@@ -396,10 +399,10 @@ This is achieved using:</p>
 <pre><code>grails generate-all &lt;CLASS_NAME&gt;
 </code></pre>
 
-<p>You&#8217;ll now have all ui pages and web controllers for each entity. There seems
-to be a bug with handling the audit and id fields (which aren&#8217;t needed in the
+<p>You&rsquo;ll now have all ui pages and web controllers for each entity. There seems
+to be a bug with handling the audit and id fields (which aren&rsquo;t needed in the
 web forms) so the following script (regenerateScaffolding.sh) has some manual
-&#8216;sed&#8217; commands to remove these extra fields.</p>
+&lsquo;sed&rsquo; commands to remove these extra fields.</p>
 
 <figure class='code'><figcaption><span>generate-all.bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -437,7 +440,7 @@ web forms) so the following script (regenerateScaffolding.sh) has some manual
 
 
 <p>Finally, we need to configure Grails to process the audit fields. To do this, we
-need to add a Hibernate event listener and register it. For those interested&#8230;
+need to add a Hibernate event listener and register it. For those interested&hellip;
 the code is [here].</p>
 
 <h3>Run the application</h3>
@@ -505,6 +508,12 @@ with the command:</p>
   </footer>
 </article>
 
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
 </div>
 
 <aside class="sidebar">
@@ -514,15 +523,15 @@ with the command:</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a simple AMF client for testing</a>
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating log entries using Log4J and the Mapped Diagnostic Context</a>
+        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating Log Entries Using Log4J and the Mapped Diagnostic Context</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing with Java Timestamps</a>
+        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing With Java Timestamps</a>
       </li>
     
       <li class="post">
@@ -545,7 +554,7 @@ with the command:</p>
   <a href="https://github.com/ccare">@ccare</a> on GitHub
   
   <script type="text/javascript">
-    $.domReady(function(){
+    $(document).ready(function(){
         if (!window.jXHR){
             var jxhr = document.createElement('script');
             jxhr.type = 'text/javascript';
@@ -600,13 +609,29 @@ with the command:</p>
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'ccare';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/';
+        var disqus_url = 'http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
 
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
+  js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
