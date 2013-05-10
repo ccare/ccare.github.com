@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: reading | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/reading/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/reading/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Interesting SemWeb Books]]></title>
-    <link href="http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books/"/>
+    <link href="http://ccare.github.com/blog/2011/03/10/interesting-semweb-books/"/>
     <updated>2011-03-10T16:38:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books</id>
+    <id>http://ccare.github.com/blog/2011/03/10/interesting-semweb-books</id>
     <content type="html"><![CDATA[<p>Over the last few months I've been trying to understand a little more about semantic web concepts etc... Here's a list of some of the books I've been flicking through. Thought I'd blog them so I can find them again in the future.</p>
 
 <p>John Davies, Rudi Studer, Paul Warren. Semantic web technologies: trends and research in ontology-based systems. Wiley 2006.</p>

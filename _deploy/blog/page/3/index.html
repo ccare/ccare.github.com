@@ -9,9 +9,8 @@
   <meta name="author" content="Charles Care">
 
   
-  <meta name="description" content="At Talis we&#8217;ve been building our RDF platform
-following a distributed SOA
-architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
+  <meta name="description" content="One of the pre-conference workshops was an excellent session by John Rauser from
+Amazon. I&#8217;ve never been hugely confident at my abilities to do &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@ architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.ccare.me/blog/page/3">
+  <link rel="canonical" href="http://ccare.github.com/blog/page/3">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -30,6 +29,7 @@ architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/ccare.css" media="screen, projection" rel="stylesheet" type="text/css">
 
   
   <script type="text/javascript">
@@ -63,7 +63,7 @@ architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
   
 <form action="http://google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:blog.ccare.me" />
+    <input type="hidden" name="q" value="site:ccare.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -84,7 +84,7 @@ architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/03/07/stub-http-server/">Stub Http Server</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/06/11/statistics-at-velocity/">Statistics @ Velocity</a></h1>
     
     
       <p class="meta">
@@ -100,46 +100,278 @@ architecture. Most of our integrations are through RESTful HTTP APIs &hellip;">
   
 
 
-<time datetime="2012-03-07T20:25:00+00:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
+<time datetime="2011-06-11T21:12:00+01:00" pubdate data-updated="true">Jun 11<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>At <a href="http://talisplatform.com">Talis</a> we&#8217;ve been building our RDF platform
-following a distributed SOA
-architecture. Most of our integrations are through RESTful HTTP APIs, and in our
-Java projects we tend to use Apache HttpClient to consume them.</p>
+  <div class="entry-content"><p>One of the pre-conference workshops was an excellent session by John Rauser from
+Amazon. I&#8217;ve never been hugely confident at my abilities to do estimation,
+forecasting, capacity planning etc. It&#8217;s a really difficult thing.</p>
 
-<p>As a result, when writing tests I find myself having to frequently stub-out a
-remote service. Sometimes we do the usual thing and create mocks. This is fairly
-easy, but does involve quite a lot of plumbing - you need a mock HttpClient, then
-a mock GetRequest, then a mock entity, and so on&#8230; it can certainly create
-quite a lot of boilerplate.</p>
+<p>I&#8217;d heard that Rauser was an excellent speaker, so I attended his workshop on
+statistics. For anyone interested, Rauser also did a shorter keynote later in
+the conference, which you can catch on YouTube. A big theme from these
+discussions was understanding the reduction that your statistical reporting
+makes. Averages, variances, etc are all summary statistics - but how often to we
+really think of them as lossy formats?</p>
 
-<p>I think this sort of test works much better with a <em>real</em> HttpClient, making
-real HTTP calls. We&#8217;ve been using this pattern quite a lot, and found that the
-JettyRule class from the junit-rules project is a great way of embedding an
-HTTP server into a unit test. Choosing a random free port for this server helps
-make the test more robust and independent.</p>
+<p>  My main takeaways from both of his talk were to try and understand the
+  lossiness of summary stats. I particularly liked his summary statistics of
+  Moby Dick. Another major theme in his talks was to make time to do deep dives
+  into log data, even if it only means you know how to when something really
+  goes wrong.</p>
 
-<p>However, I found myself writing more and more &#8216;mock-like&#8217; assertion code into my
-handlers. Implementing the happy path was easy, but if I, for example, wanted to
-test fail-and-retry logic, I needed to make a number of requests fail, then one
-succeed, and assert no other spurious requests were made. Traditionally this is
-the perfect use-case for a mock - but I wanted to make these kind of assertions,
-and, at the same time, exercise a real HttpClient.</p>
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/11/statistics-at-velocity/">Read on &rarr;</a>
+    </footer>
+  
 
-<p>To help, I wrote <a href="http://github.com/ccare/stub-http">stub-http</a>, a really simple stub HTTP Server that is
-embeddable in a unit test and supports the recording and playback of a sequence
-of Requests and Responses. I based the code on the interface of EasyMock, and
-like EasyMock, the stub can be run in either &#8216;strict&#8217;, &#8216;regular&#8217;, or &#8216;nice&#8217;
-mode. When running in strict mode, unexpected requests result in an assertion
-failure, whereas in nice mode, they return an HTTP 404 code. Switching between
-&#8216;regular&#8217; and &#8216;strict&#8217; reflects whether ordering of requests matters.</p>
 
-<p>Here&#8217;s an example test:</p>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/">Velocity 2011. .. a Great Conference</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-11T20:27:00+01:00" pubdate data-updated="true">Jun 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&#8217;s a week now since I came back from
+<a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&#8217;s Velocity</a>
+conference in San
+Jose so I&#8217;ve had a chance to let some of the thoughts settle in my mind. I
+attended both the main conference and the workshops the day before.</p>
+
+<p>Attending a large tech conference is a great way of getting up to speed with the
+latest technical themes and meet some great people. Velocity&#8217;s three days long,
+but tacked on the end was DevopsDays - a more informal meet-up of people
+interested in bringing the traditionally separate roles of development and
+operations together. Devops was also an important theme at Velocity. Or, as Theo
+Schlossnagle said in
+his <a href="http://www.youtube.com/watch?v=y0mHo7SMCQk&amp;feature=player_embedded">Velocity keynote on careers</a>&#8230;
+it&#8217;s really about *ops.
+Whatever technology you build, that software&#8217;s delivering a service, and
+whatever that service, it must operate. Or to put it from another way Theo was
+saying that we should treat &#8216;operability like security&#8217;.</p>
+
+<p>For the last couple of months, I&#8217;ve been working within the platform team at
+<a href="http://www.talis.com">Talis</a>. We&#8217;re a small team, but have a lot we want to build and manage. Trying to
+organise ourselves in a devops is something really important to the way we work.
+Personally, I&#8217;ve never felt comfortable with the traditional &#8216;throw it over the
+wall&#8217; relationship between software and operations teams. I&#8217;ve worked in a
+number of different kinds of teams before, usually I&#8217;ve tried to be a developer
+who works closely with ops, but I&#8217;ve definitely fallen into the us and them trap
+from time to time. Like agile, devops is not a magic formula, but I definitely
+feel much more comfortable with everyone being part of the same team.</p>
+
+<p>I&#8217;ve decided to blog some of my thoughts/notes from the conference: the posts
+should start to appear very soon.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/">Avoiding &#8216;Peer Not Authenticated&#8217; Error in Apache Httpclient</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-11T09:18:00+01:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&#8217;s certificate verification. This how-to was really helpful.</p>
+
+<p>http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/">Testing What Happens When a Java Process Runs Out of Disk</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-11T12:32:00+01:00" pubdate data-updated="true">Apr 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
+
+<p>I didn&#8217;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&#8217;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Create a raw &#39;disk&#39; around 1 GB in size</span>
+</span><span class='line'>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>disk.raw <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span>1000000
+</span><span class='line'><span class="c"># Format it - I went for ~900MB which suited my tests</span>
+</span><span class='line'>mkfs -t ext2 disk1.raw  900000
+</span><span class='line'><span class="c"># Mount the file into a local folder</span>
+</span><span class='line'>sudo mount -o loop -t ext2 disk.raw ./mount-dir
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Works a treat, and really easy to play with different disk sizes.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/10/interesting-semweb-books/">Interesting SemWeb Books</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-10T16:38:00+00:00" pubdate data-updated="true">Mar 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the last few months I&#8217;ve been trying to understand a little more about semantic web concepts etc&#8230; Here&#8217;s a list of some of the books I&#8217;ve been flicking through. Thought I&#8217;d blog them so I can find them again in the future.</p>
+
+<p>John Davies, Rudi Studer, Paul Warren. Semantic web technologies: trends and research in ontology-based systems. Wiley 2006.</p>
+
+<p>Karin K. Breitman, Marco Antonio Casanova, Walter Truszkowski. Semantic web: concepts, technologies, and applications.Springer 2006.</p>
+
+<p>Dean Allemang, Jim Hendler, Semantic web for the working ontologist: Effective modelling in RDFS and OWL.Elsevier 2008..</p>
+
+<p>Pascal Hitzler, Markus Krotzsch, Sebastian Rudolph. Foundations of semantic web technologies. CRC Press, 2010</p>
+
+<p>I found Davies et al. (2006) Quite interesting to flick through&#8230; two of the authors worked at the same company I was with so there&#8217;s some interesting case studies. However, I found the focus was a bit too much towards reasoning, discovery and other conceptual ideas.</p>
+
+<p>Breitman et al. (2006) and Allemang et al. (2008) were interesting as well</p>
+
+<p>My favourite was Hitzler et al. (2010). I really enjoyed their coverage of sparql - I read this one far more closely than the others.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/03/extracting-calendar-entries-from-outlook/">Extracting Calendar Entries From Outlook</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-03T12:06:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Having migrated by Outlook mailbox, I wanted to load calendar entries into another calendar. Following my earlier post, I already had my calendar entries in ICAL format, so all seemed good. However, I also had a number of recurring events (birthdays etc) that I wanted to put into my Google Calendar. The following PERL script was a handy bit of code to extract the recurring events so that I could extract them and add to my public calendar.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -153,86 +385,20 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Rule</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">StubHttp</span> <span class="n">stubHttp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StubHttp</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clientMakesHEADRequestFollowedByGET</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">File</span> <span class="n">testZipFileLocation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(...);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;GET&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">replay</span><span class="o">()</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// ...test client call here...      </span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$entry</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>;
+</span><span class='line'><span class="k">while</span><span class="o">(</span>&lt;STDIN&gt;<span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="nv">$_</span> eq <span class="s2">&quot;&quot;</span> <span class="o">||</span> <span class="nv">$_</span> eq <span class="s2">&quot;\n&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="nv">$entry</span> <span class="o">=</span>~ /^RRULE<span class="se">\:</span>/<span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      print <span class="nv">$entry</span>;
 </span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clientDoesntDoGETIfHEADRequestIs404</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">File</span> <span class="n">testZipFileLocation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(...);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Record a single HEAD (returning followed by 404),</span>
-</span><span class='line'>        <span class="c1">//  followed by nothing else</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">404</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">replay</span><span class="o">()</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// ...test client call here...        </span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clientRetriesOn503</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">File</span> <span class="n">testZipFileLocation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(...);</span>
-</span><span class='line'>        <span class="c1">// The first couple of HEAD requests result in a 503 &quot;Temporarily unavailable&quot;</span>
-</span><span class='line'>        <span class="c1">//   response, this is then followed by a 200 &quot;OK&quot; response, and a subsequent GET</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">503</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">503</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">503</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;HEAD&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="s">&quot;GET&quot;</span><span class="o">,</span> <span class="s">&quot;/foo.zip&quot;</span><span class="o">).</span><span class="na">andReturn</span><span class="o">(</span><span class="mi">200</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">stubHttp</span><span class="o">.</span><span class="na">replay</span><span class="o">()</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// ...test client call here...    </span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
+</span><span class='line'>    <span class="nv">$entry</span> <span class="o">=</span> <span class="s2">&quot;\n&quot;</span>;
+</span><span class='line'>  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>     <span class="nv">$entry</span> .<span class="o">=</span> <span class="nv">$_</span>;
+</span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
+</span><span class='line'>print <span class="nv">$entry</span>;
 </span></code></pre></td></tr></table></div></figure>
 
-
-
 </div>
   
   
@@ -245,7 +411,7 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/09/30/pub-sub-huddle/">PubSub Huddle Conference</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/">Migrating Outlook to a Ubuntu Mailbox</a></h1>
     
     
       <p class="meta">
@@ -261,104 +427,26 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
   
 
 
-<time datetime="2011-09-30T11:39:00+01:00" pubdate data-updated="true">Sep 30<span>th</span>, 2011</time>
+<time datetime="2011-03-03T11:10:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
-one-day conference/hack-afternoon hosted by SkillsMatter.</p>
+  <div class="entry-content"><p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it&#8217;s really simple.</p>
 
-<p>The day was a good event, there were quite a few people around in the morning and I had some
-particularly interesting conversations with people responsible for messaging software in hedge funds
-and banks. The basic structure of the day was talks in the morning which was then
-followed by a self-organised &#8216;hack-afternoon&#8217;. The morning was excellent and had a large number of
-attendees. The afternoon was also good fun, but things did tail off as people started disappearing.</p>
+<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook&#8217;s settings. Important: make sure outlook is closed first!</p>
 
-<p>The morning started off with Martin Sústrik discussing his vision for &#8216;the future of messaging&#8217;.
-Martin is the founder of zeromq, but he was talking more about his higher-level goals to simplify
-messaging by pushing handling of basic messaging patterns into infrastructure. Basically, he was
-arguing for messaging APIs to be provided as layer-6 (presentation-layer) protocol. The basic points
-were:</p>
+<p>2) Convert the ost file to a pst. There&#8217;s a windows tool for this - but I found it worked ok under wine. The program&#8217;s called ost2pst</p>
 
-<ul>
-<li>We need to be able to handle messaging in B2B and B2C scenarios, whereas messaging is today
-something that generally stays within the corporate firewall.</li>
-<li>Standard messaging patterns need to be simple to code</li>
-<li>Coding messaging should be as easy as coding against a standard Socket abstraction (as
-demonstrated by his work on zeromq)</li>
-<li>A major challenge of providing this kind of infrastructure is that multiple patterns would need
-to be supported (he mentioned push-pull, pub-sub, request-response), the difficulty being that
-the logical topology changes with each pattern</li>
-<li>He mentioned there would be even more challenges with security etc but didn&#8217;t discuss them.</li>
-<li>His current plans are to form a proposal for a new protocol - currently named Scalability
-Protocol - and as a starting point towards this, there is a mailing list
-http://groups.google.com/group/sp-discuss-group which is apparently an interesting read.</li>
-<li>In terms of practical stuff, he sees zeromq as being a step-towards this (in that it
-demonstrates the simple APIs he&#8217;d like to push for). Other practical steps forward are that
-people are thinking about adding zeromq to the linux kernel, and considering how vendors might
-tackle messaging-aware hardware.</li>
-</ul>
+<p>http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</p>
 
+<p>3) Install the readpst program (sudo apt-get install readpst - on Ubuntu). Then it&#8217;s a simple command to create a UNIX mailbox (one file for each folder)</p>
 
-<p>The second talk of the day was from Andy Piper from IBM Research. He was talking about MQTT, an open
-standard (with an IBM reference implementation) for doing simple pub-sub messaging. MQTT was
-designed to be a low-footprint messaging library for sensors and he showed examples of it running on
-Android, and also on an Arduino prototype board. It has some nice features, including low resource
-requirements, and support for handling different types of retry-handling. The other nice feature was
-support for registering an action to be performed if a client disappears. There is an open source
-implementation named Mosquito which looked quite interesting. I think a lot of people were a bit
-suspicious of the &#8216;IBM sell&#8217;, but it looked like a good fit for collecting data from many sources.</p>
+<p>readpst outlook.pst</p>
 
-<p>The next two talks moved into the territory of doing pub-sub between web clients and servers.</p>
-
-<p>We heard from Marek Majkowski (RabbitMq) about the difficulties of building a generic solution to
-server-browser messaging. He discussed a project that had attempted to do that, and how it had
-become really challenging to solve issues around client presence and identity. I found Marek&#8217;s talk
-quite interesting, as he discussed the web-socket standard and showed lots of examples of how the
-different implementations behaved differently. It really drove home how much the websocket standard
-is in it&#8217;s infancy. He also went on to discuss how to approach building a load-balanced server that
-could handle messaging-enabled clients, and talked about other products that help make a
-non-messaging application built on a standard MVC platform (he kept mentioning Django) to become
-messaging enabled. Some of the example services he mentioned were: AppEngine&#8217;s channels API, PubNub,
-and Pusher. The majority of these services are designed to support server push rather than client
-pull. And while all of these solutions offer some useful features, he concluded by arguing that they
-would never be able to provide a simple solution for two-way messaging. He saw the issues around
-identity and presence as being too difficult to solve in the generic. In the end he basically said
-that you should build your application around messaging from day 1, and then went on to talk about
-using NodeJS and SockJS to provide an asynchronous server-side platform.</p>
-
-<p>The fourth talk was from Julien Genestoux about SuperFeedr which allows websites to turn standard
-RSS feeds into pub-sub channels. He demoed the PubSubHubhub website that basically acts as messaging
-broker. Sites (publishers) host references to rss feeds and notify the Hub when their feed changes.
-Supported clients who have subscribed can then be notified by the hub. In a demo he showed how
-people could attach arbitrary filters to their subscriptions so they only get notified about certain
-changes. He also talked about how their infrastructure could be used to augment a chain of rss
-feeds.</p>
-
-<p>After lunch we had a series of lightning talks about various projects&#8230; the two that stood out for
-me were:</p>
-
-<ul>
-<li>the use of pub-sub messaging to implement the BBC&#8217;s Radio1 homepage using XMPP.</li>
-<li>a discussion of the architecture behind datasift.com - which is a stream-based data marketplace
-where you can subscribe (any pay) for streams of tweets and other social events containing a
-given criteria. They were using a lot of zeromq and kafka to do their processing (4000 messages
-a second, I think he said)</li>
-</ul>
-
-
-<p>All in all, the day was definitely worth attending, and although I didn&#8217;t come away with loads of new
-info, I did come away with a feeling that investing in learning in more pub-sub technologies is
-a good thing to do.</p>
-
-<p>It was also good to get some validation about how people are using zeromq and comparing it to the work
-I&#8217;ve been doing at Talis.
-Chatting to Lorenzo Alberton after his talk, it was interesting to hear how they approach failover
-and scaling of zeromq. It was nice to hear that we following very similar approaches to using and
-tuning it - particularly since they are getting quite impressive throughput.</p>
+<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I&#8217;m using Alpine ;-)</p>
 </div>
   
   
@@ -371,7 +459,7 @@ tuning it - particularly since they are getting quite impressive throughput.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/07/11/primitive-types-and-java-performance/">Primitive Types and Java Performance</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/03/03/leaving-bt/">Leaving BT</a></h1>
     
     
       <p class="meta">
@@ -387,17 +475,19 @@ tuning it - particularly since they are getting quite impressive throughput.</p>
   
 
 
-<time datetime="2011-07-11T09:05:00+01:00" pubdate data-updated="true">Jul 11<span>th</span>, 2011</time>
+<time datetime="2011-03-03T09:00:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Reading article about primitives vs wrapper objects in Java.
-Nice to see some graphs and real evidence rather than just gut-feel.</p>
+  <div class="entry-content"><p>Today&#8217;s my last full-day working at BT. I&#8217;m marking the event with a final
+visit to Adastral Park in Martlesham, Ipswich.</p>
 
-<p>http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</p>
+<p>Over the last few years, I&#8217;ve worked with some pretty smart engineers
+and had a lot of fun. I&#8217;m really excited about joining <a href="http://talis.com">Talis</a>, but
+I&#8217;m going to miss a lot of great people.</p>
 </div>
   
   
@@ -422,23 +512,23 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a simple AMF client for testing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating log entries using Log4J and the Mapped Diagnostic Context</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing with Java Timestamps</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/05/16/joining-black-pepper-software/">Joining Black Pepper Software</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/04/07/hello-octopress/">Hello Octopress!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/">Using Grails to throw-up a simple interface over JPA entities</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/23/visible-ops/">Visible Ops</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/20/jpa-and-kasabi/">JPA and Kasabi</a>
       </li>
     
   </ul>

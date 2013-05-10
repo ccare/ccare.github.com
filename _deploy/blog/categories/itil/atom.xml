@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ITIL | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/itil/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/itil/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Visible Ops]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/23/visible-ops/"/>
+    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
     <updated>2012-03-23T16:41:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
+    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
 the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I'd
 been meaning to read it for a while - ever since I first heard Gene Kim speak at
@@ -30,6 +30,9 @@ now part of the 'received wisdom' of operations. I also found it useful to get
 a reminder of the ITIL jargon. Using the correct terms for this sort of thing
 is something I'm a bit weak on, but as the authors say in the book, having a
 common language is vital.</p>
+
+<!-- more -->
+
 
 <p>Working for a smaller company, I suppose some of the talk about audits and
 change-review boards sounded a bit overkill. Although it made me realise that

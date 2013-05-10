@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: velocityconf | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/velocityconf/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/velocityconf/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,14 +15,17 @@
   
   <entry>
     <title type="html"><![CDATA[Openstack and Cloudera workshops at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
     <updated>2011-06-28T21:47:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
 <p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>
 
 <p>The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project's road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.</p>
+
+<!-- more -->
+
 
 <p>As the speakers presented it, there are two core components Openstack: OpenStack Compute (or Nova), and OpenStack Object Store, (or Swift). In Amazon speak, these are the OpenStack equivalents of EC2 and S3. Both the virtualisation and storage layers aim to be scalable, back-end agnostic, and use eventually consistent.</p>
 
@@ -93,9 +96,9 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
   
   <entry>
     <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity/"/>
     <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity</id>
     <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
 including:</p>
 
@@ -155,9 +158,9 @@ been able to make using his benchmark.</p>
   
   <entry>
     <title type="html"><![CDATA[Statistics @ Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/11/statistics-at-velocity/"/>
     <updated>2011-06-11T21:12:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/11/statistics-at-velocity</id>
     <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
 Amazon. I've never been hugely confident at my abilities to do estimation,
 forecasting, capacity planning etc. It's a really difficult thing.</p>
@@ -174,6 +177,9 @@ really think of them as lossy formats?</p>
   Moby Dick. Another major theme in his talks was to make time to do deep dives
   into log data, even if it only means you know how to when something really
   goes wrong.</p>
+
+<!-- more -->
+
 
 <p>  During the workshop, John discussed how we approach estimating someone's age.
   Given that problem, the instinct reaction is to propose a estimated value: 45,
@@ -232,9 +238,9 @@ easy to slip into the default behaviour of giving a single numeric response.</p>
   
   <entry>
     <title type="html"><![CDATA[Velocity 2011... a great conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
+    <link href="http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
     <updated>2011-06-11T20:27:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
+    <id>http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
     <content type="html"><![CDATA[<p>It's a week now since I came back from
 <a href="http://velocityconf.com/velocity2011">O'Reilly's Velocity</a>
 conference in San

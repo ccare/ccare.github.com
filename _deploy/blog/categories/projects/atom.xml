@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Projects | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/projects/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/projects/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Def Proxy]]></title>
-    <link href="http://blog.ccare.me/blog/2010/11/29/def-proxy/"/>
+    <link href="http://ccare.github.com/blog/2010/11/29/def-proxy/"/>
     <updated>2010-11-29T17:44:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2010/11/29/def-proxy</id>
+    <id>http://ccare.github.com/blog/2010/11/29/def-proxy</id>
     <content type="html"><![CDATA[<p>A while ago, I wrote some funky code to proxy interfaces method calls
 and delegate against a meta Object. For the last couple of day Tim Watson
 and I have been generalising this as a library for custom proxying between

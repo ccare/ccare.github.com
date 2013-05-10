@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -14,10 +14,495 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Creating a simple AMF client for testing]]></title>
+    <link href="http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
+    <updated>2013-05-09T12:31:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing</id>
+    <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
+blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-client-for-testing/">original</a>
+was posted on 30/04/2013.</p>
+
+
+<p>A few months back I had to debug an Adobe Flex application that used Adobe Message Format (AMF) for client-server communication. For readers unfamiliar with Adobe&#8217;s Flex/Flash stack, AMF is a binary RPC communication protocol, usually powered by Adobe&#8217;s BlazeDS technology. The application I was working on used BlazeDS to expose a number of AMF web services, backed by a fairly standard Java/Spring/Hibernate stack.</p>
+
+<p>As I started investigating the bug, I quickly began to suspect that the root cause was data related. Since many of the application screens were data-driven, I conjectured that there was inconsistent or incomplete data being returned from the web services. At the time, I didn&#8217;t have access to a stable version of Adobe FlexBuilder for Linux, so I wasn&#8217;t able to easily jump in and attach a debugger to the Flex application. However, I was able to read the code and understand a bit about the RPC service calls it was making. The server-side access logs also provided a good idea of the client-server interactions that were happening. In order to gain further insight into the scenario under test, I found myself wanting to &#8216;see&#8217; the data that was flowing between the two applications.</p>
+
+<!-- more -->
+
+
+<p>Even the simplest client-server app is a form of a distributed system, and when debugging a distributed system, I&#8217;m a big advocate of understanding the actual data flowing over the wire. I find it helps build up a picture of what an application is actually doing. Most of the systems I work with use human-readable formats in their web-services and, as a result, I always keep tools like tcpdump and wireshark to hand. However, with a binary format such as AMF, it&#8217;s really difficult to &#8216;see&#8217; what data is being transferred.</p>
+
+<h2>Building a client</h2>
+
+<p>Thankfully, there are client-side Java bindings for BlazeDS which can interact with an RPC endpoint and handle the marshalling/unmarshalling of data into Java POJOs. This allowed me to bypass flex altogether and hack together a simple Java client to interact with my webservices. In order to get started, I started a new Maven project, and added the following dependencies:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.adobe.blazeds<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>blazeds-core<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>3.2.0.3978<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.adobe.blazeds<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>blazeds-common<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>3.2.0.3978<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.adobe.blazeds<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>blazeds-remoting<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>3.2.0.3978<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Connecting to the AMF endpoint then just required a few lines of Java code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">AMFConnection</span> <span class="n">amfConnection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AMFConnection</span><span class="o">();</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://myapp.example.com/myservice/amf&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">amfConnection</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">amfConnection</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once I had a connection, it was simple to call one of the web services. For instance, in the application I was interested in, there was a UserService with an remote method named getUserByEmailAddress. The method took a single parameter: the user&#8217;s email address. To invoke this service, I did the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">amfConnection</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="s">&quot;UserService.getUserByEmailAddress&quot;</span><span class="o">,</span>
+</span><span class='line'>                                      <span class="s">&quot;charles@example.com&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This all looked good. However, I wasn&#8217;t quite finished. In this particular example, the service returned a specific type of object that needed to be unmarshalled. Let&#8217;s say that the return type of getUserByEmailAddress() was a class with a qualified name of <strong>com.example.model.User</strong>. In order for the unmarshalling code to work, the AMF bindings required me to create a client-side Java class for this type. But this was not too difficult, I just needed to provide the relevant fields, setters, and getters. For instance, something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">emailAddress</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course, what we have here is a classic Data Transfer Object (or DTO), and I soon found that I&#8217;d need to re-create a large number of DTO classes, far more boiler-plate code than I wanted to write. In some projects it might be possible to share some class definitions with the server project. However, in my particular example, the server-side classes were entities containing Hibernate/JPA annotations and were not suited to be used in a client-side environment.</p>
+
+<h2>Using HashMap-backed Data Transfer Objects</h2>
+
+<p>In fact, there is a far easier approach. Although the client requires local DTO classes, they can all be backed by a HashMap, drastically reducing the boiler-plate required. For instance, in the case of the User class, all I needed to do was to extend <strong>java.util.HashMap</strong>. I was able to drop all of the declarations and just have a empty class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">example</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">extends</span> <span class="n">HashMap</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// No further declarations required</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I was able to use simple Map getters to access the data and have a look at what was going on.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">User</span> <span class="n">result</span> <span class="o">=</span> <span class="o">(</span><span class="n">User</span><span class="o">)</span> <span class="n">amfConnection</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="s">&quot;UserService.getUserByEmailAddress&quot;</span><span class="o">,</span>
+</span><span class='line'>                                          <span class="s">&quot;charles@example.com&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&quot;email&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Summary</h2>
+
+<p>Building a lightweight Java client provides an alternative way of accessing a BlazeDS endpoint, which I found very useful when debugging and comprehend AMF services. Having this a client also enabled me to write a programmatic API test that didn&#8217;t rely on running a Flash Player. Finally, using DTOs that are specialisations of HashMap reduces boilerplate and allows you to make faster progress.</p>
+
+<p>And the bug? Well, it was data related, and it did get fixed.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Correlating log entries using Log4J and the Mapped Diagnostic Context]]></title>
+    <link href="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
+    <updated>2012-12-21T12:31:00+00:00</updated>
+    <id>http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
+    <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
+blog. The <a href="http://www.blackpepper.co.uk/posts/correlating-log-entries-using-log4j-and-the-mapped-diagnostic-context/">original</a>
+was posted on 20/12/2012.</p>
+
+
+<p>Over the last couple of years, it has become increasingly common for web applications to be built using client-side frameworks that interact with a remote server via asynchronous requests. Unlike a traditional app, that makes a single request per page, a modern web application will probably make many asynchronous HTTP requests. This poses a challenge when analysing server logs, since it can be difficult to identify which requests belong to the same client.</p>
+
+<p>In this blog post I&#8217;ll describe a simple technique we&#8217;ve applied to retro-fit a client-aware correlation token to the server logs of an existing web application.</p>
+
+<!-- more -->
+
+
+<h2>The problem</h2>
+
+<p>Our web application communicates with a Java application server over HTTP. The majority of client-side code is written in Java, using Google Web Toolkit (GWT), which is then compiled into JavaScript. The application server exposes both RESTful and GWT-RPC-based web services.</p>
+
+<p>For traditional webpages that follow a simple request-response pattern, log analysis is very straightforward. In a standard J2EE implementation, each request is served by a separate web server thread allocated from a pool. Once a request has been fully completed, that thread is returned to the pool so that it can process future requests. A convenient result of this &#8216;one-thread-per-request&#8217; model is that log lines can be correlated using the thread&#8217;s id. So a single request, handled by a thread named &#8220;http-8080-3&#8221;, might produce the following lines of output (I&#8217;ve shortened all timestamps in the log-line snippets):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the server is busy, these log lines will inevitably become interleaved, but they&#8217;re easy to unravel by looking at the thread id. Here we can see that there are two threads (http-8080-3 and http-8080-6) processing concurrent requests to the same service.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thread-based correlation is a useful technique for identifying all log entries for a <strong>single</strong> request. However, in this example we don&#8217;t know whether these requests came from the same web client or from different clients. In order to get more value from our application logs, we really need to correlate all requests from a single client.</p>
+
+<p>Consider the following scenario: we have two customers connecting to our site, and when they load the home page, each of their browsers will make two web service requests, one to <strong>Service1</strong> and another to <strong>Service2</strong>. If both clients load at the same time, we may get an interleaving like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s clear from these logs that there were two calls to each of our services, but it&#8217;s not easy to identify which ones belong to the same customer. Was our first customer using threads http-8080-3 and http-8080-2, or do the requests relating to threads http-8080-3 and http-8080-1 go together?</p>
+
+<p>One way to distinguish between them might be to print the client IP address, although that would rely on our load balancer passing through the source IP (and wouldn&#8217;t provide enough granularity if multiple sessions were coming from the same source). In any case, if both clients were behind a firewall we might see them as originating from the same address. Another approach might be to make use of server-side sessions to correlate requests. However, this wouldn&#8217;t distinguish between separate page loads, perhaps initiated in multiple browser tabs. We would also prefer to avoid maintaining server-side state.</p>
+
+<p>We finally settled on a solution based on generating a (reasonably) unique identifier for each application session client-side. This identifier can be passed as an HTTP header with each request and ultimately appended to each log line. In order to add the identifier to each log-line we used Log4J&#8217;s Mapped Diagnostic Context (MDC), which provides a simple key/value mechanism to capture small amounts of custom diagnostic data. Since it&#8217;s built into the logging framework, it&#8217;s really easy to add values from the MDC to each log line. For instance, here we have the same log fragment, but with an additional identifier field (here: &#8216;ae0021f&#8217; and &#8216;f3wev1x&#8217;) to distinguish between the different clients:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The implementation</h2>
+
+<p>The implementation doesn&#8217;t intrude into the business logic of our application and involves 3 simple steps:</p>
+
+<p>Firstly, when the application starts, we generate an identifier client-side, and add it to all subsequent HTTP requests. As I mentioned earlier, our application is built using GWT and interacts with the server using both GWT-RPC and ordinary AJAX calls to JSON APIs. Adding the HTTP header to our GWT RPC calls is a simple one-liner if you&#8217;re using com.google.gwt.http.client.RequestBuilder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">requestBuilder</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">,</span> <span class="n">globalClientId</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And for our JSON API calls, we just add the same header to our JQuery ajax calls:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s2">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">:</span> <span class="nx">globalClientId</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Secondly, the next step is to capture the identifier from each request. In order to not interfere with our existing business logic, we implemented a ServletFilter that captures the custom header and stores it in the Log4J MDC with the key &#8216;CLIENT_ID&#8217;.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">org.apache.log4j.MDC</span><span class="o">;</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClientAwareLoggingFilter</span> <span class="kd">implements</span> <span class="n">Filter</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="kd">final</span> <span class="n">ServletRequest</span> <span class="n">req</span><span class="o">,</span>
+</span><span class='line'>                   <span class="kd">final</span> <span class="n">ServletResponse</span> <span class="n">res</span><span class="o">,</span>
+</span><span class='line'>                   <span class="kd">final</span> <span class="n">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
+</span><span class='line'>                <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">if</span> <span class="o">(</span><span class="n">req</span> <span class="k">instanceof</span> <span class="n">HttpServletRequest</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>           <span class="kd">final</span> <span class="n">HttpServletRequest</span> <span class="n">httpRequest</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpServletRequest</span><span class="o">)</span><span class="n">req</span><span class="o">;</span>
+</span><span class='line'>           <span class="kd">final</span> <span class="n">String</span> <span class="n">clientSessionId</span> <span class="o">=</span>
+</span><span class='line'>                        <span class="n">httpRequest</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">);</span>
+</span><span class='line'>           <span class="k">if</span> <span class="o">(</span><span class="n">clientSessionId</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>               <span class="n">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;CLIENT_ID&quot;</span><span class="o">,</span> <span class="n">clientSessionId</span><span class="o">);</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>       <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>           <span class="n">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;CLIENT_ID&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>       <span class="o">}</span>
+</span><span class='line'>       <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'>   <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we edit our Log4J configuration to print out the contents of our MDC field. This is accomplished using the %X pattern and referencing the CLIENT_ID key:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="nl">log4j:</span><span class="n">configuration</span> <span class="nl">xmlns:</span><span class="n">log4j</span><span class="o">=</span><span class="s">&quot;http://jakarta.apache.org/log4j/&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">appender</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;FILE&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Append&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">layout</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;ConversionPattern&quot;</span>
+</span><span class='line'>           <span class="n">value</span><span class="o">=</span><span class="s">&quot;%d [%t] %p %c.%M(%L) [%X{CLIENT_ID}] | %m%n&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;/</span><span class="n">layout</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">appender</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">log4j:</span><span class="n">configuration</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Correlating acceptance tests</h2>
+
+<p>Although we originally added the correlation to help with the diagnosis of live logs, we&#8217;ve also found it really useful when investigating acceptance test failures. At Black Pepper our continuous integration server runs large numbers of automated UI tests. For this project we use Selenium&#8217;s WebDriver, and follow the fairly standard pattern of launching our application once for the entire test run. As a result, we have a single application log for the entire acceptance suite, so if a single test fails it can be difficult to find the log entries relating to the failure. Since we launch a new client for each test, the correlation token helps, as long as we can identify which token belonged to each test. We can make a further improvement by using the actual test name as the correlation token. We modified our application so that the client identifier could be overridden with a browser cookie, and added a JUnit @Rule to store the name of the current test in the cookie:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">TestName</span> <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestName</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="nd">@Override</span>
+</span><span class='line'>   <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">starting</span><span class="o">(</span><span class="kd">final</span> <span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="kd">super</span><span class="o">.</span><span class="na">starting</span><span class="o">(</span><span class="n">description</span><span class="o">);</span>
+</span><span class='line'>       <span class="kd">final</span> <span class="n">String</span> <span class="n">methodName</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="na">getMethodName</span><span class="o">();</span>
+</span><span class='line'>       <span class="o">...</span>
+</span><span class='line'>       <span class="k">if</span> <span class="o">(</span><span class="n">webDriver</span><span class="o">.</span><span class="na">manage</span><span class="o">().</span><span class="na">getCookieNamed</span><span class="o">(</span><span class="s">&quot;CLIENT_ID_SLUG&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>           <span class="n">webDriver</span><span class="o">.</span><span class="na">manage</span><span class="o">().</span><span class="na">addCookie</span><span class="o">(</span>
+</span><span class='line'>                              <span class="k">new</span> <span class="nf">Cookie</span><span class="o">(</span><span class="s">&quot;CLIENT_ID_SLUG&quot;</span><span class="o">,</span> <span class="n">methodName</span><span class="o">));</span>
+</span><span class='line'>       <span class="o">}</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, when we run the tests it is clear which log lines relate to which test:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">1</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">1</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">2</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">2</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>Making a simple change to our application to submit a client identifier in an HTTP header has helped us correlate our server-side logs. The facilities in the Log4J Mapped Diagnostic Context made this really easy to implement. Furthermore, using a cookie-based override allowed us to make our acceptance test logs more readable.</p>
+
+<p>MDC is a really handy feature of Log4J, and there are alternatives in other logging frameworks. The SLF4J facade library, for instance, provides an interface to the MDC when a suitably featured logging library is used (at the time of writing, these were just LogBack and Log4J). For libraries that don&#8217;t support this feature SLF4J provides a BasicMDCAdapter class which provides a basic implementation using ThreadLocal storage. Developers using .Net will find an MDC implementation in the NLog and log4net libraries.</p>
+
+<h2>Links</h2>
+
+<p>MDC documentation: <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html">http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html</a></p>
+
+<p>SLF4J&#8217;s implementation: <a href="http://www.slf4j.org/manual.html#mdc">http://www.slf4j.org/manual.html#mdc</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Playing with Java Timestamps]]></title>
+    <link href="http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha/"/>
+    <updated>2012-10-19T12:31:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha</id>
+    <content type="html"><![CDATA[<p>The shortcomings of Java&#8217;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&#8217;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
+
+<!-- more -->
+
+
+<p>In Java the standard way to control object equality is to implement an equals() method (and the associated hashcode() method). Generally, you would normally expect .equals() to be Symmetric (as defined by the <a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)">Java documentation for Object</a>. However, when using a java.util.Timestamp (which is a specialisation of java.util.Date), you can create an interesting scenario where equality is not symetric. This is best illustrated by the following test:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testTimestampEquality</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">Date</span> <span class="n">date</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">();</span>
+</span><span class='line'>    <span class="kd">final</span> <span class="kt">long</span> <span class="n">epochTime</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="na">getTime</span><span class="o">();</span>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">Timestamp</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timestamp</span><span class="o">(</span><span class="n">epochTime</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">date</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">timestamp</span><span class="o">));</span>
+</span><span class='line'>    <span class="c1">// Normally, you&#39;d expect date.equals(timestamp) to imply that </span>
+</span><span class='line'>    <span class="c1">// timestamp.equals(date). However, this is not the case:</span>
+</span><span class='line'>    <span class="n">Assert</span><span class="o">.</span><span class="na">assertFalse</span><span class="o">(</span><span class="n">timestamp</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">date</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a <a href="http://docs.oracle.com/javase/6/docs/api/java/sql/Timestamp.html#equals(java.lang.Object)">documented &#8216;feature&#8217;</a> and is there for backward compatibility reasons. However, if you don&#8217;t know you have an instance of java.util.Timestamp then this can be an interesting gotcha. I encountered this issue on a project where some client-side code used java.util.Date, but a deserialisation library had automagically created an instance of a Timestamp.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Joining Black Pepper Software]]></title>
-    <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
+    <link href="http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software/"/>
     <updated>2012-05-16T09:31:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
+    <id>http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software</id>
     <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&#8217;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
@@ -26,9 +511,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress!]]></title>
-    <link href="http://blog.ccare.me/blog/2012/04/07/hello-octopress/"/>
+    <link href="http://ccare.github.com/blog/2012/04/07/hello-octopress/"/>
     <updated>2012-04-07T18:25:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/04/07/hello-octopress</id>
+    <id>http://ccare.github.com/blog/2012/04/07/hello-octopress</id>
     <content type="html"><![CDATA[<p>Hi there!</p>
 
 <p>This my first post using <a href="http://octopress.org">Octopress</a>. Today I setup
@@ -46,14 +531,17 @@ sources to here during the next few weeks)</p>
   
   <entry>
     <title type="html"><![CDATA[Using Grails to throw-up a simple interface over JPA entities]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
+    <link href="http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
+    <id>http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last few weeks, I&#8217;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
 be polled and loaded in an ETL fashion. However, in order to build a compelling
 demo, I wanted to generate a simple CRUD over my existing domain classes.</p>
+
+<!-- more -->
+
 
 <h2>The scenario</h2>
 
@@ -393,9 +881,9 @@ with the command:</p>
   
   <entry>
     <title type="html"><![CDATA[Visible Ops]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/23/visible-ops/"/>
+    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
     <updated>2012-03-23T16:41:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
+    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
 the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&#8217;d
 been meaning to read it for a while - ever since I first heard Gene Kim speak at
@@ -408,6 +896,9 @@ now part of the &#8216;received wisdom&#8217; of operations. I also found it use
 a reminder of the ITIL jargon. Using the correct terms for this sort of thing
 is something I&#8217;m a bit weak on, but as the authors say in the book, having a
 common language is vital.</p>
+
+<!-- more -->
+
 
 <p>Working for a smaller company, I suppose some of the talk about audits and
 change-review boards sounded a bit overkill. Although it made me realise that
@@ -454,9 +945,9 @@ process.</p>
   
   <entry>
     <title type="html"><![CDATA[JPA and Kasabi]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi/"/>
+    <link href="http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi/"/>
     <updated>2012-03-20T18:04:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi</id>
+    <id>http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last couple of days I&#8217;ve been trying to pull together a demo of
 integrating an existing JPA application with Kasabi. It&#8217;s been a fun journey
 learning (and relearning) the JPA spec, and also working with some of the
@@ -481,12 +972,12 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Ways of Thinking]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/12/ways-of-thinking/"/>
+    <link href="http://ccare.github.com/blog/2012/03/12/ways-of-thinking/"/>
     <updated>2012-03-12T17:23:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/12/ways-of-thinking</id>
+    <id>http://ccare.github.com/blog/2012/03/12/ways-of-thinking</id>
     <content type="html"><![CDATA[<p>It&#8217;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &#8216;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&#8217;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&#8217;s taken a while to find it&#8217;s way into print, but I think it&#8217;s an interesting collection of different perspectives on modelling.</p>
 
-<p><img class="right" src="http://blog.ccare.me/images/cc/cover.jpg" title="Cover image" ></p>
+<p><img class="right" src="http://ccare.github.com/images/cc/cover.jpg" title="Cover image" ></p>
 
 <p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
 
@@ -498,9 +989,9 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Stub Http Server]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/07/stub-http-server/"/>
+    <link href="http://ccare.github.com/blog/2012/03/07/stub-http-server/"/>
     <updated>2012-03-07T20:25:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/07/stub-http-server</id>
+    <id>http://ccare.github.com/blog/2012/03/07/stub-http-server</id>
     <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we&#8217;ve been building our RDF platform
 following a distributed SOA
 architecture. Most of our integrations are through RESTful HTTP APIs, and in our
@@ -511,6 +1002,9 @@ remote service. Sometimes we do the usual thing and create mocks. This is fairly
 easy, but does involve quite a lot of plumbing - you need a mock HttpClient, then
 a mock GetRequest, then a mock entity, and so on&#8230; it can certainly create
 quite a lot of boilerplate.</p>
+
+<!-- more -->
+
 
 <p>I think this sort of test works much better with a <em>real</em> HttpClient, making
 real HTTP calls. We&#8217;ve been using this pattern quite a lot, and found that the
@@ -632,9 +1126,9 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
   
   <entry>
     <title type="html"><![CDATA[PubSub Huddle conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle/"/>
+    <link href="http://ccare.github.com/blog/2011/09/30/pub-sub-huddle/"/>
     <updated>2011-09-30T11:39:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle</id>
+    <id>http://ccare.github.com/blog/2011/09/30/pub-sub-huddle</id>
     <content type="html"><![CDATA[<p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
 one-day conference/hack-afternoon hosted by SkillsMatter.</p>
 
@@ -643,6 +1137,9 @@ particularly interesting conversations with people responsible for messaging sof
 and banks. The basic structure of the day was talks in the morning which was then
 followed by a self-organised &#8216;hack-afternoon&#8217;. The morning was excellent and had a large number of
 attendees. The afternoon was also good fun, but things did tail off as people started disappearing.</p>
+
+<!-- more -->
+
 
 <p>The morning started off with Martin Sústrik discussing his vision for &#8216;the future of messaging&#8217;.
 Martin is the founder of zeromq, but he was talking more about his higher-level goals to simplify
@@ -731,9 +1228,9 @@ tuning it - particularly since they are getting quite impressive throughput.</p>
   
   <entry>
     <title type="html"><![CDATA[Primitive types and Java performance]]></title>
-    <link href="http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance/"/>
+    <link href="http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance/"/>
     <updated>2011-07-11T09:05:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance</id>
+    <id>http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance</id>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
@@ -743,9 +1240,9 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
   
   <entry>
     <title type="html"><![CDATA[git-scm topic branch creation]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation/"/>
+    <link href="http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation/"/>
     <updated>2011-06-30T08:42:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation</id>
+    <id>http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation</id>
     <content type="html"><![CDATA[<p>Way I tend to create a topic branch in git-scm for a specific issue:</p>
 
 <pre><code>git checkout -b  # create a local branch
@@ -759,14 +1256,17 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
   
   <entry>
     <title type="html"><![CDATA[Openstack and Cloudera workshops at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
     <updated>2011-06-28T21:47:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
 <p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>
 
 <p>The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project&#8217;s road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.</p>
+
+<!-- more -->
+
 
 <p>As the speakers presented it, there are two core components Openstack: OpenStack Compute (or Nova), and OpenStack Object Store, (or Swift). In Amazon speak, these are the OpenStack equivalents of EC2 and S3. Both the virtualisation and storage layers aim to be scalable, back-end agnostic, and use eventually consistent.</p>
 
@@ -837,9 +1337,9 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
   
   <entry>
     <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity/"/>
     <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity</id>
     <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
 including:</p>
 
@@ -899,9 +1399,9 @@ been able to make using his benchmark.</p>
   
   <entry>
     <title type="html"><![CDATA[Deleting tags in gitscm]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm/"/>
+    <link href="http://ccare.github.com/blog/2011/06/23/deleting-tags-in-gitscm/"/>
     <updated>2011-06-23T09:52:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm</id>
+    <id>http://ccare.github.com/blog/2011/06/23/deleting-tags-in-gitscm</id>
     <content type="html"><![CDATA[<p>I&#8217;m bound to forget this little cryptic command to delete branch foo.</p>
 
 <pre><code>git push origin :refs/tags/foo
@@ -911,9 +1411,9 @@ been able to make using his benchmark.</p>
   
   <entry>
     <title type="html"><![CDATA[Statistics @ Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/11/statistics-at-velocity/"/>
     <updated>2011-06-11T21:12:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/11/statistics-at-velocity</id>
     <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
 Amazon. I&#8217;ve never been hugely confident at my abilities to do estimation,
 forecasting, capacity planning etc. It&#8217;s a really difficult thing.</p>
@@ -930,6 +1430,9 @@ really think of them as lossy formats?</p>
   Moby Dick. Another major theme in his talks was to make time to do deep dives
   into log data, even if it only means you know how to when something really
   goes wrong.</p>
+
+<!-- more -->
+
 
 <p>  During the workshop, John discussed how we approach estimating someone&#8217;s age.
   Given that problem, the instinct reaction is to propose a estimated value: 45,
@@ -988,9 +1491,9 @@ easy to slip into the default behaviour of giving a single numeric response.</p>
   
   <entry>
     <title type="html"><![CDATA[Velocity 2011... a great conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
+    <link href="http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
     <updated>2011-06-11T20:27:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
+    <id>http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
     <content type="html"><![CDATA[<p>It&#8217;s a week now since I came back from
 <a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&#8217;s Velocity</a>
 conference in San
@@ -1026,9 +1529,9 @@ should start to appear very soon.</p>
   
   <entry>
     <title type="html"><![CDATA[Avoiding 'peer not authenticated' error in Apache Httpclient]]></title>
-    <link href="http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
+    <link href="http://ccare.github.com/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
     <updated>2011-05-11T09:18:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
+    <id>http://ccare.github.com/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
     <content type="html"><![CDATA[<p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&#8217;s certificate verification. This how-to was really helpful.</p>
 
 <p>http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</p>
@@ -1037,9 +1540,9 @@ should start to appear very soon.</p>
   
   <entry>
     <title type="html"><![CDATA[Testing what happens when a java process runs out of disk]]></title>
-    <link href="http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
+    <link href="http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
     <updated>2011-04-11T12:32:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
+    <id>http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
     <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
 
 <p>I didn&#8217;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&#8217;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
@@ -1060,86 +1563,6 @@ should start to appear very soon.</p>
 
 
 <p>Works a treat, and really easy to play with different disk sizes.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Interesting SemWeb Books]]></title>
-    <link href="http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books/"/>
-    <updated>2011-03-10T16:38:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2011/03/10/interesting-semweb-books</id>
-    <content type="html"><![CDATA[<p>Over the last few months I&#8217;ve been trying to understand a little more about semantic web concepts etc&#8230; Here&#8217;s a list of some of the books I&#8217;ve been flicking through. Thought I&#8217;d blog them so I can find them again in the future.</p>
-
-<p>John Davies, Rudi Studer, Paul Warren. Semantic web technologies: trends and research in ontology-based systems. Wiley 2006.</p>
-
-<p>Karin K. Breitman, Marco Antonio Casanova, Walter Truszkowski. Semantic web: concepts, technologies, and applications.Springer 2006.</p>
-
-<p>Dean Allemang, Jim Hendler, Semantic web for the working ontologist: Effective modelling in RDFS and OWL.Elsevier 2008..</p>
-
-<p>Pascal Hitzler, Markus Krotzsch, Sebastian Rudolph. Foundations of semantic web technologies. CRC Press, 2010</p>
-
-<p>I found Davies et al. (2006) Quite interesting to flick through&#8230; two of the authors worked at the same company I was with so there&#8217;s some interesting case studies. However, I found the focus was a bit too much towards reasoning, discovery and other conceptual ideas.</p>
-
-<p>Breitman et al. (2006) and Allemang et al. (2008) were interesting as well</p>
-
-<p>My favourite was Hitzler et al. (2010). I really enjoyed their coverage of sparql - I read this one far more closely than the others.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Extracting calendar entries from Outlook]]></title>
-    <link href="http://blog.ccare.me/blog/2011/03/03/extracting-calendar-entries-from-outlook/"/>
-    <updated>2011-03-03T12:06:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2011/03/03/extracting-calendar-entries-from-outlook</id>
-    <content type="html"><![CDATA[<p>Having migrated by Outlook mailbox, I wanted to load calendar entries into another calendar. Following my earlier post, I already had my calendar entries in ICAL format, so all seemed good. However, I also had a number of recurring events (birthdays etc) that I wanted to put into my Google Calendar. The following PERL script was a handy bit of code to extract the recurring events so that I could extract them and add to my public calendar.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$entry</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>;
-</span><span class='line'><span class="k">while</span><span class="o">(</span>&lt;STDIN&gt;<span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="nv">$_</span> eq <span class="s2">&quot;&quot;</span> <span class="o">||</span> <span class="nv">$_</span> eq <span class="s2">&quot;\n&quot;</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="nv">$entry</span> <span class="o">=</span>~ /^RRULE<span class="se">\:</span>/<span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      print <span class="nv">$entry</span>;
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="nv">$entry</span> <span class="o">=</span> <span class="s2">&quot;\n&quot;</span>;
-</span><span class='line'>  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>     <span class="nv">$entry</span> .<span class="o">=</span> <span class="nv">$_</span>;
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>print <span class="nv">$entry</span>;
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Migrating Outlook to a Ubuntu mailbox]]></title>
-    <link href="http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/"/>
-    <updated>2011-03-03T11:10:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox</id>
-    <content type="html"><![CDATA[<p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it&#8217;s really simple.</p>
-
-<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook&#8217;s settings. Important: make sure outlook is closed first!</p>
-
-<p>2) Convert the ost file to a pst. There&#8217;s a windows tool for this - but I found it worked ok under wine. The program&#8217;s called ost2pst</p>
-
-<p>http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</p>
-
-<p>3) Install the readpst program (sudo apt-get install readpst - on Ubuntu). Then it&#8217;s a simple command to create a UNIX mailbox (one file for each folder)</p>
-
-<p>readpst outlook.pst</p>
-
-<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I&#8217;m using Alpine ;-)</p>
 ]]></content>
   </entry>
   

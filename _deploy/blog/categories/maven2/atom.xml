@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Maven2 | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/maven2/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/maven2/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Overriding the Maven local repository]]></title>
-    <link href="http://blog.ccare.me/blog/2009/07/02/overriding-the-maven-local-repository/"/>
+    <link href="http://ccare.github.com/blog/2009/07/02/overriding-the-maven-local-repository/"/>
     <updated>2009-07-02T14:17:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2009/07/02/overriding-the-maven-local-repository</id>
+    <id>http://ccare.github.com/blog/2009/07/02/overriding-the-maven-local-repository</id>
     <content type="html"><![CDATA[<p>Playing with Maven today - have been trying to establish a build from a clean repository (not .m2). Guessed that you could set the local repository, but took ages to find the prop...</p>
 
 <pre><code>mvn -o install -Dsettings.localRepository=/var/tmp/m2

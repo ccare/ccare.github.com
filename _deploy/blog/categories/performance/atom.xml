@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: performance | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/performance/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-09T11:44:15+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/performance/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-05-09T14:06:16+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Primitive types and Java performance]]></title>
-    <link href="http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance/"/>
+    <link href="http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance/"/>
     <updated>2011-07-11T09:05:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance</id>
+    <id>http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance</id>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 

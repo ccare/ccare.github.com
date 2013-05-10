@@ -9,9 +9,7 @@
   <meta name="author" content="Charles Care">
 
   
-  <meta name="description" content="Last weekend I finally got around to reading
-the Visible Ops handbook. I&#8217;d
-been meaning to read it for a while - ever since I first heard Gene &hellip;">
+  <meta name="description" content="It&#8217;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ been meaning to read it for a while - ever since I first heard Gene &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.ccare.me/blog/page/2">
+  <link rel="canonical" href="http://ccare.github.com/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -30,6 +28,7 @@ been meaning to read it for a while - ever since I first heard Gene &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/ccare.css" media="screen, projection" rel="stylesheet" type="text/css">
 
   
   <script type="text/javascript">
@@ -63,7 +62,7 @@ been meaning to read it for a while - ever since I first heard Gene &hellip;">
   
 <form action="http://google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:blog.ccare.me" />
+    <input type="hidden" name="q" value="site:ccare.github.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -78,148 +77,6 @@ been meaning to read it for a while - ever since I first heard Gene &hellip;">
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/23/visible-ops/">Visible Ops</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-23T16:41:00+00:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Last weekend I finally got around to reading
-the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&#8217;d
-been meaning to read it for a while - ever since I first heard Gene Kim speak at
-a conference last year.</p>
-
-<p>All in all it&#8217;s an interesting read. I didn&#8217;t find the book particularly
-controversial. But, then again, it is nearly 7 years since the book was first
-published. I think few people would disagree that many of the practices are
-now part of the &#8216;received wisdom&#8217; of operations. I also found it useful to get
-a reminder of the ITIL jargon. Using the correct terms for this sort of thing
-is something I&#8217;m a bit weak on, but as the authors say in the book, having a
-common language is vital.</p>
-
-<p>Working for a smaller company, I suppose some of the talk about audits and
-change-review boards sounded a bit overkill. Although it made me realise that
-the natural turn-off of these things is usually more to do with past
-experience of bureaucratic processes, rather than a feeling that audit and
-change-reviews are, in-themselves, a bad thing.</p>
-
-<p>The other week I gave a <a href="http://www.slideshare.net/cpcare/warwick-2012">lecture</a>
-to <a href="http://www2.warwick.ac.uk/fac/sci/dcs/teaching/material/cs321/">students at Warwick</a>
-about what it&#8217;s like to
-be a software developer at Kasabi. I had lots of things to talk about:
-our product, our team, our culture, etc. However I wanted to share something
-about our working practices. The practices we use have certainly evolved over
-time, inspired from various methodologies and communities including: Scrum,
-Kanban, and dev-ops. However, if I had to choose one thing that I couldn&#8217;t do
-without, I think it would be having a code-review process that&#8217;s tightly
-coupled to the build/release process.</p>
-
-<p>Nearly a year ago, our team moved to
-using <a href="http://code.google.com/p/gerrit/">Gerrit</a> as our principle review
-tool. The way it integrates with version control and continuous integration is
-fantastic. We were already following a continuous deployment model, but I feel
-that following the Gerrit workflow has helped us get closer to doing truly
-automated deployments. We&#8217;re also a distributed team, so spending extra-time
-on code-reviews can make up for less time spent pair-programming.</p>
-
-<p>So lets return to Visible Ops&#8230; for me, one of the biggest take-aways from
-reading the book was the idea that the acceptable number of unauthorised
-changes should be zero. Two points follow directly from this: 1) that
-code-review / change-review should be a straightforward and fast process (so
-that it&#8217;s not routinely circumvented), and 2) that even emergency changes
-should go through some kind of review process. In fact, the authors of Visible
-Ops make the valid point that emergency changes often benefit from closer
-review. For me, the simplicity of using a review-tool (like Gerrit) that&#8217;s
-built into the release process facilitates both of these goals. There have
-been times when I&#8217;ve needed to push an emergency fix. But because the tooling
-is relatively quick and simple to use, more and more I&#8217;m finding that I prefer
-to take these changes down the normal review path. Even though we&#8217;re not doing
-heavy-weight audits, from an ITIL perspective, it&#8217;s re-assuring to know that
-these changes are going through a robust, well-understood, and auditable
-process.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/20/jpa-and-kasabi/">JPA and Kasabi</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-20T18:04:00+00:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Over the last couple of days I&#8217;ve been trying to pull together a demo of
-integrating an existing JPA application with Kasabi. It&#8217;s been a fun journey
-learning (and relearning) the JPA spec, and also working with some of the
-internals of the Hibernate framework. It&#8217;s interesting that when a framework
-becomes really ubiquitous - like Hibernate, in this case - it&#8217;s really easy to
-find online docs and howtos about how to use it, but it&#8217;s far harder to sift
-through all that noise to find docs that help you extend it.</p>
-
-<p>In the end, I did get it working: I re-used the annotation scanning plumbing
-that Hibernate provides to get access to the JPA configuration, then I walked
-the object graph marshalling entities as RDF (I used NTriples) before submitting
-them to a Kasabi dataset.</p>
-
-<p>Of course, to complete the demo, I needed an actual JPA application, so I&#8217;ve had
-some fun re-learning Spring Roo and Grails in order to build a quick
-database-backed webapp. Normally I dislike scaffolding-based frameworks, but
-they&#8217;re certainly useful for creating a quick functional app.</p>
-
-<p>I&#8217;ll submit a link to the code at some point soon.</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -265,6 +122,359 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/07/stub-http-server/">Stub Http Server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-07T20:25:00+00:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>At <a href="http://talisplatform.com">Talis</a> we&#8217;ve been building our RDF platform
+following a distributed SOA
+architecture. Most of our integrations are through RESTful HTTP APIs, and in our
+Java projects we tend to use Apache HttpClient to consume them.</p>
+
+<p>As a result, when writing tests I find myself having to frequently stub-out a
+remote service. Sometimes we do the usual thing and create mocks. This is fairly
+easy, but does involve quite a lot of plumbing - you need a mock HttpClient, then
+a mock GetRequest, then a mock entity, and so on&#8230; it can certainly create
+quite a lot of boilerplate.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/07/stub-http-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/30/pub-sub-huddle/">PubSub Huddle Conference</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-30T11:39:00+01:00" pubdate data-updated="true">Sep 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
+one-day conference/hack-afternoon hosted by SkillsMatter.</p>
+
+<p>The day was a good event, there were quite a few people around in the morning and I had some
+particularly interesting conversations with people responsible for messaging software in hedge funds
+and banks. The basic structure of the day was talks in the morning which was then
+followed by a self-organised &#8216;hack-afternoon&#8217;. The morning was excellent and had a large number of
+attendees. The afternoon was also good fun, but things did tail off as people started disappearing.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/09/30/pub-sub-huddle/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/11/primitive-types-and-java-performance/">Primitive Types and Java Performance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-11T09:05:00+01:00" pubdate data-updated="true">Jul 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Reading article about primitives vs wrapper objects in Java.
+Nice to see some graphs and real evidence rather than just gut-feel.</p>
+
+<p>http://vanillajava.blogspot.com/2011/07/low-gc-in-java-use-primitives-instead.html</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/30/git-scm-topic-branch-creation/">Git-scm Topic Branch Creation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-30T08:42:00+01:00" pubdate data-updated="true">Jun 30<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Way I tend to create a topic branch in git-scm for a specific issue:</p>
+
+<pre><code>git checkout -b  # create a local branch
+# Do some stuff. We decide that its worth pursuing, so lets add the branch to the remote repo
+git push origin [branch-name] # push the local branch to the remote repo
+git branch --set-upstream [branch-name] origin/[branch-name] # make branch track remote
+# Carry on working in the branch
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/">Openstack and Cloudera Workshops at Velocity</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-28T21:47:00+01:00" pubdate data-updated="true">Jun 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
+
+<p>http://velocityconf.com/velocity2011/public/schedule/detail/19970</p>
+
+<p>The majority of the session provided an overview of the different components of OpenStack as they stand today and a look at the project&#8217;s road map. It seems that a lot has happened to this project over the last couple of months and they seem to have quite an interesting set of features coming in the next couple of months.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/26/nodejs-at-velocity/">NodeJS at Velocity</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-26T21:17:00+01:00" pubdate data-updated="true">Jun 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
+including:</p>
+
+<ul>
+<li>&#8220;Performance Enhancing Programming with NodeJS&#8221; by Tim Caswell</li>
+<li>Bryan Cantrill&#8217;s &#8220;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&#8221;</li>
+<li>&#8220;Cast - The Open Deployment Platform&#8221; by Paul Querna</li>
+<li>&#8220;Real-Time, Real-Fast&#8221; by Dylan Schiemann</li>
+</ul>
+
+
+<p>I attended Tim Caswell&#8217;s and Bryan Cantrill&#8217;s sessions, both of which were great
+introductions to Node.js hipe</p>
+
+<p>Tim Caswell&#8217;s (creationix on twitter/github) workshop was a great demo of
+Node&#8217;s scalability. He spun up a webserver on a private wlan and got the whole
+room to start pinging various demo apps.</p>
+
+<p>A few things discussed:</p>
+
+<p>Running JavaScript on client and server can avoid the issue of doubling your
+effort&#8230; You don&#8217;t cross the boundary all the time if pieces of modular
+functionality can be run either client side or server side.
+There&#8217;s an opportunity to run more in the server during the period that the
+Browser&#8217;s busy downloading content or engaged in pre-render tasks. Once the
+app is fully up, you can then progressively do more in the client by shipping
+the same scripts over the wire.
+Non blocking IO. Using buffers and memcpy to avoid string builder overhead
+Some discussion on tooling: node-inspector, DTrace, node -debug, and v8
+graphical debug all sound interesting.</p>
+
+<p>Bryan Cantrill&#8217;s talk was, in a single word, energetic. Unsurprisingly we saw a
+lot of DTrace and we heard about a Node.js app he&#8217;d build to monitor net traffic
+during a hackday. I think that Cantrill&#8217;s talk can be summarised as Node being
+the union of the popularity of JavaScript, non-blocking IO, and the Unix APIs
+(or, as Cantrill puts it &#8220;the APIs God intended&#8221;).</p>
+
+<p>In summary, there seems to be a lot of hype around Node. And it seems that
+it&#8217;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
+the mood. Also because JavaScript never had any IO in the core language, you
+don&#8217;t have to drop the bits of the language that don&#8217;t fit the Node.js model
+(e.g. if you&#8217;re using twisted you&#8217;re only wanting to use a subset of python).
+I&#8217;ll definitely be playing with it to understand more.</p>
+
+<p>Of course, the backbone of Node is the V8 JavaScript engine, and the theme of
+JavaScript tuning was definitely strong at Velocity. Another interesting keynote
+was Douglas Crockford on JavaScript. He was talking about the JavaScript
+benchmarks and how a lack of good benchmarks had resulted in the wrong kind of
+optimisations. Recently Crockford created a benchmark by running jslint over
+jslint. He argued that this provided a much better benchmark as it touched more
+widely-used patterns (such as closures and prototypal inheritance) than the more
+common &#8220;how fast does this loop execute&#8221; tests often found in benchmarks. He
+also shared some interesting stats on performance gains that the V8 team had
+been able to make using his benchmark.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/23/deleting-tags-in-gitscm/">Deleting Tags in Gitscm</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-23T09:52:00+01:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m bound to forget this little cryptic command to delete branch foo.</p>
+
+<pre><code>git push origin :refs/tags/foo
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -282,23 +492,23 @@ they&#8217;re certainly useful for creating a quick functional app.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a simple AMF client for testing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/">Correlating log entries using Log4J and the Mapped Diagnostic Context</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/19/java-timestamp-gotcha/">Playing with Java Timestamps</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/05/16/joining-black-pepper-software/">Joining Black Pepper Software</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/04/07/hello-octopress/">Hello Octopress!</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/">Using Grails to throw-up a simple interface over JPA entities</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/23/visible-ops/">Visible Ops</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/20/jpa-and-kasabi/">JPA and Kasabi</a>
       </li>
     
   </ul>
