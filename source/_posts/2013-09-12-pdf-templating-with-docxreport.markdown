@@ -74,9 +74,9 @@ In order to get going we had to add the library's dependencies to our project. I
 
 Next we needed to create a template and add it to our classpath. We decided to use **odt** as our template format. Marking up the document is done using the 'add field' menu in OpenOffice or LibreOffice writer [3]. Inside the template fields you can add artbitrary Velocity expressions. We made use of #if...#end directives because we were generating a contract that only needed to include a VAT number if a customer was VAT registered.
 
-{% img ./img1.png %}
-{% img ./img2.png %}
-{% img ./img3.png %}
+{% img /images/docxreport/img1.png %}
+{% img /images/docxreport/img2.png %}
+{% img /images/docxreport/img3.png %}
 
 
 Next we needed some code to populate values into our template. First we created a simple object to represent our model
