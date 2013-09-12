@@ -15,6 +15,7 @@ It is very common requirement for software systems to generate a PDF document of
 [Black Pepper](http://www.blackpepper.co.uk), we've built a number of e-commerce systems, and usually our clients have a requirement to produce a nicely formatted invoice or contract which their customers can access through the web.
 
 We often work on a Java stack, and there are therefore a number of approaches to generating a PDF, including Apache FOP (based on XSL), iText, and a variety of others [1]. In a number of solutions we've gone down the iText approach since it's pure Java and therefore reasonably straight forward to integrate and test. However, it presents a DOM-based approach which is not without it shortcomings. A better solution is to use a template so that layout can be separated from the PDF generation. That's precisely what we wanted to do for a recent project, when we discovered the XDocReport library [2] which provided exactly what we needed. This post describes how to get started with that library.
+<!-- more -->
 
 The problem
 -----------
