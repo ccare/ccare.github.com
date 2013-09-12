@@ -4,7 +4,7 @@
   <title><![CDATA[Charles' Blog]]></title>
   <link href="http://blog.ccare.me/atom.xml" rel="self"/>
   <link href="http://blog.ccare.me/"/>
-  <updated>2013-05-10T15:35:42+01:00</updated>
+  <updated>2013-09-12T21:43:59+01:00</updated>
   <id>http://blog.ccare.me/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -12,6 +12,180 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PDF Templating with DocXReport]]></title>
+    <link href="http://blog.ccare.me/blog/2013/09/12/pdf-templating-with-docxreport/"/>
+    <updated>2013-09-12T21:07:00+01:00</updated>
+    <id>http://blog.ccare.me/blog/2013/09/12/pdf-templating-with-docxreport</id>
+    <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
+blog. The <a href="http://www.blackpepper.co.uk/posts/pdf-templating-with-docxreport/">original</a>
+
+was posted on 12/09/2013.</p>
+
+
+<p>It is very common requirement for software systems to generate a PDF document of some kind. For instance, at
+<a href="http://www.blackpepper.co.uk">Black Pepper</a>, we&rsquo;ve built a number of e-commerce systems, and usually our clients have a requirement to produce a nicely formatted invoice or contract which their customers can access through the web.</p>
+
+<p>We often work on a Java stack, and there are therefore a number of approaches to generating a PDF, including Apache FOP (based on XSL), iText, and a variety of others [1]. In a number of solutions we&rsquo;ve gone down the iText approach since it&rsquo;s pure Java and therefore reasonably straight forward to integrate and test. However, it presents a DOM-based approach which is not without it shortcomings. A better solution is to use a template so that layout can be separated from the PDF generation. That&rsquo;s precisely what we wanted to do for a recent project, when we discovered the XDocReport library [2] which provided exactly what we needed. This post describes how to get started with that library.</p>
+
+<h2>The problem</h2>
+
+<p>In previous projects, we often used the iText library to produce a PDF, writing quite low-level code to describe the Document Object Model (DOM) of the PDF. Something like the following snippiet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="n">Document</span> <span class="n">document</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Document</span><span class="o">();</span>
+</span><span class='line'><span class="n">PdfWriter</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">document</span><span class="o">,</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">FILE</span><span class="o">));</span>
+</span><span class='line'><span class="n">document</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+</span><span class='line'><span class="n">document</span><span class="o">.</span><span class="na">addTitle</span><span class="o">(</span><span class="s">&quot;My first PDF&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">Paragraph</span> <span class="n">para1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Paragraph</span><span class="o">();</span>
+</span><span class='line'><span class="n">para1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Paragraph</span><span class="o">(</span><span class="s">&quot;Paragraph text...&quot;</span><span class="o">,</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nf">Font</span><span class="o">(</span><span class="n">Font</span><span class="o">.</span><span class="na">FontFamily</span><span class="o">.</span><span class="na">TIMES_ROMAN</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="n">Font</span><span class="o">.</span><span class="na">BOLD</span><span class="o">)))</span>
+</span><span class='line'><span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, following this approach results in a fairly tight-coupling between how a PDF is produced and how it looked. Every time our clients wanted to change the formatting of their report, we had to change our code. In terms of the Model-View-Controller pattern, it felt that we didn&rsquo;t have the correct separation between our controller and view logic. What we needed was a way of templating a PDF document and then substituting our data into placeholders.</p>
+
+<p>Of course, templating is not new to us. We commonly leverage view templates when we generate emails, reports, and other HTML-based documents. One of our favourite template technologies is Apache Velocity &mdash; an open-source template engine that has become the de-facto standard templating engine in many enterprise Java projects. Ideally, we wanted to be able to use Velocity to produce our PDF.</p>
+
+<h2>The solution &ndash; XDocReport</h2>
+
+<p>The XDocReport library [2] is a fantastic utility that provided exactly what we needed. It builds on top of Apache Velocity and IText, but instead of directly producing PDFs, it separates the problem into two parts: a &lsquo;mail-merge&rsquo; of a template document, followed by a reliable converter that produces a PDF from the merged document. Templates can be based on either the popular Microsoft .docx format, or alternatively, the OpenOffice .odt format.</p>
+
+<p>What&rsquo;s really great about XDocReport is the way it plays nicely with the formats it&rsquo;s templating for. Both the Microsoft and OpenOffice format have built-in support for adding data-driven fields which are commonly used when performing a traditional mail merge. To it&rsquo;s credit, XDocReport utilises these features to capture the template placeholders. As a result, it requires very little (if any) software engineering skills to update and maintain a template.</p>
+
+<h2>Using XDocReport</h2>
+
+<p>In order to get going we had to add the library&rsquo;s dependencies to our project. Initially it was a bit tricky to track down the exact dependencies because a number of the dependent libraries have been repackaged (presumably to help when deploying into an OSGI context). If you&rsquo;re using Maven (or Ivy, Gradle etc), then you can grab the jars from the Maven Central repository using the following definitions:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'>...
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>fr.opensagres.xdocreport<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>fr.opensagres.xdocreport.document.odt<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>fr.opensagres.xdocreport<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>fr.opensagres.xdocreport.converter.odt.odfdom<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;groupId&gt;</span>fr.opensagres.xdocreport<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;artifactId&gt;</span>fr.opensagres.xdocreport.template.velocity<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we needed to create a template and add it to our classpath. We decided to use <strong>odt</strong> as our template format. Marking up the document is done using the &lsquo;add field&rsquo; menu in OpenOffice or LibreOffice writer [3]. Inside the template fields you can add artbitrary Velocity expressions. We made use of #if&hellip;#end directives because we were generating a contract that only needed to include a VAT number if a customer was VAT registered.</p>
+
+<p><img src="http://blog.ccare.me/images/docxreport/img1.png">
+<img src="http://blog.ccare.me/images/docxreport/img2.png">
+<img src="http://blog.ccare.me/images/docxreport/img3.png"></p>
+
+<p>Next we needed some code to populate values into our template. First we created a simple object to represent our model</p>
+
+<pre><code>public class Invoice {
+
+    private String formattedTotal;
+    private String vatNumber;
+    private boolean vatRegistered;
+
+    ...
+
+}
+</code></pre>
+
+<p>Then, finally, we needed some glue code to generate a PDF (here with no exception handling or IO cleanup)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// 1) Load ODT file by filling Velocity template engine and cache</span>
+</span><span class='line'><span class="kd">final</span> <span class="n">InputStream</span> <span class="n">in</span> <span class="o">=</span>
+</span><span class='line'><span class="n">Demo</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/invoiceTemplate.odt&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="kd">final</span> <span class="n">IXDocReport</span> <span class="n">report</span> <span class="o">=</span> <span class="n">XDocReportRegistry</span><span class="o">.</span><span class="na">getRegistry</span><span class="o">()</span>
+</span><span class='line'>      <span class="o">.</span><span class="na">loadReport</span><span class="o">(</span><span class="n">in</span><span class="o">,</span> <span class="n">TemplateEngineKind</span><span class="o">.</span><span class="na">Velocity</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 2) Create context Java model and add model</span>
+</span><span class='line'><span class="kd">final</span> <span class="n">IContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="na">createContext</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;invoice&quot;</span><span class="o">,</span> <span class="n">invoice</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 3) Generate report by merging Java model with the ODT,</span>
+</span><span class='line'><span class="c1">//      and then converting to PDF</span>
+</span><span class='line'><span class="kd">final</span> <span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">FileOutputStream</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;mergedInvoice.pdf&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="kd">final</span> <span class="n">Options</span> <span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="o">.</span><span class="na">getTo</span><span class="o">(</span><span class="n">ConverterTypeTo</span><span class="o">.</span><span class="na">PDF</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">.</span><span class="na">via</span><span class="o">(</span><span class="n">ConverterTypeVia</span><span class="o">.</span><span class="na">ODFDOM</span><span class="o">);</span>
+</span><span class='line'><span class="n">report</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">options</span><span class="o">,</span> <span class="n">out</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Integrating within Spring MVC</h2>
+
+<p>In practice we want to generate and serve the PDF over HTTP. We were using Spring MVC to manage both our server-side pages and RESTful APIs so it made sense to enapsulate our PDF generaton into a custom view. Creating a PDF document on the fly then was a simple matter of writing a small amount of controller logic, passing in a model object and a reference to the template we wanted to use.</p>
+
+<h2>Conclusion</h2>
+
+<p>Using XDocReport has enabled us to produce nicely formatted PDF documents based on data inside our application. The advantage over alternative approaches we&rsquo;ve followed in the past is that anyone with basic word processor skills can update the templates without requiring a software engineer to write code. Using a template-based approach also allowed us to deliver the functionality much faster, and when our customer required a different template to be used in certain situations, dynamically switching the template was a really simple code change.</p>
+
+<h2>References</h2>
+
+<p>[1] List of PDF libraries for Java: [<a href="http://java-source.net/open-source/pdf-libraries/itext">http://java-source.net/open-source/pdf-libraries/itext</a>]</p>
+
+<p>[2] The XDocReport library: [<a href="http://code.google.com/p/xdocreport">http://code.google.com/p/xdocreport</a>]</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Creating a simple AMF client for testing]]></title>
@@ -506,6 +680,30 @@ was posted on 20/12/2012.</p>
     <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&rsquo;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moving on from Talis]]></title>
+    <link href="http://blog.ccare.me/blog/2012/05/04/moving-on-from-talis/"/>
+    <updated>2012-05-04T15:55:00+01:00</updated>
+    <id>http://blog.ccare.me/blog/2012/05/04/moving-on-from-talis</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s all change for me again. I&rsquo;ve decided to move on from <a href="http://talis.com">Talis</a>. Today was my last day in the office, and the end of what has been an
+incredible journey. Although it&rsquo;s only just over a year since I joined the Talis Platform team, we&rsquo;ve been constanly iterating and developing
+innovative solutions. A year ago, we had the opportunity to focus
+entirely on our next generation data platform, and I felt we had a really
+productive year. It has certainly been a constant learning-curve for
+me and forced me to seriously think about the design and
+implementation of distributed systems. Whether it&rsquo;s been about dev-ops, continuous deployment, RDF, Jena, sparql, or zeromq, I don&rsquo;t feel I&rsquo;ve stopped
+learning. The pace has been great.</p>
+
+<p>As engineers, I think we all aspire to work on great projects, preferably using cool technology to deliver great software. The last year
+has certainly allowed me to do that. However, what really counts is being surrounded by great people &mdash; and that&rsquo;s certainly been true
+of working at Talis.
+I&rsquo;ve certainly learnt a lot and have really benefited from working with some truly inspirational people.</p>
+
+<p>In a few weeks time I&rsquo;ll be joining the team at <a href="http://blackpepper.co.uk/">Black Pepper software</a>. I&rsquo;m excited about the fresh challenge, but
+will definitely miss my old colleagues at Talis.</p>
 ]]></content>
   </entry>
   
@@ -1524,45 +1722,6 @@ feel much more comfortable with everyone being part of the same team.</p>
 
 <p>I&rsquo;ve decided to blog some of my thoughts/notes from the conference: the posts
 should start to appear very soon.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Avoiding 'peer not authenticated' error in Apache Httpclient]]></title>
-    <link href="http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient/"/>
-    <updated>2011-05-11T09:18:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/05/11/avoiding-peer-not-authenticated-error-in-apache-httpclient</id>
-    <content type="html"><![CDATA[<p>Ran into some issues with httpclient not accepting SSL certs for an Amazon S3 url. Wanted to temporarily turn off httpclient&rsquo;s certificate verification. This how-to was really helpful.</p>
-
-<p><a href="http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html">http://javaskeleton.blogspot.com/2010/07/avoiding-peer-not-authenticated-with.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Testing what happens when a java process runs out of disk]]></title>
-    <link href="http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
-    <updated>2011-04-11T12:32:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
-    <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
-
-<p>I didn&rsquo;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&rsquo;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Create a raw &#39;disk&#39; around 1 GB in size</span>
-</span><span class='line'>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>disk.raw <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span>1000000
-</span><span class='line'><span class="c"># Format it - I went for ~900MB which suited my tests</span>
-</span><span class='line'>mkfs -t ext2 disk1.raw  900000
-</span><span class='line'><span class="c"># Mount the file into a local folder</span>
-</span><span class='line'>sudo mount -o loop -t ext2 disk.raw ./mount-dir
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Works a treat, and really easy to play with different disk sizes.</p>
 ]]></content>
   </entry>
   

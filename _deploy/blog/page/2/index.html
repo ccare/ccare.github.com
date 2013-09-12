@@ -9,7 +9,9 @@
   <meta name="author" content="Charles Care">
 
   
-  <meta name="description" content="It&rsquo;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &hellip;">
+  <meta name="description" content="Last weekend I finally got around to reading
+the Visible Ops handbook. I&rsquo;d
+been meaning to read it for a while &ndash; ever since I first heard &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +80,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/23/visible-ops/">Visible Ops</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-23T16:41:00+00:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/23/visible-ops/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last weekend I finally got around to reading
+the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&rsquo;d
+been meaning to read it for a while &ndash; ever since I first heard Gene Kim speak at
+a conference last year.</p>
+
+<p>All in all it&rsquo;s an interesting read. I didn&rsquo;t find the book particularly
+controversial. But, then again, it is nearly 7 years since the book was first
+published. I think few people would disagree that many of the practices are
+now part of the &lsquo;received wisdom&rsquo; of operations. I also found it useful to get
+a reminder of the ITIL jargon. Using the correct terms for this sort of thing
+is something I&rsquo;m a bit weak on, but as the authors say in the book, having a
+common language is vital.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/23/visible-ops/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/20/jpa-and-kasabi/">JPA and Kasabi</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T18:04:00+00:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/20/jpa-and-kasabi/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the last couple of days I&rsquo;ve been trying to pull together a demo of
+integrating an existing JPA application with Kasabi. It&rsquo;s been a fun journey
+learning (and relearning) the JPA spec, and also working with some of the
+internals of the Hibernate framework. It&rsquo;s interesting that when a framework
+becomes really ubiquitous &ndash; like Hibernate, in this case &ndash; it&rsquo;s really easy to
+find online docs and howtos about how to use it, but it&rsquo;s far harder to sift
+through all that noise to find docs that help you extend it.</p>
+
+<p>In the end, I did get it working: I re-used the annotation scanning plumbing
+that Hibernate provides to get access to the JPA configuration, then I walked
+the object graph marshalling entities as RDF (I used NTriples) before submitting
+them to a Kasabi dataset.</p>
+
+<p>Of course, to complete the demo, I needed an actual JPA application, so I&rsquo;ve had
+some fun re-learning Spring Roo and Grails in order to build a quick
+database-backed webapp. Normally I dislike scaffolding-based frameworks, but
+they&rsquo;re certainly useful for creating a quick functional app.</p>
+
+<p>I&rsquo;ll submit a link to the code at some point soon.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -360,145 +472,13 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/06/26/nodejs-at-velocity/">NodeJS at Velocity</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-26T21:17:00+01:00" pubdate data-updated="true">Jun 26<span>th</span>, 2011</time>
-        
-         | <a href="/blog/2011/06/26/nodejs-at-velocity/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
-including:</p>
-
-<ul>
-<li>&ldquo;Performance Enhancing Programming with NodeJS&rdquo; by Tim Caswell</li>
-<li>Bryan Cantrill&rsquo;s &ldquo;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&rdquo;</li>
-<li>&ldquo;Cast &ndash; The Open Deployment Platform&rdquo; by Paul Querna</li>
-<li>&ldquo;Real-Time, Real-Fast&rdquo; by Dylan Schiemann</li>
-</ul>
-
-
-<p>I attended Tim Caswell&rsquo;s and Bryan Cantrill&rsquo;s sessions, both of which were great
-introductions to Node.js hipe</p>
-
-<p>Tim Caswell&rsquo;s (creationix on twitter/github) workshop was a great demo of
-Node&rsquo;s scalability. He spun up a webserver on a private wlan and got the whole
-room to start pinging various demo apps.</p>
-
-<p>A few things discussed:</p>
-
-<p>Running JavaScript on client and server can avoid the issue of doubling your
-effort&hellip; You don&rsquo;t cross the boundary all the time if pieces of modular
-functionality can be run either client side or server side.
-There&rsquo;s an opportunity to run more in the server during the period that the
-Browser&rsquo;s busy downloading content or engaged in pre-render tasks. Once the
-app is fully up, you can then progressively do more in the client by shipping
-the same scripts over the wire.
-Non blocking IO. Using buffers and memcpy to avoid string builder overhead
-Some discussion on tooling: node-inspector, DTrace, node -debug, and v8
-graphical debug all sound interesting.</p>
-
-<p>Bryan Cantrill&rsquo;s talk was, in a single word, energetic. Unsurprisingly we saw a
-lot of DTrace and we heard about a Node.js app he&rsquo;d build to monitor net traffic
-during a hackday. I think that Cantrill&rsquo;s talk can be summarised as Node being
-the union of the popularity of JavaScript, non-blocking IO, and the Unix APIs
-(or, as Cantrill puts it &ldquo;the APIs God intended&rdquo;).</p>
-
-<p>In summary, there seems to be a lot of hype around Node. And it seems that
-it&rsquo;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
-the mood. Also because JavaScript never had any IO in the core language, you
-don&rsquo;t have to drop the bits of the language that don&rsquo;t fit the Node.js model
-(e.g. if you&rsquo;re using twisted you&rsquo;re only wanting to use a subset of python).
-I&rsquo;ll definitely be playing with it to understand more.</p>
-
-<p>Of course, the backbone of Node is the V8 JavaScript engine, and the theme of
-JavaScript tuning was definitely strong at Velocity. Another interesting keynote
-was Douglas Crockford on JavaScript. He was talking about the JavaScript
-benchmarks and how a lack of good benchmarks had resulted in the wrong kind of
-optimisations. Recently Crockford created a benchmark by running jslint over
-jslint. He argued that this provided a much better benchmark as it touched more
-widely-used patterns (such as closures and prototypal inheritance) than the more
-common &ldquo;how fast does this loop execute&rdquo; tests often found in benchmarks. He
-also shared some interesting stats on performance gains that the V8 team had
-been able to make using his benchmark.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/06/23/deleting-tags-in-gitscm/">Deleting Tags in Gitscm</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-23T09:52:00+01:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/06/23/deleting-tags-in-gitscm/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;m bound to forget this little cryptic command to delete branch foo.</p>
-
-<pre><code>git push origin :refs/tags/foo
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/">Newer &rarr;</a>
+    <a class="next" href="/blog/">Newer &rarr;</a>
     
   </div>
 </div>
@@ -507,6 +487,10 @@ been able to make using his benchmark.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/12/pdf-templating-with-docxreport/">PDF Templating With DocXReport</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
@@ -522,10 +506,6 @@ been able to make using his benchmark.</p>
     
       <li class="post">
         <a href="/blog/2012/05/16/joining-black-pepper-software/">Joining Black Pepper Software</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/07/hello-octopress/">Hello Octopress!</a>
       </li>
     
   </ul>

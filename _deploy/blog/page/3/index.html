@@ -9,8 +9,8 @@
   <meta name="author" content="Charles Care">
 
   
-  <meta name="description" content="One of the pre-conference workshops was an excellent session by John Rauser from
-Amazon. I&rsquo;ve never been hugely confident at my abilities to do &hellip;">
+  <meta name="description" content="NodeJS seemed to be a passing theme in a number of the talks at the conference,
+including: &ldquo;Performance Enhancing Programming with NodeJS&rdquo &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,138 @@ Amazon. I&rsquo;ve never been hugely confident at my abilities to do &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/26/nodejs-at-velocity/">NodeJS at Velocity</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-26T21:17:00+01:00" pubdate data-updated="true">Jun 26<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/06/26/nodejs-at-velocity/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
+including:</p>
+
+<ul>
+<li>&ldquo;Performance Enhancing Programming with NodeJS&rdquo; by Tim Caswell</li>
+<li>Bryan Cantrill&rsquo;s &ldquo;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&rdquo;</li>
+<li>&ldquo;Cast &ndash; The Open Deployment Platform&rdquo; by Paul Querna</li>
+<li>&ldquo;Real-Time, Real-Fast&rdquo; by Dylan Schiemann</li>
+</ul>
+
+
+<p>I attended Tim Caswell&rsquo;s and Bryan Cantrill&rsquo;s sessions, both of which were great
+introductions to Node.js hipe</p>
+
+<p>Tim Caswell&rsquo;s (creationix on twitter/github) workshop was a great demo of
+Node&rsquo;s scalability. He spun up a webserver on a private wlan and got the whole
+room to start pinging various demo apps.</p>
+
+<p>A few things discussed:</p>
+
+<p>Running JavaScript on client and server can avoid the issue of doubling your
+effort&hellip; You don&rsquo;t cross the boundary all the time if pieces of modular
+functionality can be run either client side or server side.
+There&rsquo;s an opportunity to run more in the server during the period that the
+Browser&rsquo;s busy downloading content or engaged in pre-render tasks. Once the
+app is fully up, you can then progressively do more in the client by shipping
+the same scripts over the wire.
+Non blocking IO. Using buffers and memcpy to avoid string builder overhead
+Some discussion on tooling: node-inspector, DTrace, node -debug, and v8
+graphical debug all sound interesting.</p>
+
+<p>Bryan Cantrill&rsquo;s talk was, in a single word, energetic. Unsurprisingly we saw a
+lot of DTrace and we heard about a Node.js app he&rsquo;d build to monitor net traffic
+during a hackday. I think that Cantrill&rsquo;s talk can be summarised as Node being
+the union of the popularity of JavaScript, non-blocking IO, and the Unix APIs
+(or, as Cantrill puts it &ldquo;the APIs God intended&rdquo;).</p>
+
+<p>In summary, there seems to be a lot of hype around Node. And it seems that
+it&rsquo;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
+the mood. Also because JavaScript never had any IO in the core language, you
+don&rsquo;t have to drop the bits of the language that don&rsquo;t fit the Node.js model
+(e.g. if you&rsquo;re using twisted you&rsquo;re only wanting to use a subset of python).
+I&rsquo;ll definitely be playing with it to understand more.</p>
+
+<p>Of course, the backbone of Node is the V8 JavaScript engine, and the theme of
+JavaScript tuning was definitely strong at Velocity. Another interesting keynote
+was Douglas Crockford on JavaScript. He was talking about the JavaScript
+benchmarks and how a lack of good benchmarks had resulted in the wrong kind of
+optimisations. Recently Crockford created a benchmark by running jslint over
+jslint. He argued that this provided a much better benchmark as it touched more
+widely-used patterns (such as closures and prototypal inheritance) than the more
+common &ldquo;how fast does this loop execute&rdquo; tests often found in benchmarks. He
+also shared some interesting stats on performance gains that the V8 team had
+been able to make using his benchmark.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/23/deleting-tags-in-gitscm/">Deleting Tags in Gitscm</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-23T09:52:00+01:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/06/23/deleting-tags-in-gitscm/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m bound to forget this little cryptic command to delete branch foo.</p>
+
+<pre><code>git push origin :refs/tags/foo
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -419,99 +551,6 @@ should start to appear very soon.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/">Migrating Outlook to a Ubuntu Mailbox</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-03T11:10:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it&rsquo;s really simple.</p>
-
-<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook&rsquo;s settings. Important: make sure outlook is closed first!</p>
-
-<p>2) Convert the ost file to a pst. There&rsquo;s a windows tool for this &ndash; but I found it worked ok under wine. The program&rsquo;s called ost2pst</p>
-
-<p><a href="http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/">http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</a></p>
-
-<p>3) Install the readpst program (sudo apt-get install readpst &ndash; on Ubuntu). Then it&rsquo;s a simple command to create a UNIX mailbox (one file for each folder)</p>
-
-<p>readpst outlook.pst</p>
-
-<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I&rsquo;m using Alpine ;&ndash;)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/03/03/leaving-bt/">Leaving BT</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-03T09:00:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
-        
-         | <a href="/blog/2011/03/03/leaving-bt/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today&rsquo;s my last full-day working at BT. I&rsquo;m marking the event with a final
-visit to Adastral Park in Martlesham, Ipswich.</p>
-
-<p>Over the last few years, I&rsquo;ve worked with some pretty smart engineers
-and had a lot of fun. I&rsquo;m really excited about joining <a href="http://talis.com">Talis</a>, but
-I&rsquo;m going to miss a lot of great people.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -529,6 +568,10 @@ I&rsquo;m going to miss a lot of great people.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/12/pdf-templating-with-docxreport/">PDF Templating With DocXReport</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
       </li>
     
@@ -542,10 +585,6 @@ I&rsquo;m going to miss a lot of great people.</p>
     
       <li class="post">
         <a href="/blog/2012/05/16/joining-black-pepper-software/">Joining Black Pepper Software</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/07/hello-octopress/">Hello Octopress!</a>
       </li>
     
   </ul>
