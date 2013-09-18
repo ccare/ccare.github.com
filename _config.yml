@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://blog.ccare.me
+url: http://ccare.github.com
 title: Charles' Blog
 subtitle: General ramblings of a tech geek.
 author: Charles Care
@@ -94,7 +94,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: ccare
+disqus_short_name: charlescare
 disqus_show_comment_count: true
 
 # Google Analytics
