@@ -4,7 +4,7 @@
   <title><![CDATA[Category: publishing | Charles' Blog]]></title>
   <link href="http://ccare.github.com/blog/categories/publishing/atom.xml" rel="self"/>
   <link href="http://ccare.github.com/"/>
-  <updated>2013-10-23T21:48:36+01:00</updated>
+  <updated>2013-10-23T21:48:49+01:00</updated>
   <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -20,7 +20,7 @@
     <id>http://ccare.github.com/blog/2012/03/12/ways-of-thinking</id>
     <content type="html"><![CDATA[<p>It&rsquo;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &lsquo;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&rsquo;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&rsquo;s taken a while to find it&rsquo;s way into print, but I think it&rsquo;s an interesting collection of different perspectives on modelling.</p>
 
-<p>{% img right /images/cc/cover.jpg Cover image %}</p>
+<p><img class="right" src="/images/cc/cover.jpg" title="Cover image" ></p>
 
 <p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
 
