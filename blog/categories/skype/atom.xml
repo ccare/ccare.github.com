@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Skype | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/skype/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Skype on Ubuntu 10.04 ]]></title>
+    <link href="http://ccare.github.com/blog/2010/08/04/skype-on-ubuntu-10-dot-04/"/>
+    <updated>2010-08-04T22:10:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2010/08/04/skype-on-ubuntu-10-dot-04</id>
+    <content type="html"><![CDATA[<p>Installed Skype from the standard package &ndash; all looks fine &ndash; but I&rsquo;ve got to sort my microphone out first!</p>
+
+<p>Did have a problem with menus being invisible (black text on black background). My fix was to simply change the settings of the current &ldquo;style&rdquo; and remove skype&rsquo;s own &lsquo;clean looks&rsquo; style with the ubuntu one.</p>
+
+<p>Go to Options > General > Choose Style</p>
+
+<p>and instead of &ldquo;clean looks&rdquo; choose &ldquo;Desktop settings&rdquo;. You will need to restart Skype.</p>
+]]></content>
+  </entry>
+  
+</feed>

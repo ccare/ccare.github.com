@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ITIL | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/itil/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Visible Ops]]></title>
+    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
+    <updated>2012-03-23T16:41:00+00:00</updated>
+    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
+    <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
+the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&rsquo;d
+been meaning to read it for a while &ndash; ever since I first heard Gene Kim speak at
+a conference last year.</p>
+
+<p>All in all it&rsquo;s an interesting read. I didn&rsquo;t find the book particularly
+controversial. But, then again, it is nearly 7 years since the book was first
+published. I think few people would disagree that many of the practices are
+now part of the &lsquo;received wisdom&rsquo; of operations. I also found it useful to get
+a reminder of the ITIL jargon. Using the correct terms for this sort of thing
+is something I&rsquo;m a bit weak on, but as the authors say in the book, having a
+common language is vital.</p>
+
+<!-- more -->
+
+
+<p>Working for a smaller company, I suppose some of the talk about audits and
+change-review boards sounded a bit overkill. Although it made me realise that
+the natural turn-off of these things is usually more to do with past
+experience of bureaucratic processes, rather than a feeling that audit and
+change-reviews are, in-themselves, a bad thing.</p>
+
+<p>The other week I gave a <a href="http://www.slideshare.net/cpcare/warwick-2012">lecture</a>
+to <a href="http://www2.warwick.ac.uk/fac/sci/dcs/teaching/material/cs321/">students at Warwick</a>
+about what it&rsquo;s like to
+be a software developer at Kasabi. I had lots of things to talk about:
+our product, our team, our culture, etc. However I wanted to share something
+about our working practices. The practices we use have certainly evolved over
+time, inspired from various methodologies and communities including: Scrum,
+Kanban, and dev-ops. However, if I had to choose one thing that I couldn&rsquo;t do
+without, I think it would be having a code-review process that&rsquo;s tightly
+coupled to the build/release process.</p>
+
+<p>Nearly a year ago, our team moved to
+using <a href="http://code.google.com/p/gerrit/">Gerrit</a> as our principle review
+tool. The way it integrates with version control and continuous integration is
+fantastic. We were already following a continuous deployment model, but I feel
+that following the Gerrit workflow has helped us get closer to doing truly
+automated deployments. We&rsquo;re also a distributed team, so spending extra-time
+on code-reviews can make up for less time spent pair-programming.</p>
+
+<p>So lets return to Visible Ops&hellip; for me, one of the biggest take-aways from
+reading the book was the idea that the acceptable number of unauthorised
+changes should be zero. Two points follow directly from this: 1) that
+code-review / change-review should be a straightforward and fast process (so
+that it&rsquo;s not routinely circumvented), and 2) that even emergency changes
+should go through some kind of review process. In fact, the authors of Visible
+Ops make the valid point that emergency changes often benefit from closer
+review. For me, the simplicity of using a review-tool (like Gerrit) that&rsquo;s
+built into the release process facilitates both of these goals. There have
+been times when I&rsquo;ve needed to push an emergency fix. But because the tooling
+is relatively quick and simple to use, more and more I&rsquo;m finding that I prefer
+to take these changes down the normal review path. Even though we&rsquo;re not doing
+heavy-weight audits, from an ITIL perspective, it&rsquo;s re-assuring to know that
+these changes are going through a robust, well-understood, and auditable
+process.</p>
+]]></content>
+  </entry>
+  
+</feed>

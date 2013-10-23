@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: messaging | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/messaging/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PubSub Huddle conference]]></title>
+    <link href="http://ccare.github.com/blog/2011/09/30/pub-sub-huddle/"/>
+    <updated>2011-09-30T11:39:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2011/09/30/pub-sub-huddle</id>
+    <content type="html"><![CDATA[<p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
+one-day conference/hack-afternoon hosted by SkillsMatter.</p>
+
+<p>The day was a good event, there were quite a few people around in the morning and I had some
+particularly interesting conversations with people responsible for messaging software in hedge funds
+and banks. The basic structure of the day was talks in the morning which was then
+followed by a self-organised &lsquo;hack-afternoon&rsquo;. The morning was excellent and had a large number of
+attendees. The afternoon was also good fun, but things did tail off as people started disappearing.</p>
+
+<!-- more -->
+
+
+<p>The morning started off with Martin Sústrik discussing his vision for &lsquo;the future of messaging&rsquo;.
+Martin is the founder of zeromq, but he was talking more about his higher-level goals to simplify
+messaging by pushing handling of basic messaging patterns into infrastructure. Basically, he was
+arguing for messaging APIs to be provided as layer-6 (presentation-layer) protocol. The basic points
+were:</p>
+
+<ul>
+<li>We need to be able to handle messaging in B2B and B2C scenarios, whereas messaging is today
+something that generally stays within the corporate firewall.</li>
+<li>Standard messaging patterns need to be simple to code</li>
+<li>Coding messaging should be as easy as coding against a standard Socket abstraction (as
+demonstrated by his work on zeromq)</li>
+<li>A major challenge of providing this kind of infrastructure is that multiple patterns would need
+to be supported (he mentioned push-pull, pub-sub, request-response), the difficulty being that
+the logical topology changes with each pattern</li>
+<li>He mentioned there would be even more challenges with security etc but didn&rsquo;t discuss them.</li>
+<li>His current plans are to form a proposal for a new protocol &ndash; currently named Scalability
+Protocol &ndash; and as a starting point towards this, there is a mailing list
+<a href="http://groups.google.com/group/sp-discuss-group">http://groups.google.com/group/sp-discuss-group</a> which is apparently an interesting read.</li>
+<li>In terms of practical stuff, he sees zeromq as being a step-towards this (in that it
+demonstrates the simple APIs he&rsquo;d like to push for). Other practical steps forward are that
+people are thinking about adding zeromq to the linux kernel, and considering how vendors might
+tackle messaging-aware hardware.</li>
+</ul>
+
+
+<p>The second talk of the day was from Andy Piper from IBM Research. He was talking about MQTT, an open
+standard (with an IBM reference implementation) for doing simple pub-sub messaging. MQTT was
+designed to be a low-footprint messaging library for sensors and he showed examples of it running on
+Android, and also on an Arduino prototype board. It has some nice features, including low resource
+requirements, and support for handling different types of retry-handling. The other nice feature was
+support for registering an action to be performed if a client disappears. There is an open source
+implementation named Mosquito which looked quite interesting. I think a lot of people were a bit
+suspicious of the &lsquo;IBM sell&rsquo;, but it looked like a good fit for collecting data from many sources.</p>
+
+<p>The next two talks moved into the territory of doing pub-sub between web clients and servers.</p>
+
+<p>We heard from Marek Majkowski (RabbitMq) about the difficulties of building a generic solution to
+server-browser messaging. He discussed a project that had attempted to do that, and how it had
+become really challenging to solve issues around client presence and identity. I found Marek&rsquo;s talk
+quite interesting, as he discussed the web-socket standard and showed lots of examples of how the
+different implementations behaved differently. It really drove home how much the websocket standard
+is in it&rsquo;s infancy. He also went on to discuss how to approach building a load-balanced server that
+could handle messaging-enabled clients, and talked about other products that help make a
+non-messaging application built on a standard MVC platform (he kept mentioning Django) to become
+messaging enabled. Some of the example services he mentioned were: AppEngine&rsquo;s channels API, PubNub,
+and Pusher. The majority of these services are designed to support server push rather than client
+pull. And while all of these solutions offer some useful features, he concluded by arguing that they
+would never be able to provide a simple solution for two-way messaging. He saw the issues around
+identity and presence as being too difficult to solve in the generic. In the end he basically said
+that you should build your application around messaging from day 1, and then went on to talk about
+using NodeJS and SockJS to provide an asynchronous server-side platform.</p>
+
+<p>The fourth talk was from Julien Genestoux about SuperFeedr which allows websites to turn standard
+RSS feeds into pub-sub channels. He demoed the PubSubHubhub website that basically acts as messaging
+broker. Sites (publishers) host references to rss feeds and notify the Hub when their feed changes.
+Supported clients who have subscribed can then be notified by the hub. In a demo he showed how
+people could attach arbitrary filters to their subscriptions so they only get notified about certain
+changes. He also talked about how their infrastructure could be used to augment a chain of rss
+feeds.</p>
+
+<p>After lunch we had a series of lightning talks about various projects&hellip; the two that stood out for
+me were:</p>
+
+<ul>
+<li>the use of pub-sub messaging to implement the BBC&rsquo;s Radio1 homepage using XMPP.</li>
+<li>a discussion of the architecture behind datasift.com &ndash; which is a stream-based data marketplace
+where you can subscribe (any pay) for streams of tweets and other social events containing a
+given criteria. They were using a lot of zeromq and kafka to do their processing (4000 messages
+a second, I think he said)</li>
+</ul>
+
+
+<p>All in all, the day was definitely worth attending, and although I didn&rsquo;t come away with loads of new
+info, I did come away with a feeling that investing in learning in more pub-sub technologies is
+a good thing to do.</p>
+
+<p>It was also good to get some validation about how people are using zeromq and comparing it to the work
+I&rsquo;ve been doing at Talis.
+Chatting to Lorenzo Alberton after his talk, it was interesting to hear how they approach failover
+and scaling of zeromq. It was nice to hear that we following very similar approaches to using and
+tuning it &ndash; particularly since they are getting quite impressive throughput.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: statistics | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/statistics/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Statistics @ Velocity]]></title>
+    <link href="http://ccare.github.com/blog/2011/06/11/statistics-at-velocity/"/>
+    <updated>2011-06-11T21:12:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2011/06/11/statistics-at-velocity</id>
+    <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
+Amazon. I&rsquo;ve never been hugely confident at my abilities to do estimation,
+forecasting, capacity planning etc. It&rsquo;s a really difficult thing.</p>
+
+<p>I&rsquo;d heard that Rauser was an excellent speaker, so I attended his workshop on
+statistics. For anyone interested, Rauser also did a shorter keynote later in
+the conference, which you can catch on YouTube. A big theme from these
+discussions was understanding the reduction that your statistical reporting
+makes. Averages, variances, etc are all summary statistics &ndash; but how often to we
+really think of them as lossy formats?</p>
+
+<p>  My main takeaways from both of his talk were to try and understand the
+  lossiness of summary stats. I particularly liked his summary statistics of
+  Moby Dick. Another major theme in his talks was to make time to do deep dives
+  into log data, even if it only means you know how to when something really
+  goes wrong.</p>
+
+<!-- more -->
+
+
+<p>  During the workshop, John discussed how we approach estimating someone&rsquo;s age.
+  Given that problem, the instinct reaction is to propose a estimated value: 45,
+  58, 60 etc. However, to quote Rauser: we &lsquo;[shouldn&rsquo;t] give a single number
+  unless you&rsquo;re forced to. We should always give a range, ideally with an agreed
+  confidence interval such as 90%. I can guess someone&rsquo;s age with 100%
+  confidence if I state their age is between 0 and 150, but that&rsquo;s not very
+  useful. But by combining additional information and reducing absolute
+  certainty I can start to narrow that down. This isn&rsquo;t rocket science, but how
+  many times have we been asked &ldquo;when will this be ready&rdquo;, or &ldquo;when&rsquo;s the
+  delivery date&rdquo;? And in the face of those questions, how often have we given a
+  range with a stated confidence. Perhaps we feel that our project managers
+  would laugh us out of the room? Project managers like fixed dates.</p>
+
+<p>However, in complex projects &ndash; and IT projects are usually complex &ndash; a range is
+often more honest, and would often better express the reality of the situation.
+Again, this is nothing new &ndash; if you have an Agile Coach on your team, they will
+probably recommend estimating using ranges or 3-point estimates. However, it&rsquo;s
+easy to slip into the default behaviour of giving a single numeric response.</p>
+
+<p>  Throughout the talk, Rauser covered other examples, such as estimating the
+  depth of his desk, and discussed how measurement improves our ability to
+  estimate with confidence.</p>
+
+<p>  As the workshop continued, Rauser set us an estimating task. He asked us to
+  provide estimates (ranges, of course!) for a number of questions. The key was
+  not the specific answers, but rather that we were aiming for 90% confidence
+  estimates&hellip; i.e we should have got 18 out of the 20 questions correct. We
+  then graphed the results of a portion of the room and found that most people
+  averaged between 20% and 40% accuracy. An interesting demo of how humans seem
+  to default to be over-optimistic in their estimating.</p>
+
+<p>  In the final section of the workshop, Rauser discussed the nature of
+  statistics &ndash; how school curriculum are still teaching stats the &lsquo;old way&rsquo; and
+  how for practical analysis, it&rsquo;s really much better to tackle stats correctly
+  using computer modelling. Do we need to learn about how to apply statistical
+  tests and derive summary statistics? After all, summary stats are lossy and
+  stop you looking at your data? Are they more dangerous in the hands of the
+  layman that just getting a computer to process the raw stats? We saw a demo of
+  some of the statistical features of excel, and then, a demo of more powerful
+  tools like <strong>R</strong> and <strong>Sage</strong>.</p>
+
+<p>  In conclusion: Rauser left us with a few final comments:</p>
+
+<ul>
+<li>everything is uncertain</li>
+<li>even counting breaks down at scale</li>
+<li>estimates need ranges</li>
+<li>single numbers are decisions</li>
+</ul>
+
+
+<p>A great session.</p>
+]]></content>
+  </entry>
+  
+</feed>

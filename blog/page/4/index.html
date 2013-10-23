@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Charles' Blog</title>
+  <meta name="author" content="Charles Care">
+
+  
+  <meta name="description" content="Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk. I didn&rsquo;t &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ccare.github.com/blog/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Charles' Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/ccare.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30682266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Charles' Blog</a></h1>
+  
+    <h2>General ramblings of a tech geek.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ccare.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/">Testing What Happens When a Java Process Runs Out of Disk</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-11T12:32:00+01:00" pubdate data-updated="true">Apr 11<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
+
+<p>I didn&rsquo;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&rsquo;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Create a raw &#39;disk&#39; around 1 GB in size</span>
+</span><span class='line'>dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>disk.raw <span class="nv">bs</span><span class="o">=</span>1k <span class="nv">count</span><span class="o">=</span>1000000
+</span><span class='line'><span class="c"># Format it - I went for ~900MB which suited my tests</span>
+</span><span class='line'>mkfs -t ext2 disk1.raw  900000
+</span><span class='line'><span class="c"># Mount the file into a local folder</span>
+</span><span class='line'>sudo mount -o loop -t ext2 disk.raw ./mount-dir
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Works a treat, and really easy to play with different disk sizes.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/10/interesting-semweb-books/">Interesting SemWeb Books</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-10T16:38:00+00:00" pubdate data-updated="true">Mar 10<span>th</span>, 2011</time>
+        
+         | <a href="/blog/2011/03/10/interesting-semweb-books/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the last few months I&rsquo;ve been trying to understand a little more about semantic web concepts etc&hellip; Here&rsquo;s a list of some of the books I&rsquo;ve been flicking through. Thought I&rsquo;d blog them so I can find them again in the future.</p>
+
+<p>John Davies, Rudi Studer, Paul Warren. Semantic web technologies: trends and research in ontology-based systems. Wiley 2006.</p>
+
+<p>Karin K. Breitman, Marco Antonio Casanova, Walter Truszkowski. Semantic web: concepts, technologies, and applications.Springer 2006.</p>
+
+<p>Dean Allemang, Jim Hendler, Semantic web for the working ontologist: Effective modelling in RDFS and OWL.Elsevier 2008..</p>
+
+<p>Pascal Hitzler, Markus Krotzsch, Sebastian Rudolph. Foundations of semantic web technologies. CRC Press, 2010</p>
+
+<p>I found Davies et al. (2006) Quite interesting to flick through&hellip; two of the authors worked at the same company I was with so there&rsquo;s some interesting case studies. However, I found the focus was a bit too much towards reasoning, discovery and other conceptual ideas.</p>
+
+<p>Breitman et al. (2006) and Allemang et al. (2008) were interesting as well</p>
+
+<p>My favourite was Hitzler et al. (2010). I really enjoyed their coverage of sparql &ndash; I read this one far more closely than the others.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/03/extracting-calendar-entries-from-outlook/">Extracting Calendar Entries From Outlook</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-03T12:06:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/03/03/extracting-calendar-entries-from-outlook/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Having migrated by Outlook mailbox, I wanted to load calendar entries into another calendar. Following my earlier post, I already had my calendar entries in ICAL format, so all seemed good. However, I also had a number of recurring events (birthdays etc) that I wanted to put into my Google Calendar. The following PERL script was a handy bit of code to extract the recurring events so that I could extract them and add to my public calendar.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$entry</span> <span class="o">=</span>  <span class="s1">&#39;&#39;</span>;
+</span><span class='line'><span class="k">while</span><span class="o">(</span>&lt;STDIN&gt;<span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="nv">$_</span> eq <span class="s2">&quot;&quot;</span> <span class="o">||</span> <span class="nv">$_</span> eq <span class="s2">&quot;\n&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="nv">$entry</span> <span class="o">=</span>~ /^RRULE<span class="se">\:</span>/<span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      print <span class="nv">$entry</span>;
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="nv">$entry</span> <span class="o">=</span> <span class="s2">&quot;\n&quot;</span>;
+</span><span class='line'>  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>     <span class="nv">$entry</span> .<span class="o">=</span> <span class="nv">$_</span>;
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>print <span class="nv">$entry</span>;
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/">Migrating Outlook to a Ubuntu Mailbox</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-03T11:10:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/03/03/migrating-outlook-to-a-ubuntu-mailbox/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wanted to migrate a load of emails and contacts from Outlook to my Ubuntu netbook. Turns out it&rsquo;s really simple.</p>
+
+<p>1) Copy the outlook ost file to the netbook. The location of this can be found by looking at outlook&rsquo;s settings. Important: make sure outlook is closed first!</p>
+
+<p>2) Convert the ost file to a pst. There&rsquo;s a windows tool for this &ndash; but I found it worked ok under wine. The program&rsquo;s called ost2pst</p>
+
+<p><a href="http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/">http://www.windowsreference.com/ms-exchange-server/how-to-convert-ost-to-pst-format-for-outlook/</a></p>
+
+<p>3) Install the readpst program (sudo apt-get install readpst &ndash; on Ubuntu). Then it&rsquo;s a simple command to create a UNIX mailbox (one file for each folder)</p>
+
+<p>readpst outlook.pst</p>
+
+<p>4) Enjoy your windows mail in the mail client of your choice. Being a fan of terminal apps, I&rsquo;m using Alpine ;&ndash;)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/03/leaving-bt/">Leaving BT</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-03T09:00:00+00:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time>
+        
+         | <a href="/blog/2011/03/03/leaving-bt/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today&rsquo;s my last full-day working at BT. I&rsquo;m marking the event with a final
+visit to Adastral Park in Martlesham, Ipswich.</p>
+
+<p>Over the last few years, I&rsquo;ve worked with some pretty smart engineers
+and had a lot of fun. I&rsquo;m really excited about joining <a href="http://talis.com">Talis</a>, but
+I&rsquo;m going to miss a lot of great people.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/11/29/def-proxy/">Def Proxy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-29T17:44:00+00:00" pubdate data-updated="true">Nov 29<span>th</span>, 2010</time>
+        
+         | <a href="/blog/2010/11/29/def-proxy/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A while ago, I wrote some funky code to proxy interfaces method calls
+and delegate against a meta Object. For the last couple of day Tim Watson
+and I have been generalising this as a library for custom proxying between
+Java interfaces.</p>
+
+<p>Code&rsquo;s available on github: <a href="https://github.com/hyperthunk/def-proxy">https://github.com/hyperthunk/def-proxy</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/11/29/handy-urls-from-29th-nov/">Handy Urls From 29th Nov</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-29T17:31:00+00:00" pubdate data-updated="true">Nov 29<span>th</span>, 2010</time>
+        
+         | <a href="/blog/2010/11/29/handy-urls-from-29th-nov/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://atmosphere.java.net/">http://atmosphere.java.net/</a></p>
+
+<p>Erlang Web</p>
+
+<p><a href="http://www.evanmiller.org/chicago-boss-guide.html">http://www.evanmiller.org/chicago-boss-guide.html</a></p>
+
+<p><a href="http://www.chicagoboss.org/">http://www.chicagoboss.org/</a></p>
+
+<p><a href="http://zotonic.com">http://zotonic.com</a></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Open_Database_Connectivity">http://en.wikipedia.org/wiki/Open_Database_Connectivity</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/04/skype-on-ubuntu-10-dot-04/">Skype on Ubuntu 10.04</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-04T22:10:00+01:00" pubdate data-updated="true">Aug 4<span>th</span>, 2010</time>
+        
+         | <a href="/blog/2010/08/04/skype-on-ubuntu-10-dot-04/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Installed Skype from the standard package &ndash; all looks fine &ndash; but I&rsquo;ve got to sort my microphone out first!</p>
+
+<p>Did have a problem with menus being invisible (black text on black background). My fix was to simply change the settings of the current &ldquo;style&rdquo; and remove skype&rsquo;s own &lsquo;clean looks&rsquo; style with the ubuntu one.</p>
+
+<p>Go to Options > General > Choose Style</p>
+
+<p>and instead of &ldquo;clean looks&rdquo; choose &ldquo;Desktop settings&rdquo;. You will need to restart Skype.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/23/the-galago-arrives-dot-dot-dot/">The Galago Arrives&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/bye-bye-black-pepper/">Bye-bye Black Pepper, Hello Meducation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js/">Custom Reverse Proxying With Node.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/12/pdf-templating-with-docxreport/">PDF Templating With DocXReport</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/ccare">@ccare</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ccare',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("charlescare", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/charlescare" class="twitter-follow-button" data-show-count="false">Follow @charlescare</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Charles Care -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'charlescare';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

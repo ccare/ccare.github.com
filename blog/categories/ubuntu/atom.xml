@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ubuntu | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The Galago arrives...]]></title>
+    <link href="http://ccare.github.com/blog/2013/10/23/the-galago-arrives-dot-dot-dot/"/>
+    <updated>2013-10-23T14:32:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/10/23/the-galago-arrives-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Today, when I got home, the first thing greeting me was the box containing my
+new Galago Pro. Very exciting. I&rsquo;ve just started at
+<a href="http://company.meducation.net">Meducation</a> so I needed to get a new development machine.
+The Galago is from <a href="http://system76.com/">System 76</a>, a Linux-only laptop
+supplier that ship machines pre-configured with Ubuntu.</p>
+
+<p>Actually, I was a bit apprehensive about the purchase. In terms of spec,
+and money, the machine is awesome. However, the keyboard has attracted a
+significant amount of criticism on Internet forums (see <a href="http://blag.depotwarehouse.net/2013/09/system76-galago-ultrapro-galu1-review.html">here</a> and <a href="http://blog.goodstuff.im/sorry_system76">here</a>). I didn&rsquo;t know if I would
+find the keyboard annoying or whether it would be fine. I&rsquo;m not a particularly
+demanding user, I spend the majority of my time in the console and I don&rsquo;t have a
+particular need for typing at a high RPM. In fact, this blog post is the
+longest continuous bit of typing I&rsquo;ve had to do this week.</p>
+
+<p>So, the keyboard? Well it&rsquo;s not too bad.
+It&rsquo;s got chicklet style keys, and probably doesn&rsquo;t have an experience anything
+like a MacBook Pro (which, incidently I also find I
+miss keys on). At first, it seemed that certain key strokes didn&rsquo;t register. For
+me, the key missses tended to be alpha keys near the edge of the keyboard (A, S, M etc).
+I don&rsquo;t think there&rsquo;s anything technicaly wrong with the keyboard, it&rsquo;s
+probably because my fingers strike
+those keys with less force. To be honest, I tend to struggle with most new keyboards I try,
+it&rsquo;s one of the things I find difficult about frequent pair rotation.
+In fact, when I think about my old favorite machines, they all had sigificant burn
+in. I still harken after my old Sony Vaio, I wrote my PhD thesis on that, and I
+adore my little Asus netbook with it&rsquo;s diddy Atom processor and I wrote my book on
+that. However, with no immediate writing projects on the horizon, the Galago keyboard
+will not have to endure all that hammering. Maybe I should blog more? If
+I can get through this post
+without falling out of love with the laptop, then I&rsquo;ll probably be ok going
+forward.</p>
+
+<p>Right. So that&rsquo;s the keyboard issue discussed &ndash; with a final judgement due later.
+Now to describe the rest of the machine. The Galago is, I think, the best looking
+laptop I&rsquo;ve ever bought. It&rsquo;s sleek and solid, and even with the extra hard
+disk I fitted, it&rsquo;s pretty light. The screen has full HD resolution and is
+bright and sharp. The rear cooling grills also seem to work very well &ndash; no overheating so far.
+ One or two reviews I read before buying the device expressed concern that the rather
+narrow hinge between the screen and the keyboard was rather narrow, it doesn&rsquo;t
+feel overly fragile, but I am pretty rough with my kit so time will tell there
+too.</p>
+
+<p>Initially I thought that buying a System76 was a bit gimmicky. The machine
+itself is actually manufactured in France, and I&rsquo;m in the UK, so I could have
+got the same box from a European supplier. Even with shipping, System76 was actually
+marginally cheaper, but I have to admit that deep down I wanted that Ubuntu key.
+Yeh I know, it seems petty, but I&rsquo;ve been using Ubuntu for about 7 years, and
+before that I was a RedHat and
+Solaris guy. So it&rsquo;s been 13 years since I last used Windows as my main system and
+that makes me wondern why I must have that Windows key? Stickers are all well and good,
+but finally I have the proper solution.</p>
+
+<p><img src="/images/galago-ubuntu-key.jpg" title="The Galago, like other System 76 laptops features a Ubuntu key" ></p>
+
+<p>The other thing that&rsquo;s amazing is the way the hardware just works. I powered on
+(very quickly, thanks to the SSD) and went straight into the final
+configuration screens of the Ubuntu setup process. No need to download and
+configure an ISO &ndash; the System76 guys had sorted it. For the first time ever, I
+was able to go from unwrapping a UPS parcel to typing in a shell within minutes.</p>
+
+<p>It&rsquo;s also fantastic that I can use and rely on all those &lsquo;function&rsquo; keys that
+I&rsquo;m usually scared of. During installation I playfully hit func+F4 thinking &lsquo;I
+wonder what this key with the Moon symbol does&rsquo;. Immediately, the laptop
+suspended to disk and switched off. I confess that I was mildly concerned, thinking I&rsquo;d suspended
+mid installation and would be forced to rebuild from scratch. Far from the disaster I anticipated, the
+laptop resumed in exactly the same state. I know it&rsquo;s probably not that awesome
+to all you Mac and Windows users, but I&rsquo;m sold.</p>
+
+<p>All in all, it&rsquo;s a fab machine, that I think I&rsquo;ll enjoy using. And the
+keyboard? Well, since I haven&rsquo;t missed any keys in the last few paragraphs. I think
+we&rsquo;ll get along just fine.</p>
+]]></content>
+  </entry>
+  
+</feed>

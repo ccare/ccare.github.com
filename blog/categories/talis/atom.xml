@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Talis | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/talis/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:55:07+01:00</updated>
+  <id>http://ccare.github.com/</id>
+  <author>
+    <name><![CDATA[Charles Care]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Moving on from Talis]]></title>
+    <link href="http://ccare.github.com/blog/2012/05/04/moving-on-from-talis/"/>
+    <updated>2012-05-04T15:55:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2012/05/04/moving-on-from-talis</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s all change for me again. I&rsquo;ve decided to move on from <a href="http://talis.com">Talis</a>. Today was my last day in the office, and the end of what has been an
+incredible journey. Although it&rsquo;s only just over a year since I joined the Talis Platform team, we&rsquo;ve been constanly iterating and developing
+innovative solutions. A year ago, we had the opportunity to focus
+entirely on our next generation data platform, and I felt we had a really
+productive year. It has certainly been a constant learning-curve for
+me and forced me to seriously think about the design and
+implementation of distributed systems. Whether it&rsquo;s been about dev-ops, continuous deployment, RDF, Jena, sparql, or zeromq, I don&rsquo;t feel I&rsquo;ve stopped
+learning. The pace has been great.</p>
+
+<p>As engineers, I think we all aspire to work on great projects, preferably using cool technology to deliver great software. The last year
+has certainly allowed me to do that. However, what really counts is being surrounded by great people &mdash; and that&rsquo;s certainly been true
+of working at Talis.
+I&rsquo;ve certainly learnt a lot and have really benefited from working with some truly inspirational people.</p>
+
+<p>In a few weeks time I&rsquo;ll be joining the team at <a href="http://blackpepper.co.uk/">Black Pepper software</a>. I&rsquo;m excited about the fresh challenge, but
+will definitely miss my old colleagues at Talis.</p>
+]]></content>
+  </entry>
+  
+</feed>

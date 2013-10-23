@@ -1,0 +1,611 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Correlating log entries using Log4J and the Mapped Diagnostic Context - Charles' Blog</title>
+  <meta name="author" content="Charles Care">
+
+  
+  <meta name="description" content="This post was originally written for the Black Pepper Software
+blog. The original
+was posted on 20/12/2012. Over the last couple of years, it has &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Charles' Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/ccare.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30682266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Charles' Blog</a></h1>
+  
+    <h2>General ramblings of a tech geek.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ccare.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Correlating Log Entries Using Log4J and the Mapped Diagnostic Context</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-21T12:31:00+00:00" pubdate data-updated="true">Dec 21<span>st</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
+blog. The <a href="http://www.blackpepper.co.uk/posts/correlating-log-entries-using-log4j-and-the-mapped-diagnostic-context/">original</a>
+was posted on 20/12/2012.</p>
+
+
+<p>Over the last couple of years, it has become increasingly common for web applications to be built using client-side frameworks that interact with a remote server via asynchronous requests. Unlike a traditional app, that makes a single request per page, a modern web application will probably make many asynchronous HTTP requests. This poses a challenge when analysing server logs, since it can be difficult to identify which requests belong to the same client.</p>
+
+<p>In this blog post I&rsquo;ll describe a simple technique we&rsquo;ve applied to retro-fit a client-aware correlation token to the server logs of an existing web application.</p>
+
+<!-- more -->
+
+
+<h2>The problem</h2>
+
+<p>Our web application communicates with a Java application server over HTTP. The majority of client-side code is written in Java, using Google Web Toolkit (GWT), which is then compiled into JavaScript. The application server exposes both RESTful and GWT-RPC-based web services.</p>
+
+<p>For traditional webpages that follow a simple request-response pattern, log analysis is very straightforward. In a standard J2EE implementation, each request is served by a separate web server thread allocated from a pool. Once a request has been fully completed, that thread is returned to the pool so that it can process future requests. A convenient result of this &lsquo;one-thread-per-request&rsquo; model is that log lines can be correlated using the thread&rsquo;s id. So a single request, handled by a thread named &ldquo;http-8080-3&rdquo;, might produce the following lines of output (I&rsquo;ve shortened all timestamps in the log-line snippets):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the server is busy, these log lines will inevitably become interleaved, but they&rsquo;re easy to unravel by looking at the thread id. Here we can see that there are two threads (http-8080-3 and http-8080-6) processing concurrent requests to the same service.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Handling request for service
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thread-based correlation is a useful technique for identifying all log entries for a <strong>single</strong> request. However, in this example we don&rsquo;t know whether these requests came from the same web client or from different clients. In order to get more value from our application logs, we really need to correlate all requests from a single client.</p>
+
+<p>Consider the following scenario: we have two customers connecting to our site, and when they load the home page, each of their browsers will make two web service requests, one to <strong>Service1</strong> and another to <strong>Service2</strong>. If both clients load at the same time, we may get an interleaving like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s clear from these logs that there were two calls to each of our services, but it&rsquo;s not easy to identify which ones belong to the same customer. Was our first customer using threads http-8080-3 and http-8080-2, or do the requests relating to threads http-8080-3 and http-8080-1 go together?</p>
+
+<p>One way to distinguish between them might be to print the client IP address, although that would rely on our load balancer passing through the source IP (and wouldn&rsquo;t provide enough granularity if multiple sessions were coming from the same source). In any case, if both clients were behind a firewall we might see them as originating from the same address. Another approach might be to make use of server-side sessions to correlate requests. However, this wouldn&rsquo;t distinguish between separate page loads, perhaps initiated in multiple browser tabs. We would also prefer to avoid maintaining server-side state.</p>
+
+<p>We finally settled on a solution based on generating a (reasonably) unique identifier for each application session client-side. This identifier can be passed as an HTTP header with each request and ultimately appended to each log line. In order to add the identifier to each log-line we used Log4J&rsquo;s Mapped Diagnostic Context (MDC), which provides a simple key/value mechanism to capture small amounts of custom diagnostic data. Since it&rsquo;s built into the logging framework, it&rsquo;s really easy to add values from the MDC to each log line. For instance, here we have the same log fragment, but with an additional identifier field (here: &lsquo;ae0021f&rsquo; and &lsquo;f3wev1x&rsquo;) to distinguish between the different clients:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Handling request for service 1
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-3] INFO Service1.execute(77) [ae0021f] | Completed request
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Handling request for service 2
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-2] INFO Service2.execute(77) [ae0021f] | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Requesting data from database
+</span><span class='line'>17:25 [http-8080-6] INFO Service1.execute(77) [f3wev1x] | Completed request
+</span><span class='line'>17:25 [http-8080-1] INFO Service2.execute(77) [f3wev1x] | Completed request</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The implementation</h2>
+
+<p>The implementation doesn&rsquo;t intrude into the business logic of our application and involves 3 simple steps:</p>
+
+<p>Firstly, when the application starts, we generate an identifier client-side, and add it to all subsequent HTTP requests. As I mentioned earlier, our application is built using GWT and interacts with the server using both GWT-RPC and ordinary AJAX calls to JSON APIs. Adding the HTTP header to our GWT RPC calls is a simple one-liner if you&rsquo;re using com.google.gwt.http.client.RequestBuilder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">requestBuilder</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">,</span> <span class="n">globalClientId</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And for our JSON API calls, we just add the same header to our JQuery ajax calls:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s2">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">:</span> <span class="nx">globalClientId</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Secondly, the next step is to capture the identifier from each request. In order to not interfere with our existing business logic, we implemented a ServletFilter that captures the custom header and stores it in the Log4J MDC with the key &lsquo;CLIENT_ID&rsquo;.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">org.apache.log4j.MDC</span><span class="o">;</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClientAwareLoggingFilter</span> <span class="kd">implements</span> <span class="n">Filter</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="kd">final</span> <span class="n">ServletRequest</span> <span class="n">req</span><span class="o">,</span>
+</span><span class='line'>                   <span class="kd">final</span> <span class="n">ServletResponse</span> <span class="n">res</span><span class="o">,</span>
+</span><span class='line'>                   <span class="kd">final</span> <span class="n">FilterChain</span> <span class="n">chain</span><span class="o">)</span>
+</span><span class='line'>                <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">ServletException</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">if</span> <span class="o">(</span><span class="n">req</span> <span class="k">instanceof</span> <span class="n">HttpServletRequest</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>           <span class="kd">final</span> <span class="n">HttpServletRequest</span> <span class="n">httpRequest</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpServletRequest</span><span class="o">)</span><span class="n">req</span><span class="o">;</span>
+</span><span class='line'>           <span class="kd">final</span> <span class="n">String</span> <span class="n">clientSessionId</span> <span class="o">=</span>
+</span><span class='line'>                        <span class="n">httpRequest</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">&quot;X-BLACKPEPPER-SESSION-ID&quot;</span><span class="o">);</span>
+</span><span class='line'>           <span class="k">if</span> <span class="o">(</span><span class="n">clientSessionId</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>               <span class="n">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;CLIENT_ID&quot;</span><span class="o">,</span> <span class="n">clientSessionId</span><span class="o">);</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>       <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>           <span class="n">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;CLIENT_ID&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>       <span class="o">}</span>
+</span><span class='line'>       <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'>   <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we edit our Log4J configuration to print out the contents of our MDC field. This is accomplished using the %X pattern and referencing the CLIENT_ID key:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="nl">log4j:</span><span class="n">configuration</span> <span class="nl">xmlns:</span><span class="n">log4j</span><span class="o">=</span><span class="s">&quot;http://jakarta.apache.org/log4j/&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">appender</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;FILE&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Append&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">layout</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="n">param</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;ConversionPattern&quot;</span>
+</span><span class='line'>           <span class="n">value</span><span class="o">=</span><span class="s">&quot;%d [%t] %p %c.%M(%L) [%X{CLIENT_ID}] | %m%n&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;/</span><span class="n">layout</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">appender</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">log4j:</span><span class="n">configuration</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Correlating acceptance tests</h2>
+
+<p>Although we originally added the correlation to help with the diagnosis of live logs, we&rsquo;ve also found it really useful when investigating acceptance test failures. At Black Pepper our continuous integration server runs large numbers of automated UI tests. For this project we use Selenium&rsquo;s WebDriver, and follow the fairly standard pattern of launching our application once for the entire test run. As a result, we have a single application log for the entire acceptance suite, so if a single test fails it can be difficult to find the log entries relating to the failure. Since we launch a new client for each test, the correlation token helps, as long as we can identify which token belonged to each test. We can make a further improvement by using the actual test name as the correlation token. We modified our application so that the client identifier could be overridden with a browser cookie, and added a JUnit @Rule to store the name of the current test in the cookie:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">TestName</span> <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestName</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="nd">@Override</span>
+</span><span class='line'>   <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">starting</span><span class="o">(</span><span class="kd">final</span> <span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="kd">super</span><span class="o">.</span><span class="na">starting</span><span class="o">(</span><span class="n">description</span><span class="o">);</span>
+</span><span class='line'>       <span class="kd">final</span> <span class="n">String</span> <span class="n">methodName</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="na">getMethodName</span><span class="o">();</span>
+</span><span class='line'>       <span class="o">...</span>
+</span><span class='line'>       <span class="k">if</span> <span class="o">(</span><span class="n">webDriver</span><span class="o">.</span><span class="na">manage</span><span class="o">().</span><span class="na">getCookieNamed</span><span class="o">(</span><span class="s">&quot;CLIENT_ID_SLUG&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>           <span class="n">webDriver</span><span class="o">.</span><span class="na">manage</span><span class="o">().</span><span class="na">addCookie</span><span class="o">(</span>
+</span><span class='line'>                              <span class="k">new</span> <span class="nf">Cookie</span><span class="o">(</span><span class="s">&quot;CLIENT_ID_SLUG&quot;</span><span class="o">,</span> <span class="n">methodName</span><span class="o">));</span>
+</span><span class='line'>       <span class="o">}</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, when we run the tests it is clear which log lines relate to which test:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">1</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">1</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">2</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">3</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Handling</span> <span class="n">request</span> <span class="k">for</span> <span class="n">service</span> <span class="mi">2</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanOpenHomePage</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Requesting</span> <span class="n">data</span> <span class="n">from</span> <span class="n">database</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">6</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="mi">17</span><span class="o">:</span><span class="mi">25</span> <span class="o">[</span><span class="n">http</span><span class="o">-</span><span class="mi">8080</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">...</span> <span class="o">[</span><span class="n">asACustomerICanBuyMyProduct</span><span class="o">]</span> <span class="o">|</span> <span class="n">Completed</span> <span class="n">request</span>
+</span><span class='line'> <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>Making a simple change to our application to submit a client identifier in an HTTP header has helped us correlate our server-side logs. The facilities in the Log4J Mapped Diagnostic Context made this really easy to implement. Furthermore, using a cookie-based override allowed us to make our acceptance test logs more readable.</p>
+
+<p>MDC is a really handy feature of Log4J, and there are alternatives in other logging frameworks. The SLF4J facade library, for instance, provides an interface to the MDC when a suitably featured logging library is used (at the time of writing, these were just LogBack and Log4J). For libraries that don&rsquo;t support this feature SLF4J provides a BasicMDCAdapter class which provides a basic implementation using ThreadLocal storage. Developers using .Net will find an MDC implementation in the NLog and log4net libraries.</p>
+
+<h2>Links</h2>
+
+<p>MDC documentation: <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html"><a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html">http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/MDC.html</a></a></p>
+
+<p>SLF4J&rsquo;s implementation: <a href="http://www.slf4j.org/manual.html#mdc"><a href="http://www.slf4j.org/manual.html#mdc">http://www.slf4j.org/manual.html#mdc</a></a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Charles Care</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-21T12:31:00+00:00" pubdate data-updated="true">Dec 21<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java-gwt-log4j-logging/'>java GWT log4j logging</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/" data-via="charlescare" data-counturl="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/19/java-timestamp-gotcha/" title="Previous Post: Playing with Java Timestamps">&laquo; Playing with Java Timestamps</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/09/creating-an-amf-client-for-testing/" title="Next Post: Creating a simple AMF client for testing">Creating a simple AMF client for testing &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/23/the-galago-arrives-dot-dot-dot/">The Galago Arrives...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/bye-bye-black-pepper/">Bye-bye Black Pepper, Hello Meducation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js/">Custom Reverse Proxying With Node.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/12/pdf-templating-with-docxreport/">PDF Templating With DocXReport</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/creating-an-amf-client-for-testing/">Creating a Simple AMF Client for Testing</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ccare">@ccare</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ccare',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("charlescare", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/charlescare" class="twitter-follow-button" data-show-count="false">Follow @charlescare</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Charles Care -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'charlescare';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/';
+        var disqus_url = 'http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
