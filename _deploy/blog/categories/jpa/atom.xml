@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JPA | Charles' Blog]]></title>
   <link href="http://ccare.github.com/blog/categories/jpa/atom.xml" rel="self"/>
   <link href="http://ccare.github.com/"/>
-  <updated>2013-10-23T21:46:25+01:00</updated>
+  <updated>2013-10-23T21:48:36+01:00</updated>
   <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -182,7 +182,7 @@ would probably be using a production-strength database.</p>
 
 <p>Next, we need to bring our JPA classes into the project. The JPA classes are
 a maven project, so as long as we&rsquo;ve installed them into our local maven repo (
-by running  in the suppliers-parts-domain project),
+by running {{mvn install}} in the suppliers-parts-domain project),
 we can pull these in via a dependency:</p>
 
 <p>In the BuildConfig.groovy configuration, uncomment the

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | Charles' Blog]]></title>
   <link href="http://ccare.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://ccare.github.com/"/>
-  <updated>2013-10-23T21:46:25+01:00</updated>
+  <updated>2013-10-23T21:48:36+01:00</updated>
   <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
@@ -70,7 +70,7 @@ Solaris guy. So it&rsquo;s been 13 years since I last used Windows as my main sy
 that makes me wondern why I must have that Windows key? Stickers are all well and good,
 but finally I have the proper solution.</p>
 
-<p><img src="/images/galago-ubuntu-key.jpg" title="The Galago, like other System 76 laptops features a Ubuntu key" ></p>
+<p>{% img /images/galago-ubuntu-key.jpg The Galago, like other System 76 laptops features a Ubuntu key %}</p>
 
 <p>The other thing that&rsquo;s amazing is the way the hardware just works. I powered on
 (very quickly, thanks to the SSD) and went straight into the final
