@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: web operations | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/web-operations/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/web-operations/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Velocity 2011... a great conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
+    <link href="http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
     <updated>2011-06-11T20:27:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
+    <id>http://ccare.github.com/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
     <content type="html"><![CDATA[<p>It&rsquo;s a week now since I came back from
 <a href="http://velocityconf.com/velocity2011">O'Reilly&rsquo;s Velocity</a>
 conference in San

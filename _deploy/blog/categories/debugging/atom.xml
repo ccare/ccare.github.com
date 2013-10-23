@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Debugging | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/debugging/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/debugging/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating a simple AMF client for testing]]></title>
-    <link href="http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
+    <link href="http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
     <updated>2013-05-09T12:31:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing</id>
+    <id>http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-client-for-testing/">original</a>
 was posted on 30/04/2013.</p>

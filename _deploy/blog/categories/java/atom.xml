@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: java | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/java/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Primitive types and Java performance]]></title>
-    <link href="http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance/"/>
+    <link href="http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance/"/>
     <updated>2011-07-11T09:05:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance</id>
+    <id>http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance</id>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
@@ -27,9 +27,9 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
   
   <entry>
     <title type="html"><![CDATA[Testing what happens when a java process runs out of disk]]></title>
-    <link href="http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
+    <link href="http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk/"/>
     <updated>2011-04-11T12:32:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
+    <id>http://ccare.github.com/blog/2011/04/11/testing-what-happens-when-a-java-process-runs-out-of-disk</id>
     <content type="html"><![CDATA[<p>Needed to do some smoke testing of a java app that was downloading files. In particular I wanted to simulate it running out of disk.</p>
 
 <p>I didn&rsquo;t want to spin up a virtual machine, so instead I created a virtual disk and mounted it as an ordinary directory. I&rsquo;d forgotten which commands to use to create, format, and mount a loop device. Blogging them so I can find them again.</p>

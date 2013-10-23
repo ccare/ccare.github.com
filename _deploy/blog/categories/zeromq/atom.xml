@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: zeromq | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/zeromq/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/zeromq/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[PubSub Huddle conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle/"/>
+    <link href="http://ccare.github.com/blog/2011/09/30/pub-sub-huddle/"/>
     <updated>2011-09-30T11:39:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle</id>
+    <id>http://ccare.github.com/blog/2011/09/30/pub-sub-huddle</id>
     <content type="html"><![CDATA[<p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
 one-day conference/hack-afternoon hosted by SkillsMatter.</p>
 

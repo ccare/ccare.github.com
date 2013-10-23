@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: java GWT log4j logging | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/java-gwt-log4j-logging/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/java-gwt-log4j-logging/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Correlating log entries using Log4J and the Mapped Diagnostic Context]]></title>
-    <link href="http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
+    <link href="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
     <updated>2012-12-21T12:31:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
+    <id>http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/correlating-log-entries-using-log4j-and-the-mapped-diagnostic-context/">original</a>
 was posted on 20/12/2012.</p>

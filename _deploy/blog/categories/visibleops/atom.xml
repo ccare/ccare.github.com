@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: VisibleOps | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/visibleops/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/blog/categories/visibleops/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Visible Ops]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/23/visible-ops/"/>
+    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
     <updated>2012-03-23T16:41:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
+    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
 the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&rsquo;d
 been meaning to read it for a while &ndash; ever since I first heard Gene Kim speak at

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.ccare.me/sitemap.xml 
+Sitemap: http://ccare.github.com/sitemap.xml 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: node.js | Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/blog/categories/node-dot-js/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <title><![CDATA[Category: Node.js | Charles' Blog]]></title>
+  <link href="http://ccare.github.com/blog/categories/node-dot-js/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -14,64 +14,126 @@
 
   
   <entry>
-    <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
-    <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
-    <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
-including:</p>
+    <title type="html"><![CDATA[Custom reverse proxying with Node.js]]></title>
+    <link href="http://ccare.github.com/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js/"/>
+    <updated>2013-09-18T13:36:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js</id>
+    <content type="html"><![CDATA[<p>On a number of occassions over the last year or so, I&rsquo;ve found myself writing
+wanting to create a reverse proxy to front a number of HTTP services. For me,
+the usual requirement is that I want to access these services via AJAX requests,
+and using a reverse proxy allows me to not need to worry about cross-site scripting
+(XSS) or configuring cross-origin resource sharing (CORS). Node.js is a fantastic
+tool for doing this. Particularly if you lean on the well-regarded
+node-http-proxy module.</p>
+
+<p>If all you need is static proxying/routing, then node-http-proxy project
+supports a variety of
+<a href="configuration%20options">https://github.com/nodejitsu/node-http-proxy</a>.
+However, I usually find myself turning to this library when I want to
+do custom routing. So in this post, I focus on configuring the proxy with
+custom code.</p>
+
+<p>In this blog post, I&rsquo;ll share some code snippets to create a simple reverse proxy
+in Node.js and then move onto a slightly more complicated example with some routing
+and express middleware. Finally, I&rsquo;ll show how to base the routing on an asynchronous
+call to another service (e.g. a service-discovery service for looking up endpoints ).</p>
+
+<!-- more -->
+
+
+<h2>Simplest proxy</h2>
+
+<p>The simplest proxy you can write is one that routes all requests to the same
+back-end service. There might be a number of reasons to do this, the last time I
+wrote something like this was to add a couple of HTTP headers to each outbound
+request in order to authenticate against an API.</p>
+
+<p>```javascript
+var httpProxy = require(&lsquo;http-proxy&rsquo;);</p>
+
+<p>var proxy = httpProxy.createServer(function (req, res, proxy) {</p>
+
+<pre><code>if (match) {
+req.headers["X-CUSTOM-API-KEY"] = 'my-api-key';
+proxy.proxyRequest(req, res, {
+    host: 'backend.example.com',
+    port: 9000
+});      
+</code></pre>
+
+<p>})</p>
+
+<p>proxy.listen(8000);
+```</p>
+
+<h2>Simple Routing</h2>
+
+<p>Perhaps your front-end app needs to route different paths to different backends,
+that&rsquo;s easy too. E.g. perhaps paths beginning /api/ need to route to api.example.com</p>
+
+<p>```javascript
+var httpProxy = require(&lsquo;http-proxy&rsquo;);</p>
+
+<p>var proxy = httpProxy.createServer(function (req, res, proxy) {</p>
+
+<pre><code>var backendHost;
+if (/^\/api/.exec(req.url)) {
+    backendHost = 'api.example.com';
+} else {
+    backendHost = 'backend.example.com';        
+}
+req.headers["X-CUSTOM-API-KEY"] = 'my-api-key';
+proxy.proxyRequest(req, res, {
+    host: backendHost,
+    port: 9000
+});
+</code></pre>
+
+<p>})</p>
+
+<p>proxy.listen(8000);
+```</p>
+
+<h2>Routing based on an async call</h2>
+
+<p>Routing can be based on code with arbitrary complexity. For instance, it may be
+necessary to call another service to lookup the host to route to. In Node.js, this
+lookup will likely be an async function, so the actual routing will happen in
+a callback. In order for the callback to have access to the correct request and
+response streams, the http-proxy library provides a buffer() method.
+The buffer() method returns a buffer reference that is then passed into
+the call to proxyRequest();</p>
+
+<p>```javascript
+var httpProxy = require(&lsquo;http-proxy&rsquo;);</p>
+
+<p>var proxy = httpProxy.createServer(function (req, res, proxy) {</p>
+
+<pre><code>var requestBuffer = proxy.buffer();
+discoverHostFor(req.url,
+    function(err, result) {
+        // NB: should implement some error handling in case of
+        // err being non-null.
+        proxy.proxyRequest(req, res, {
+            host: result.host,
+            port: 9000,
+            buffer: requestBuffer
+        });
+    })
+}
+</code></pre>
+
+<p>})</p>
+
+<p>proxy.listen(8000);
+```</p>
+
+<h2>References</h2>
 
 <ul>
-<li>&ldquo;Performance Enhancing Programming with NodeJS&rdquo; by Tim Caswell</li>
-<li>Bryan Cantrill&rsquo;s &ldquo;Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection&rdquo;</li>
-<li>&ldquo;Cast &ndash; The Open Deployment Platform&rdquo; by Paul Querna</li>
-<li>&ldquo;Real-Time, Real-Fast&rdquo; by Dylan Schiemann</li>
+<li>The node-http-proxy library [<a href="https://github.com/nodejitsu/node-http-proxy">https://github.com/nodejitsu/node-http-proxy</a>]</li>
 </ul>
 
-
-<p>I attended Tim Caswell&rsquo;s and Bryan Cantrill&rsquo;s sessions, both of which were great
-introductions to Node.js hipe</p>
-
-<p>Tim Caswell&rsquo;s (creationix on twitter/github) workshop was a great demo of
-Node&rsquo;s scalability. He spun up a webserver on a private wlan and got the whole
-room to start pinging various demo apps.</p>
-
-<p>A few things discussed:</p>
-
-<p>Running JavaScript on client and server can avoid the issue of doubling your
-effort&hellip; You don&rsquo;t cross the boundary all the time if pieces of modular
-functionality can be run either client side or server side.
-There&rsquo;s an opportunity to run more in the server during the period that the
-Browser&rsquo;s busy downloading content or engaged in pre-render tasks. Once the
-app is fully up, you can then progressively do more in the client by shipping
-the same scripts over the wire.
-Non blocking IO. Using buffers and memcpy to avoid string builder overhead
-Some discussion on tooling: node-inspector, DTrace, node -debug, and v8
-graphical debug all sound interesting.</p>
-
-<p>Bryan Cantrill&rsquo;s talk was, in a single word, energetic. Unsurprisingly we saw a
-lot of DTrace and we heard about a Node.js app he&rsquo;d build to monitor net traffic
-during a hackday. I think that Cantrill&rsquo;s talk can be summarised as Node being
-the union of the popularity of JavaScript, non-blocking IO, and the Unix APIs
-(or, as Cantrill puts it &ldquo;the APIs God intended&rdquo;).</p>
-
-<p>In summary, there seems to be a lot of hype around Node. And it seems that
-it&rsquo;s the mix of JavaScript, Closures, and Non-blocking IO that are capturing
-the mood. Also because JavaScript never had any IO in the core language, you
-don&rsquo;t have to drop the bits of the language that don&rsquo;t fit the Node.js model
-(e.g. if you&rsquo;re using twisted you&rsquo;re only wanting to use a subset of python).
-I&rsquo;ll definitely be playing with it to understand more.</p>
-
-<p>Of course, the backbone of Node is the V8 JavaScript engine, and the theme of
-JavaScript tuning was definitely strong at Velocity. Another interesting keynote
-was Douglas Crockford on JavaScript. He was talking about the JavaScript
-benchmarks and how a lack of good benchmarks had resulted in the wrong kind of
-optimisations. Recently Crockford created a benchmark by running jslint over
-jslint. He argued that this provided a much better benchmark as it touched more
-widely-used patterns (such as closures and prototypal inheritance) than the more
-common &ldquo;how fast does this loop execute&rdquo; tests often found in benchmarks. He
-also shared some interesting stats on performance gains that the V8 team had
-been able to make using his benchmark.</p>
 ]]></content>
   </entry>
   

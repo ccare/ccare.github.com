@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Charles' Blog]]></title>
-  <link href="http://blog.ccare.me/atom.xml" rel="self"/>
-  <link href="http://blog.ccare.me/"/>
-  <updated>2013-09-12T22:18:40+01:00</updated>
-  <id>http://blog.ccare.me/</id>
+  <link href="http://ccare.github.com/atom.xml" rel="self"/>
+  <link href="http://ccare.github.com/"/>
+  <updated>2013-10-23T21:46:25+01:00</updated>
+  <id>http://ccare.github.com/</id>
   <author>
     <name><![CDATA[Charles Care]]></name>
     
@@ -14,10 +14,276 @@
 
   
   <entry>
+    <title type="html"><![CDATA[The Galago arrives...]]></title>
+    <link href="http://ccare.github.com/blog/2013/10/23/the-galago-arrives-dot-dot-dot/"/>
+    <updated>2013-10-23T14:32:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/10/23/the-galago-arrives-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Today, when I got home, the first thing greeting me was the box containing my
+new Galago Pro. Very exciting. I&rsquo;ve just started at
+<a href="http://company.meducation.net">Meducation</a> so I needed to get a new development machine.
+The Galago is from <a href="http://system76.com/">System 76</a>, a Linux-only laptop
+supplier that ship machines pre-configured with Ubuntu.</p>
+
+<p>Actually, I was a bit apprehensive about the purchase. In terms of spec,
+and money, the machine is awesome. However, the keyboard has attracted a
+significant amount of criticism on Internet forums (see <a href="http://blag.depotwarehouse.net/2013/09/system76-galago-ultrapro-galu1-review.html">here</a> and <a href="http://blog.goodstuff.im/sorry_system76">here</a>). I didn&rsquo;t know if I would
+find the keyboard annoying or whether it would be fine. I&rsquo;m not a particularly
+demanding user, I spend the majority of my time in the console and I don&rsquo;t have a
+particular need for typing at a high RPM. In fact, this blog post is the
+longest continuous bit of typing I&rsquo;ve had to do this week.</p>
+
+<p>So, the keyboard? Well it&rsquo;s not too bad.
+It&rsquo;s got chicklet style keys, and probably doesn&rsquo;t have an experience anything
+like a MacBook Pro (which, incidently I also find I
+miss keys on). At first, it seemed that certain key strokes didn&rsquo;t register. For
+me, the key missses tended to be alpha keys near the edge of the keyboard (A, S, M etc).
+I don&rsquo;t think there&rsquo;s anything technicaly wrong with the keyboard, it&rsquo;s
+probably because my fingers strike
+those keys with less force. To be honest, I tend to struggle with most new keyboards I try,
+it&rsquo;s one of the things I find difficult about frequent pair rotation.
+In fact, when I think about my old favorite machines, they all had sigificant burn
+in. I still harken after my old Sony Vaio, I wrote my PhD thesis on that, and I
+adore my little Asus netbook with it&rsquo;s diddy Atom processor and I wrote my book on
+that. However, with no immediate writing projects on the horizon, the Galago keyboard
+will not have to endure all that hammering. Maybe I should blog more? If
+I can get through this post
+without falling out of love with the laptop, then I&rsquo;ll probably be ok going
+forward.</p>
+
+<p>Right. So that&rsquo;s the keyboard issue discussed &ndash; with a final judgement due later.
+Now to describe the rest of the machine. The Galago is, I think, the best looking
+laptop I&rsquo;ve ever bought. It&rsquo;s sleek and solid, and even with the extra hard
+disk I fitted, it&rsquo;s pretty light. The screen has full HD resolution and is
+bright and sharp. The rear cooling grills also seem to work very well &ndash; no overheating so far.
+ One or two reviews I read before buying the device expressed concern that the rather
+narrow hinge between the screen and the keyboard was rather narrow, it doesn&rsquo;t
+feel overly fragile, but I am pretty rough with my kit so time will tell there
+too.</p>
+
+<p>Initially I thought that buying a System76 was a bit gimmicky. The machine
+itself is actually manufactured in France, and I&rsquo;m in the UK, so I could have
+got the same box from a European supplier. Even with shipping, System76 was actually
+marginally cheaper, but I have to admit that deep down I wanted that Ubuntu key.
+Yeh I know, it seems petty, but I&rsquo;ve been using Ubuntu for about 7 years, and
+before that I was a RedHat and
+Solaris guy. So it&rsquo;s been 13 years since I last used Windows as my main system and
+that makes me wondern why I must have that Windows key? Stickers are all well and good,
+but finally I have the proper solution.</p>
+
+<p><img src="http://ccare.github.com/images/galago-ubuntu-key.jpg" title="The Galago, like other System 76 laptops features a Ubuntu key" ></p>
+
+<p>The other thing that&rsquo;s amazing is the way the hardware just works. I powered on
+(very quickly, thanks to the SSD) and went straight into the final
+configuration screens of the Ubuntu setup process. No need to download and
+configure an ISO &ndash; the System76 guys had sorted it. For the first time ever, I
+was able to go from unwrapping a UPS parcel to typing in a shell within minutes.</p>
+
+<p>It&rsquo;s also fantastic that I can use and rely on all those &lsquo;function&rsquo; keys that
+I&rsquo;m usually scared of. During installation I playfully hit func+F4 thinking &lsquo;I
+wonder what this key with the Moon symbol does&rsquo;. Immediately, the laptop
+suspended to disk and switched off. I confess that I was mildly concerned, thinking I&rsquo;d suspended
+mid installation and would be forced to rebuild from scratch. Far from the disaster I anticipated, the
+laptop resumed in exactly the same state. I know it&rsquo;s probably not that awesome
+to all you Mac and Windows users, but I&rsquo;m sold.</p>
+
+<p>All in all, it&rsquo;s a fab machine, that I think I&rsquo;ll enjoy using. And the
+keyboard? Well, since I haven&rsquo;t missed any keys in the last few paragraphs. I think
+we&rsquo;ll get along just fine.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bye-bye Black Pepper, Hello Meducation]]></title>
+    <link href="http://ccare.github.com/blog/2013/10/16/bye-bye-black-pepper/"/>
+    <updated>2013-10-16T16:58:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/10/16/bye-bye-black-pepper</id>
+    <content type="html"><![CDATA[<p>Anyone watching my <a href="http://www.twitter.com/charlescare">Twitter</a> and
+<a href="https://github.com/ccare">Github</a> profiles over the last couple of weeks will
+have noticed that I&rsquo;m about to embark on a new challenge. I&rsquo;ve decided
+to move on from <a href="http://www.blackpepper.co.uk">Black Pepper Software</a> and
+join the expanding <a href="http://company.meducation.net">team</a> building <a href="https://www.meducation.net">Meducation</a>.</p>
+
+<p>Meducation are a really exciting Birmingham based start-up. They provide a social network
+targeted at medics that has a strong educational focus.
+ Founded a few years ago, they have been steadily growing, and have
+just raised funding to expand and accelerate.
+I&rsquo;m going to be joining a fantastic team who are passionate about developing a
+successful business with a <a href="http://company.meducation.net/jobs/principles">great set of values</a>.</p>
+
+<p>Despite
+all the excitement, moving on is not without a bit of sadness. Black Pepper
+is a fantastic company with a fantastic culture and jam-packed with highly intelligent
+people. I will miss them, and wish them every success in their future work.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Custom reverse proxying with Node.js]]></title>
+    <link href="http://ccare.github.com/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js/"/>
+    <updated>2013-09-18T13:36:00+01:00</updated>
+    <id>http://ccare.github.com/blog/2013/09/18/custom-reverse-proxying-with-node-dot-js</id>
+    <content type="html"><![CDATA[<p>On a number of occassions over the last year or so, I&rsquo;ve found myself writing
+wanting to create a reverse proxy to front a number of HTTP services. For me,
+the usual requirement is that I want to access these services via AJAX requests,
+and using a reverse proxy allows me to not need to worry about cross-site scripting
+(XSS) or configuring cross-origin resource sharing (CORS). Node.js is a fantastic
+tool for doing this. Particularly if you lean on the well-regarded
+node-http-proxy module.</p>
+
+<p>If all you need is static proxying/routing, then node-http-proxy project
+supports a variety of
+<a href="configuration%20options">https://github.com/nodejitsu/node-http-proxy</a>.
+However, I usually find myself turning to this library when I want to
+do custom routing. So in this post, I focus on configuring the proxy with
+custom code.</p>
+
+<p>In this blog post, I&rsquo;ll share some code snippets to create a simple reverse proxy
+in Node.js and then move onto a slightly more complicated example with some routing
+and express middleware. Finally, I&rsquo;ll show how to base the routing on an asynchronous
+call to another service (e.g. a service-discovery service for looking up endpoints ).</p>
+
+<!-- more -->
+
+
+<h2>Simplest proxy</h2>
+
+<p>The simplest proxy you can write is one that routes all requests to the same
+back-end service. There might be a number of reasons to do this, the last time I
+wrote something like this was to add a couple of HTTP headers to each outbound
+request in order to authenticate against an API.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">httpProxy</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http-proxy&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">httpProxy</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">match</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s2">&quot;X-CUSTOM-API-KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;my-api-key&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">proxy</span><span class="p">.</span><span class="nx">proxyRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;backend.example.com&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">port</span><span class="o">:</span> <span class="mi">9000</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">proxy</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Simple Routing</h2>
+
+<p>Perhaps your front-end app needs to route different paths to different backends,
+that&rsquo;s easy too. E.g. perhaps paths beginning /api/ need to route to api.example.com</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">httpProxy</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http-proxy&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">httpProxy</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">backendHost</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="sr">/^\/api/</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">backendHost</span> <span class="o">=</span> <span class="s1">&#39;api.example.com&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">backendHost</span> <span class="o">=</span> <span class="s1">&#39;backend.example.com&#39;</span><span class="p">;</span>      
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s2">&quot;X-CUSTOM-API-KEY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;my-api-key&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">proxy</span><span class="p">.</span><span class="nx">proxyRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">host</span><span class="o">:</span> <span class="nx">backendHost</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">port</span><span class="o">:</span> <span class="mi">9000</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">proxy</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Routing based on an async call</h2>
+
+<p>Routing can be based on code with arbitrary complexity. For instance, it may be
+necessary to call another service to lookup the host to route to. In Node.js, this
+lookup will likely be an async function, so the actual routing will happen in
+a callback. In order for the callback to have access to the correct request and
+response streams, the http-proxy library provides a buffer() method.
+The buffer() method returns a buffer reference that is then passed into
+the call to proxyRequest();</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">httpProxy</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http-proxy&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">httpProxy</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">requestBuffer</span> <span class="o">=</span> <span class="nx">proxy</span><span class="p">.</span><span class="nx">buffer</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">discoverHostFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+</span><span class='line'>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="c1">// NB: should implement some error handling in case of</span>
+</span><span class='line'>          <span class="c1">// err being non-null.</span>
+</span><span class='line'>          <span class="nx">proxy</span><span class="p">.</span><span class="nx">proxyRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">host</span><span class="o">:</span> <span class="nx">result</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">port</span><span class="o">:</span> <span class="mi">9000</span><span class="p">,</span>
+</span><span class='line'>              <span class="nx">buffer</span><span class="o">:</span> <span class="nx">requestBuffer</span>
+</span><span class='line'>          <span class="p">});</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">proxy</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li>The node-http-proxy library [<a href="https://github.com/nodejitsu/node-http-proxy">https://github.com/nodejitsu/node-http-proxy</a>]</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[PDF Templating with DocXReport]]></title>
-    <link href="http://blog.ccare.me/blog/2013/09/12/pdf-templating-with-docxreport/"/>
+    <link href="http://ccare.github.com/blog/2013/09/12/pdf-templating-with-docxreport/"/>
     <updated>2013-09-12T21:07:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2013/09/12/pdf-templating-with-docxreport</id>
+    <id>http://ccare.github.com/blog/2013/09/12/pdf-templating-with-docxreport</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/pdf-templating-with-docxreport/">original</a>
 
@@ -28,6 +294,9 @@ was posted on 12/09/2013.</p>
 <a href="http://www.blackpepper.co.uk">Black Pepper</a>, we&rsquo;ve built a number of e-commerce systems, and usually our clients have a requirement to produce a nicely formatted invoice or contract which their customers can access through the web.</p>
 
 <p>We often work on a Java stack, and there are therefore a number of approaches to generating a PDF, including Apache FOP (based on XSL), iText, and a variety of others [1]. In a number of solutions we&rsquo;ve gone down the iText approach since it&rsquo;s pure Java and therefore reasonably straight forward to integrate and test. However, it presents a DOM-based approach which is not without it shortcomings. A better solution is to use a template so that layout can be separated from the PDF generation. That&rsquo;s precisely what we wanted to do for a recent project, when we discovered the XDocReport library [2] which provided exactly what we needed. This post describes how to get started with that library.</p>
+
+<!-- more -->
+
 
 <h2>The problem</h2>
 
@@ -115,9 +384,9 @@ was posted on 12/09/2013.</p>
 
 <p>Next we needed to create a template and add it to our classpath. We decided to use <strong>odt</strong> as our template format. Marking up the document is done using the &lsquo;add field&rsquo; menu in OpenOffice or LibreOffice writer [3]. Inside the template fields you can add artbitrary Velocity expressions. We made use of #if&hellip;#end directives because we were generating a contract that only needed to include a VAT number if a customer was VAT registered.</p>
 
-<p><img src="http://blog.ccare.me/images/docxreport/img1.png">
-<img src="http://blog.ccare.me/images/docxreport/img2.png">
-<img src="http://blog.ccare.me/images/docxreport/img3.png"></p>
+<p><img src="http://ccare.github.com/images/docxreport/img1.png">
+<img src="http://ccare.github.com/images/docxreport/img2.png">
+<img src="http://ccare.github.com/images/docxreport/img3.png"></p>
 
 <p>Next we needed some code to populate values into our template. First we created a simple object to represent our model</p>
 
@@ -189,9 +458,9 @@ was posted on 12/09/2013.</p>
   
   <entry>
     <title type="html"><![CDATA[Creating a simple AMF client for testing]]></title>
-    <link href="http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
+    <link href="http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing/"/>
     <updated>2013-05-09T12:31:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2013/05/09/creating-an-amf-client-for-testing</id>
+    <id>http://ccare.github.com/blog/2013/05/09/creating-an-amf-client-for-testing</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/creating-a-simple-amf-client-for-testing/">original</a>
 was posted on 30/04/2013.</p>
@@ -340,9 +609,9 @@ was posted on 30/04/2013.</p>
   
   <entry>
     <title type="html"><![CDATA[Correlating log entries using Log4J and the Mapped Diagnostic Context]]></title>
-    <link href="http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
+    <link href="http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc/"/>
     <updated>2012-12-21T12:31:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
+    <id>http://ccare.github.com/blog/2012/12/21/correlating-log-entries-using-log4j-and-mdc</id>
     <content type="html"><![CDATA[<p class="headline-box">This post was originally written for the <a href="http://www.blackpepper.co.uk/blog/">Black Pepper Software</a>
 blog. The <a href="http://www.blackpepper.co.uk/posts/correlating-log-entries-using-log4j-and-the-mapped-diagnostic-context/">original</a>
 was posted on 20/12/2012.</p>
@@ -635,9 +904,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Playing with Java Timestamps]]></title>
-    <link href="http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha/"/>
+    <link href="http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha/"/>
     <updated>2012-10-19T12:31:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/10/19/java-timestamp-gotcha</id>
+    <id>http://ccare.github.com/blog/2012/10/19/java-timestamp-gotcha</id>
     <content type="html"><![CDATA[<p>The shortcomings of Java&rsquo;s native date and time support is well known. Asking a developer about a date/time problem in Java is a good way of judging their exposure to building systems with it. For new projects, Joda time is excellent, but there&rsquo;s plenty of native code out there that uses the standard Java APIs. Today I ran into an interesting and unexpected behaviour relating to Timestamps.</p>
 
 <!-- more -->
@@ -674,9 +943,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Joining Black Pepper Software]]></title>
-    <link href="http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software/"/>
+    <link href="http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software/"/>
     <updated>2012-05-16T09:31:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/05/16/joining-black-pepper-software</id>
+    <id>http://ccare.github.com/blog/2012/05/16/joining-black-pepper-software</id>
     <content type="html"><![CDATA[<p>Today I start with a new company, on a fresh challenge. I&rsquo;ve joined <a href="http://www.blackpepper.co.uk">Black Pepper Software Ltd</a> as a consultant.</p>
 
 <p>Black Pepper are an Agile software house/consultancy based in Leamington Spa.</p>
@@ -685,9 +954,9 @@ was posted on 20/12/2012.</p>
   
   <entry>
     <title type="html"><![CDATA[Moving on from Talis]]></title>
-    <link href="http://blog.ccare.me/blog/2012/05/04/moving-on-from-talis/"/>
+    <link href="http://ccare.github.com/blog/2012/05/04/moving-on-from-talis/"/>
     <updated>2012-05-04T15:55:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/05/04/moving-on-from-talis</id>
+    <id>http://ccare.github.com/blog/2012/05/04/moving-on-from-talis</id>
     <content type="html"><![CDATA[<p>It&rsquo;s all change for me again. I&rsquo;ve decided to move on from <a href="http://talis.com">Talis</a>. Today was my last day in the office, and the end of what has been an
 incredible journey. Although it&rsquo;s only just over a year since I joined the Talis Platform team, we&rsquo;ve been constanly iterating and developing
 innovative solutions. A year ago, we had the opportunity to focus
@@ -709,9 +978,9 @@ will definitely miss my old colleagues at Talis.</p>
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress!]]></title>
-    <link href="http://blog.ccare.me/blog/2012/04/07/hello-octopress/"/>
+    <link href="http://ccare.github.com/blog/2012/04/07/hello-octopress/"/>
     <updated>2012-04-07T18:25:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/04/07/hello-octopress</id>
+    <id>http://ccare.github.com/blog/2012/04/07/hello-octopress</id>
     <content type="html"><![CDATA[<p>Hi there!</p>
 
 <p>This my first post using <a href="http://octopress.org">Octopress</a>. Today I setup
@@ -729,9 +998,9 @@ sources to here during the next few weeks)</p>
   
   <entry>
     <title type="html"><![CDATA[Using Grails to throw-up a simple interface over JPA entities]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
+    <link href="http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi/"/>
     <updated>2012-03-29T18:25:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
+    <id>http://ccare.github.com/blog/2012/03/29/building-a-demo-jpa-integration-for-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last few weeks, I&rsquo;ve been wanting to write a demo for
 <a href="http://kasabi.com">Kasabi</a> to show how to integrate data from a database using
 object-relational mapping. The idea was that data in an existing database would
@@ -1079,9 +1348,9 @@ with the command:</p>
   
   <entry>
     <title type="html"><![CDATA[Visible Ops]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/23/visible-ops/"/>
+    <link href="http://ccare.github.com/blog/2012/03/23/visible-ops/"/>
     <updated>2012-03-23T16:41:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/23/visible-ops</id>
+    <id>http://ccare.github.com/blog/2012/03/23/visible-ops</id>
     <content type="html"><![CDATA[<p>Last weekend I finally got around to reading
 the <a href="http://www.amazon.co.uk/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612">Visible Ops handbook</a>. I&rsquo;d
 been meaning to read it for a while &ndash; ever since I first heard Gene Kim speak at
@@ -1143,9 +1412,9 @@ process.</p>
   
   <entry>
     <title type="html"><![CDATA[JPA and Kasabi]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi/"/>
+    <link href="http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi/"/>
     <updated>2012-03-20T18:04:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/20/jpa-and-kasabi</id>
+    <id>http://ccare.github.com/blog/2012/03/20/jpa-and-kasabi</id>
     <content type="html"><![CDATA[<p>Over the last couple of days I&rsquo;ve been trying to pull together a demo of
 integrating an existing JPA application with Kasabi. It&rsquo;s been a fun journey
 learning (and relearning) the JPA spec, and also working with some of the
@@ -1170,12 +1439,12 @@ they&rsquo;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Ways of Thinking]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/12/ways-of-thinking/"/>
+    <link href="http://ccare.github.com/blog/2012/03/12/ways-of-thinking/"/>
     <updated>2012-03-12T17:23:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/12/ways-of-thinking</id>
+    <id>http://ccare.github.com/blog/2012/03/12/ways-of-thinking</id>
     <content type="html"><![CDATA[<p>It&rsquo;s nice to see Ways of Thinking, Ways of Seeing (ed. Bissell &amp; Dillon) finally published [1]. I contributed Chapter 5 (see [2]), entitled &lsquo;Early Computational Modelling: Physical Models, Electrical Analogies and Analogue Computers&rsquo;. The origins of this book came from a session which Chris Bissell organised at SHOT 2007. It&rsquo;s taken a while to find it&rsquo;s way into print, but I think it&rsquo;s an interesting collection of different perspectives on modelling.</p>
 
-<p><img class="right" src="http://blog.ccare.me/images/cc/cover.jpg" title="Cover image" ></p>
+<p><img class="right" src="http://ccare.github.com/images/cc/cover.jpg" title="Cover image" ></p>
 
 <p>Thanks to Chris Bissell and Chris Dillon for making it all happen!</p>
 
@@ -1187,9 +1456,9 @@ they&rsquo;re certainly useful for creating a quick functional app.</p>
   
   <entry>
     <title type="html"><![CDATA[Stub Http Server]]></title>
-    <link href="http://blog.ccare.me/blog/2012/03/07/stub-http-server/"/>
+    <link href="http://ccare.github.com/blog/2012/03/07/stub-http-server/"/>
     <updated>2012-03-07T20:25:00+00:00</updated>
-    <id>http://blog.ccare.me/blog/2012/03/07/stub-http-server</id>
+    <id>http://ccare.github.com/blog/2012/03/07/stub-http-server</id>
     <content type="html"><![CDATA[<p>At <a href="http://talisplatform.com">Talis</a> we&rsquo;ve been building our RDF platform
 following a distributed SOA
 architecture. Most of our integrations are through RESTful HTTP APIs, and in our
@@ -1324,9 +1593,9 @@ failure, whereas in nice mode, they return an HTTP 404 code. Switching between
   
   <entry>
     <title type="html"><![CDATA[PubSub Huddle conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle/"/>
+    <link href="http://ccare.github.com/blog/2011/09/30/pub-sub-huddle/"/>
     <updated>2011-09-30T11:39:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/09/30/pub-sub-huddle</id>
+    <id>http://ccare.github.com/blog/2011/09/30/pub-sub-huddle</id>
     <content type="html"><![CDATA[<p>On 23rd September, a colleague and I attended the PubSub Huddle in London. It was a
 one-day conference/hack-afternoon hosted by SkillsMatter.</p>
 
@@ -1426,9 +1695,9 @@ tuning it &ndash; particularly since they are getting quite impressive throughpu
   
   <entry>
     <title type="html"><![CDATA[Primitive types and Java performance]]></title>
-    <link href="http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance/"/>
+    <link href="http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance/"/>
     <updated>2011-07-11T09:05:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/07/11/primitive-types-and-java-performance</id>
+    <id>http://ccare.github.com/blog/2011/07/11/primitive-types-and-java-performance</id>
     <content type="html"><![CDATA[<p>Reading article about primitives vs wrapper objects in Java.
 Nice to see some graphs and real evidence rather than just gut-feel.</p>
 
@@ -1438,9 +1707,9 @@ Nice to see some graphs and real evidence rather than just gut-feel.</p>
   
   <entry>
     <title type="html"><![CDATA[git-scm topic branch creation]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation/"/>
+    <link href="http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation/"/>
     <updated>2011-06-30T08:42:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/30/git-scm-topic-branch-creation</id>
+    <id>http://ccare.github.com/blog/2011/06/30/git-scm-topic-branch-creation</id>
     <content type="html"><![CDATA[<p>Way I tend to create a topic branch in git-scm for a specific issue:</p>
 
 <pre><code>git checkout -b  # create a local branch
@@ -1454,9 +1723,9 @@ git branch --set-upstream [branch-name] origin/[branch-name] # make branch track
   
   <entry>
     <title type="html"><![CDATA[Openstack and Cloudera workshops at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity/"/>
     <updated>2011-06-28T21:47:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/28/openstack-and-cloudera-workshops-at-velocity</id>
     <content type="html"><![CDATA[<p>The first workshop I attended at Velocity was run by Rib Pedde, Todd Willey, and Matt Ray, and discussed the Openstack project. This was less of a workshop, and more of a talk in three parts. Interesting, none-the-less. Openstack is a virtualisation platform which has gained quite a lot of momentum in the last year.</p>
 
 <p><a href="http://velocityconf.com/velocity2011/public/schedule/detail/19970">http://velocityconf.com/velocity2011/public/schedule/detail/19970</a></p>
@@ -1535,9 +1804,9 @@ One interesting point he made was that OpenStack was evolving so fast that he wa
   
   <entry>
     <title type="html"><![CDATA[NodeJS at Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity/"/>
+    <link href="http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity/"/>
     <updated>2011-06-26T21:17:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/26/nodejs-at-velocity</id>
+    <id>http://ccare.github.com/blog/2011/06/26/nodejs-at-velocity</id>
     <content type="html"><![CDATA[<p>NodeJS seemed to be a passing theme in a number of the talks at the conference,
 including:</p>
 
@@ -1592,136 +1861,6 @@ widely-used patterns (such as closures and prototypal inheritance) than the more
 common &ldquo;how fast does this loop execute&rdquo; tests often found in benchmarks. He
 also shared some interesting stats on performance gains that the V8 team had
 been able to make using his benchmark.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Deleting tags in gitscm]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm/"/>
-    <updated>2011-06-23T09:52:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/23/deleting-tags-in-gitscm</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m bound to forget this little cryptic command to delete branch foo.</p>
-
-<pre><code>git push origin :refs/tags/foo
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Statistics @ Velocity]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity/"/>
-    <updated>2011-06-11T21:12:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/statistics-at-velocity</id>
-    <content type="html"><![CDATA[<p>One of the pre-conference workshops was an excellent session by John Rauser from
-Amazon. I&rsquo;ve never been hugely confident at my abilities to do estimation,
-forecasting, capacity planning etc. It&rsquo;s a really difficult thing.</p>
-
-<p>I&rsquo;d heard that Rauser was an excellent speaker, so I attended his workshop on
-statistics. For anyone interested, Rauser also did a shorter keynote later in
-the conference, which you can catch on YouTube. A big theme from these
-discussions was understanding the reduction that your statistical reporting
-makes. Averages, variances, etc are all summary statistics &ndash; but how often to we
-really think of them as lossy formats?</p>
-
-<p>  My main takeaways from both of his talk were to try and understand the
-  lossiness of summary stats. I particularly liked his summary statistics of
-  Moby Dick. Another major theme in his talks was to make time to do deep dives
-  into log data, even if it only means you know how to when something really
-  goes wrong.</p>
-
-<!-- more -->
-
-
-<p>  During the workshop, John discussed how we approach estimating someone&rsquo;s age.
-  Given that problem, the instinct reaction is to propose a estimated value: 45,
-  58, 60 etc. However, to quote Rauser: we &lsquo;[shouldn&rsquo;t] give a single number
-  unless you&rsquo;re forced to. We should always give a range, ideally with an agreed
-  confidence interval such as 90%. I can guess someone&rsquo;s age with 100%
-  confidence if I state their age is between 0 and 150, but that&rsquo;s not very
-  useful. But by combining additional information and reducing absolute
-  certainty I can start to narrow that down. This isn&rsquo;t rocket science, but how
-  many times have we been asked &ldquo;when will this be ready&rdquo;, or &ldquo;when&rsquo;s the
-  delivery date&rdquo;? And in the face of those questions, how often have we given a
-  range with a stated confidence. Perhaps we feel that our project managers
-  would laugh us out of the room? Project managers like fixed dates.</p>
-
-<p>However, in complex projects &ndash; and IT projects are usually complex &ndash; a range is
-often more honest, and would often better express the reality of the situation.
-Again, this is nothing new &ndash; if you have an Agile Coach on your team, they will
-probably recommend estimating using ranges or 3-point estimates. However, it&rsquo;s
-easy to slip into the default behaviour of giving a single numeric response.</p>
-
-<p>  Throughout the talk, Rauser covered other examples, such as estimating the
-  depth of his desk, and discussed how measurement improves our ability to
-  estimate with confidence.</p>
-
-<p>  As the workshop continued, Rauser set us an estimating task. He asked us to
-  provide estimates (ranges, of course!) for a number of questions. The key was
-  not the specific answers, but rather that we were aiming for 90% confidence
-  estimates&hellip; i.e we should have got 18 out of the 20 questions correct. We
-  then graphed the results of a portion of the room and found that most people
-  averaged between 20% and 40% accuracy. An interesting demo of how humans seem
-  to default to be over-optimistic in their estimating.</p>
-
-<p>  In the final section of the workshop, Rauser discussed the nature of
-  statistics &ndash; how school curriculum are still teaching stats the &lsquo;old way&rsquo; and
-  how for practical analysis, it&rsquo;s really much better to tackle stats correctly
-  using computer modelling. Do we need to learn about how to apply statistical
-  tests and derive summary statistics? After all, summary stats are lossy and
-  stop you looking at your data? Are they more dangerous in the hands of the
-  layman that just getting a computer to process the raw stats? We saw a demo of
-  some of the statistical features of excel, and then, a demo of more powerful
-  tools like <strong>R</strong> and <strong>Sage</strong>.</p>
-
-<p>  In conclusion: Rauser left us with a few final comments:</p>
-
-<ul>
-<li>everything is uncertain</li>
-<li>even counting breaks down at scale</li>
-<li>estimates need ranges</li>
-<li>single numbers are decisions</li>
-</ul>
-
-
-<p>A great session.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Velocity 2011... a great conference]]></title>
-    <link href="http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference/"/>
-    <updated>2011-06-11T20:27:00+01:00</updated>
-    <id>http://blog.ccare.me/blog/2011/06/11/velocity-2011-dot-dot-dot-a-great-conference</id>
-    <content type="html"><![CDATA[<p>It&rsquo;s a week now since I came back from
-<a href="http://velocityconf.com/velocity2011">O&#8217;Reilly&rsquo;s Velocity</a>
-conference in San
-Jose so I&rsquo;ve had a chance to let some of the thoughts settle in my mind. I
-attended both the main conference and the workshops the day before.</p>
-
-<p>Attending a large tech conference is a great way of getting up to speed with the
-latest technical themes and meet some great people. Velocity&rsquo;s three days long,
-but tacked on the end was DevopsDays &ndash; a more informal meet-up of people
-interested in bringing the traditionally separate roles of development and
-operations together. Devops was also an important theme at Velocity. Or, as Theo
-Schlossnagle said in
-his <a href="http://www.youtube.com/watch?v=y0mHo7SMCQk&amp;feature=player_embedded">Velocity keynote on careers</a>&hellip;
-it&rsquo;s really about *ops.
-Whatever technology you build, that software&rsquo;s delivering a service, and
-whatever that service, it must operate. Or to put it from another way Theo was
-saying that we should treat &lsquo;operability like security&rsquo;.</p>
-
-<p>For the last couple of months, I&rsquo;ve been working within the platform team at
-<a href="http://www.talis.com">Talis</a>. We&rsquo;re a small team, but have a lot we want to build and manage. Trying to
-organise ourselves in a devops is something really important to the way we work.
-Personally, I&rsquo;ve never felt comfortable with the traditional &lsquo;throw it over the
-wall&rsquo; relationship between software and operations teams. I&rsquo;ve worked in a
-number of different kinds of teams before, usually I&rsquo;ve tried to be a developer
-who works closely with ops, but I&rsquo;ve definitely fallen into the us and them trap
-from time to time. Like agile, devops is not a magic formula, but I definitely
-feel much more comfortable with everyone being part of the same team.</p>
-
-<p>I&rsquo;ve decided to blog some of my thoughts/notes from the conference: the posts
-should start to appear very soon.</p>
 ]]></content>
   </entry>
   
